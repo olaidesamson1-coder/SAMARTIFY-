@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Refund Policy — SamArtify</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Lora:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cream: #F9FAFB;
+            --rust: #2E5EAA;
+            --deep-rust: #1E3F7A;
+            --sage: #00C3B1;
+            --charcoal: #1F2937;
+            --gold: #00C3B1;
+            --light-sage: #E0F7F5;
+            --white: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lora', serif;
+            background: var(--cream);
+            color: var(--charcoal);
+            line-height: 1.8;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(250, 247, 240, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid rgba(184, 92, 56, 0.1);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--deep-rust);
+            text-decoration: none;
+            cursor: pointer;
+            letter-spacing: -1px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            color: var(--charcoal);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            font-family: 'Lora', serif;
+            text-decoration: none;
+        }
+
+        .nav-btn:hover {
+            color: var(--rust);
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--deep-rust);
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--charcoal);
+            opacity: 0.85;
+            margin-bottom: 0.5rem;
+        }
+
+        .last-updated {
+            font-size: 0.95rem;
+            color: #666;
+            font-style: italic;
+        }
+
+        /* Key Policy Box */
+        .key-policy-box {
+            background: linear-gradient(135deg, var(--light-sage) 0%, rgba(184, 92, 56, 0.1) 100%);
+            border-left: 5px solid var(--rust);
+            padding: 2rem;
+            margin: 2.5rem 0;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(184, 92, 56, 0.12);
+        }
+
+        .key-policy-box h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--deep-rust);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .policy-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+
+        .policy-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 6px;
+            border: 2px solid var(--gold);
+            text-align: center;
+        }
+
+        .policy-card .number {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--rust);
+            margin-bottom: 0.5rem;
+        }
+
+        .policy-card .label {
+            font-weight: 700;
+            color: var(--deep-rust);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .policy-card .description {
+            font-size: 0.95rem;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Warning Box */
+        .warning-box {
+            background: #fff3cd;
+            border-left: 5px solid #ff9800;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 6px;
+            color: #333;
+        }
+
+        .warning-box strong {
+            color: #d84315;
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        /* Refund Rules */
+        .content-section {
+            margin: 3rem 0;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--deep-rust);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--gold);
+        }
+
+        .subsection-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--rust);
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .rule-list {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+
+        .rule-list li {
+            background: white;
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--rust);
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .rule-list li strong {
+            color: var(--deep-rust);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .rule-list li p {
+            color: #666;
+            margin: 0;
+            font-size: 0.95rem;
+        }
+
+        .highlight {
+            background: rgba(212, 165, 116, 0.1);
+            padding: 1.5rem;
+            border-radius: 6px;
+            margin: 1.5rem 0;
+            border: 2px dashed var(--gold);
+        }
+
+        .highlight strong {
+            color: var(--deep-rust);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        table th,
+        table td {
+            padding: 1.2rem;
+            text-align: left;
+            border-bottom: 1px solid var(--light-sage);
+        }
+
+        table th {
+            background: var(--light-sage);
+            font-weight: 700;
+            color: var(--deep-rust);
+            font-family: 'Playfair Display', serif;
+        }
+
+        table tr:hover {
+            background: rgba(184, 92, 56, 0.05);
+        }
+
+        table td strong {
+            color: var(--deep-rust);
+        }
+
+        .process-steps {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+            border: 2px solid var(--light-sage);
+        }
+
+        .step {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--light-sage);
+        }
+
+        .step:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .step-number {
+            background: var(--rust);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .step-content h3 {
+            color: var(--deep-rust);
+            margin-bottom: 0.5rem;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+        }
+
+        .step-content p {
+            color: #666;
+            margin: 0;
+            font-size: 0.95rem;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background: var(--light-sage);
+            padding: 2.5rem;
+            border-radius: 8px;
+            margin: 3rem 0;
+            text-align: center;
+        }
+
+        .contact-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--deep-rust);
+            margin-bottom: 1rem;
+        }
+
+        .contact-section p {
+            font-size: 1.05rem;
+            color: var(--charcoal);
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-link {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--rust);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 0.5rem;
+        }
+
+        .contact-link:hover {
+            background: var(--deep-rust);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(184, 92, 56, 0.3);
+        }
+
+        /* FAQ Style */
+        .faq-item {
+            background: white;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            border-left: 4px solid var(--gold);
+        }
+
+        .faq-question {
+            font-weight: 700;
+            color: var(--deep-rust);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .faq-answer {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--charcoal);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        footer a {
+            color: var(--gold);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .policy-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .step {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .step-number {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-content">
+            <a href="homepage.html" class="logo">SamArtify</a>
+            <div class="nav-links">
+                <a href="homepage.html" class="nav-btn">Home</a>
+                <a href="categories.html" class="nav-btn">Categories</a>
+                <a href="about.html" class="nav-btn">About</a>
+                <a href="faq.html" class="nav-btn">FAQ</a>
+                <a href="contact.html" class="nav-btn">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero container">
+            <h1>Refund Policy</h1>
+            <p>SamArtify is committed to customer satisfaction. Please review our refund policy below.</p>
+            <p class="last-updated">Effective: February 5, 2026</p>
+        </section>
+
+        <div class="container">
+            <!-- Key Policy Highlights -->
+            <div class="key-policy-box">
+                <h2>⏱️ Our Refund Window</h2>
+                <div class="policy-grid">
+                    <div class="policy-card">
+                        <div class="number">7</div>
+                        <div class="label">Days to Request</div>
+                        <div class="description">You have 7 days from purchase to request a refund for eligible items</div>
+                    </div>
+                    <div class="policy-card">
+                        <div class="number">5-7</div>
+                        <div class="label">Days to Process</div>
+                        <div class="description">Once approved, refunds are processed within 5-7 business days</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Critical Rules -->
+            <section class="content-section">
+                <h2 class="section-title">🔴 Critical Refund Rules</h2>
+                
+                <div class="warning-box">
+                    <strong>⚠️ No Refunds for Accessed Files</strong>
+                    <p>Once you download and access your design files, they cannot be refunded. This policy is final and non-negotiable. By clicking "Download," you acknowledge that you are accepting the file in its current state.</p>
+                </div>
+
+                <ul class="rule-list">
+                    <li>
+                        <strong>❌ No Refunds After Download</strong>
+                        <p>Design files are digital products. Once downloaded, they cannot be returned. You bear responsibility for verifying file compatibility before download.</p>
+                    </li>
+                    <li>
+                        <strong>❌ No Refunds for Change of Mind</strong>
+                        <p>If you change your mind about a design after preview, we cannot offer a refund. Take time to review the preview images and specifications before purchasing.</p>
+                    </li>
+                    <li>
+                        <strong>❌ No Refunds for Shared Files</strong>
+                        <p>If files have been shared, transferred, or distributed to others, refunds cannot be issued. Each purchase is licensed to the individual buyer only.</p>
+                    </li>
+                    <li>
+                        <strong>❌ No Refunds for Commercial Use Misuse</strong>
+                        <p>If you purchased with Personal Use license but used the files commercially, refunds will not be issued. Ensure you purchase the correct license type.</p>
+                    </li>
+                    <li>
+                        <strong>✓ Preview Before Purchase</strong>
+                        <p>We provide detailed previews, specifications, stitch counts, file formats, and customer reviews. Please review all information carefully before purchasing.</p>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- When Refunds ARE Allowed -->
+            <section class="content-section">
+                <h2 class="section-title">✅ When Refunds ARE Allowed</h2>
+
+                <p>Refunds MAY be issued in the following situations:</p>
+
+                <ul class="rule-list">
+                    <li>
+                        <strong>Technical Issues (Before Download)</strong>
+                        <p>If the file fails to download, corrupts, or cannot be accessed within 24 hours of purchase, refunds can be issued if reported immediately.</p>
+                    </li>
+                    <li>
+                        <strong>File Format Error</strong>
+                        <p>If advertised file formats are missing or incorrect (e.g., promised .PES file not included), you may request a refund within 7 days of discovery.</p>
+                    </li>
+                    <li>
+                        <strong>Design Quality Defect</strong>
+                        <p>If the design contains obvious stitching errors, distortions, or quality issues that differ significantly from the preview, refunds may be issued within 7 days of purchase.</p>
+                    </li>
+                    <li>
+                        <strong>System Error/Duplicate Charge</strong>
+                        <p>If you were charged twice for the same purchase or experienced a system error, we will issue a full refund immediately.</p>
+                    </li>
+                    <li>
+                        <strong>Design Removed/Unavailable</strong>
+                        <p>If a design is removed from our catalog due to copyright violations or policy violations after your purchase, a full refund will be issued.</p>
+                    </li>
+                </ul>
+
+                <div class="highlight">
+                    <strong>Important:</strong> To qualify for a refund in these situations, you must contact support@samartify.com within 7 days of purchase with proof (screenshots, error messages, or detailed description).
+                </div>
+            </section>
+
+            <!-- Refund Process -->
+            <section class="content-section">
+                <h2 class="section-title">📋 How to Request a Refund</h2>
+
+                <div class="process-steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h3>Submit Your Request</h3>
+                            <p>Email support@samartify.com with your order number, reason for refund, and any supporting evidence (screenshots, error messages, etc.). Subject: "REFUND REQUEST - [Order #]"</p>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h3>We Review Your Case</h3>
+                            <p>Our support team reviews your request within 24-48 business hours. We may ask clarifying questions or request additional documentation to verify your claim.</p>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h3>Decision & Approval</h3>
+                            <p>We notify you via email whether your refund has been approved or denied. If approved, we process the refund immediately. If denied, we explain why with reference to this policy.</p>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h3>Refund Processing</h3>
+                            <p>Approved refunds are processed back to your original payment method within 5-7 business days. Your bank may take an additional 2-3 business days to show the credit.</p>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <h3>Confirmation</h3>
+                            <p>You receive a confirmation email once the refund has been processed. Check your bank account within 7-10 days total from approval.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Timeline Table -->
+            <section class="content-section">
+                <h2 class="section-title">⏰ Refund Timeline Reference</h2>
+
+                <table>
+                    <tr>
+                        <th>Scenario</th>
+                        <th>Request Window</th>
+                        <th>Review Time</th>
+                        <th>Processing Time</th>
+                        <th>Total Time</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Technical Issue</strong></td>
+                        <td>24 hours (immediate)</td>
+                        <td>24 hours</td>
+                        <td>Same day</td>
+                        <td>1-2 days</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Quality Defect</strong></td>
+                        <td>7 days</td>
+                        <td>24-48 hours</td>
+                        <td>5-7 business days</td>
+                        <td>10-14 days</td>
+                    </tr>
+                    <tr>
+                        <td><strong>File Format Error</strong></td>
+                        <td>7 days</td>
+                        <td>24 hours</td>
+                        <td>5-7 business days</td>
+                        <td>9-12 days</td>
+                    </tr>
+                    <tr>
+                        <td><strong>System Error</strong></td>
+                        <td>Anytime</td>
+                        <td>24 hours</td>
+                        <td>Same day</td>
+                        <td>1-2 days</td>
+                    </tr>
+                </table>
+            </section>
+
+            <!-- Store Credit Alternative -->
+            <section class="content-section">
+                <h2 class="section-title">💳 Store Credit Alternative</h2>
+
+                <div class="highlight">
+                    <strong>Not eligible for refund?</strong> We may offer store credit instead. Store credit can be used for future purchases and is valid for 12 months from issuance. This is at our discretion and only if you request it within the 7-day window.
+                </div>
+
+                <ul class="rule-list">
+                    <li>
+                        <strong>Store Credit vs. Refund</strong>
+                        <p>If you prefer store credit instead of a refund, we may approve this for purchases that don't qualify for cash refunds. Request this when contacting support.</p>
+                    </li>
+                    <li>
+                        <strong>Credit Expiration</strong>
+                        <p>Store credits expire 12 months from issue date. If unused after 12 months, the credit is forfeited with no refund or extension available.</p>
+                    </li>
+                    <li>
+                        <strong>Non-Transferable</strong>
+                        <p>Store credits are tied to your account and cannot be transferred, sold, or shared with other users.</p>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Preview Policy -->
+            <section class="content-section">
+                <h2 class="section-title">🔍 Our Preview Policy</h2>
+
+                <p>To help you make informed decisions, SamArtify provides:</p>
+
+                <ul class="rule-list">
+                    <li>
+                        <strong>High-Quality Preview Images</strong>
+                        <p>Each design includes detailed preview images showing the pattern, colors, and layout. Zoom and inspect before purchasing.</p>
+                    </li>
+                    <li>
+                        <strong>Complete Specifications</strong>
+                        <p>All designs list stitch count, dimensions, file formats included, color count, difficulty level, and machine compatibility.</p>
+                    </li>
+                    <li>
+                        <strong>Customer Reviews</strong>
+                        <p>Read reviews from other customers who've purchased the design. Look for feedback on quality, accuracy, and file compatibility.</p>
+                    </li>
+                    <li>
+                        <strong>7-Day Preview Window</strong>
+                        <p>You have 7 days to review all available information before the refund window closes. This is your chance to verify the design meets your needs.</p>
+                    </li>
+                    <li>
+                        <strong>Contact Support</strong>
+                        <p>Have questions about a design? Email support@samartify.com before purchasing. We can provide additional information or technical details.</p>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Frequently Asked Questions -->
+            <section class="content-section">
+                <h2 class="section-title">❓ Frequently Asked Questions</h2>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <strong>Can I get a refund if I don't like the design after purchasing?</strong>
+                    </div>
+                    <div class="faq-answer">
+                        No. Once you purchase, you have reviewed all available previews, specifications, and reviews. If you change your mind after purchasing, no refund will be issued. This is why we provide extensive preview information.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <strong>What happens if I download the file then want a refund?</strong>
+                    </div>
+                    <div class="faq-answer">
+                        Once downloaded, files cannot be refunded under any circumstances. Downloads are final. Do not download the file if you're unsure about the design.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <strong>Can I return a file within 30 days instead of 7?</strong>
+                    </div>
+                    <div class="faq-answer">
+                        No. The refund window is strictly 7 days from purchase for most issues. Technical issues may be eligible for refund within 30 days if reported immediately, but downloaded files cannot be refunded.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <strong>How long do refunds take to appear in my bank account?</strong>
+                    </div>
+                    <div class="faq-answer">
+                        Refunds are processed within 5-7 business days, but your bank may take an additional 2-3 business days to show the credit. Total time is typically 10 days. International transfers may take longer.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <strong>What if I don't receive my refund within 10 days?</strong>
+                    </div>
+                    <div class="faq-answer">
+                        Contact your bank first to check if the refund is pending. If not found, contact us at support@samartify.com with your order number and refund confirmation email. We'll investigate.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <strong>Can I resell a design if I'm not happy with it?</strong>
+                    </div>
+                    <div class="faq-answer">
+                        No. Design files cannot be resold, redistributed, or shared. Attempting to do so violates our license agreement and may result in account termination.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <strong>What if there's a billing error and I was charged twice?</strong>
+                    </div>
+                    <div class="faq-answer">
+                        Contact us immediately at support@samartify.com. System errors are processed as emergency refunds and can be issued same-day with proof of duplicate charge.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <strong>Can I get a refund in another form (gift card, store credit)?</strong>
+                    </div>
+                    <div class="faq-answer">
+                        Yes. Instead of a cash refund, we may offer store credit (valid 12 months) for eligible claims. Request this when submitting your refund request.
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact Section -->
+            <div class="contact-section">
+                <h2>Have Questions About Our Refund Policy?</h2>
+                <p>Our support team is here to help. Contact us within 7 days of purchase for any refund-related questions.</p>
+                <a href="mailto:support@samartify.com" class="contact-link">📧 Email Support</a>
+                <a href="contact.html" class="contact-link">💬 Contact Form</a>
+                <a href="faq.html" class="contact-link">❓ FAQ Page</a>
+            </div>
+
+            <!-- Final Notice -->
+            <div class="warning-box" style="margin-top: 3rem; margin-bottom: 3rem;">
+                <strong>Final Notice on Refund Policy</strong>
+                <p>This refund policy is binding and applies to all purchases made through SamArtify. By completing a purchase, you acknowledge that you have read, understood, and agree to this policy. No exceptions will be made for downloaded files or accessed designs.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 SamArtify. All rights reserved. | <a href="refund-policy.html">Refund Policy</a> | <a href="policies.html">Policies & Terms</a> | <a href="faq.html">FAQ</a></p>
+    </footer>
+</body>
+</html>

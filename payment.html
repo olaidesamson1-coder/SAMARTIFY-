@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment — SamArtify</title>
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="https://checkout.paystack.com/js/paystack.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Lora:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root{
+            --cream: #F9FAFB;
+            --rust: #2E5EAA;
+            --deep-rust: #1E3F7A;
+            --charcoal: #1F2937;
+            --gold: #00C3B1;
+            --light-sage: #E0F7F5;
+            --white: #FFFFFF;
+        }
+        body.dark-mode {
+            --cream: #0d0d0d;
+            --charcoal: #e8e8e8;
+            --rust: #ff7a54;
+            --deep-rust: #ff9d7a;
+            --gold: #ffc266;
+            --light-sage: #1a3a2a;
+            --white: #1a1a1a;
+        }
+        *{box-sizing:border-box;margin:0;padding:0}
+        body{font-family:'Lora', serif;background:var(--cream);color:var(--charcoal);line-height:1.6}
+        .container{max-width:1100px;margin:0 auto;padding:2rem}
+        nav{background:rgba(250,247,240,0.95);padding:1rem 2rem;border-bottom:1px solid rgba(0,0,0,0.05);position:sticky;top:0;z-index:100}
+        .nav-content{display:flex;justify-content:space-between;align-items:center;max-width:1100px;margin:0 auto}
+        .logo{font-family:'Playfair Display', serif;font-size:1.6rem;color:var(--deep-rust);font-weight:800;text-decoration:none}
+        .nav-links{display:flex;gap:1.5rem;align-items:center;flex-wrap:wrap}
+        .nav-btn{background:none;border:none;color:var(--charcoal);font-weight:600;text-decoration:none;cursor:pointer;font-size:1rem}
+        .nav-btn:hover{color:var(--rust)}
+        .hero{padding:3rem 0;text-align:center}
+        .hero h1{font-family:'Playfair Display', serif;font-size:3.5rem;color:var(--deep-rust);margin-bottom:1rem}
+        .hero p{font-size:1.1rem;color:var(--charcoal);opacity:0.85;max-width:70%;margin:1rem auto}
+        .form-section{background:white;padding:2.5rem;border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,0.05);max-width:600px;margin:2rem auto}
+        .form-group{margin-bottom:1.5rem}
+        .form-group label{display:block;font-weight:600;margin-bottom:0.5rem;color:var(--deep-rust)}
+        .form-group input{width:100%;padding:0.75rem;border:2px solid var(--light-sage);border-radius:6px;font-family:'Lora', serif;font-size:1rem;transition:border-color 0.3s}
+        .form-group input:focus{outline:none;border-color:var(--rust)}
+        .btn-primary{background:var(--rust);color:white;padding:0.75rem 2rem;border:none;border-radius:6px;font-weight:600;cursor:pointer;font-size:1rem;transition:background 0.3s}
+        .btn-primary:hover{background:var(--deep-rust)}
+        .success-msg, .error-msg{display:none;padding:1rem;border-radius:6px;margin-bottom:1rem}
+        .success-msg{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+        .error-msg{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+        @media (max-width:768px){.hero h1{font-size:2.5rem}.nav-links{gap:0.75rem}.nav-btn{font-size:0.9rem}}
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-content">
+            <a href="homepage.html" class="logo">SamArtify</a>
+            <div class="nav-links">
+                <a href="homepage.html" class="nav-btn">Home</a>
+                <a href="product.html" class="nav-btn">Product</a>
+                <a href="categories.html" class="nav-btn">Categories</a>
+                <a href="about.html" class="nav-btn">About</a>
+                <a href="contact.html" class="nav-btn">Contact</a>
+                <a href="checkout.html" class="nav-btn" style="color:var(--rust);font-weight:700">Cart</a>
+            </div>
+        </div>
+    </nav>
+    <main class="container">
+        <section class="hero">
+            <h1>Make a Payment</h1>
+            <p>Enter your card details below or use Paystack for secure checkout. You can also toggle dark mode with the button at the bottom.</p>
+        </section>
+        <section class="form-section">
+            <div class="success-msg" id="successMsg">Payment successful! Thank you for your purchase.</div>
+            <div class="error-msg" id="errorMsg">Payment failed. Please try again.</div>
+            <form id="paymentForm">
+                <div class="form-group">
+                    <label for="cardNumber">Card Number</label>
+                    <input type="text" id="cardNumber" required>
+                </div>
+                <div class="form-group">
+                    <label for="expiry">Expiry (MM/YY)</label>
+                    <input type="text" id="expiry" required>
+                </div>
+                <div class="form-group">
+                    <label for="cvc">CVC</label>
+                    <input type="text" id="cvc" required>
+                </div>
+                <button type="submit" class="btn-primary">Pay ₦<span id="amount">0.00</span></button>
+            </form>
+        </section>
+    </main>
+    <button class="dark-mode-toggle" onclick="document.body.classList.toggle('dark-mode')">🌙</button>
+    <script>
+        document.getElementById('paymentForm').addEventListener('submit', function(e){
+            e.preventDefault();
+            // placeholder for integration (Stripe/Paystack)
+            const success = Math.random() > 0.2;
+            if(success){
+                document.getElementById('successMsg').style.display='block';
+                document.getElementById('errorMsg').style.display='none';
+            } else {
+                document.getElementById('errorMsg').style.display='block';
+                document.getElementById('successMsg').style.display='none';
+            }
+        });
+        // example amount from query or cart
+        document.getElementById('amount').textContent = new URLSearchParams(window.location.search).get('amt') || '0.00';
+    </script>
+</body>
+</html>

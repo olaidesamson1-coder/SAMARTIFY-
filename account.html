@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account — SamArtify</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Lora:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cream: #F9FAFB;
+            --rust: #2E5EAA;
+            --deep-rust: #1E3F7A;
+            --sage: #00C3B1;
+            --charcoal: #1F2937;
+            --gold: #00C3B1;
+            --light-sage: #E0F7F5;
+            --white: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lora', serif;
+            background: var(--cream);
+            color: var(--charcoal);
+            line-height: 1.6;
+        }
+
+        #root {
+            min-height: 100vh;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(250, 247, 240, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid rgba(184, 92, 56, 0.1);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--deep-rust);
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-btn {
+            color: var(--charcoal);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            text-decoration: none;
+            background: none;
+            border: none;
+        }
+
+        .nav-btn:hover {
+            color: var(--rust);
+        }
+
+        .logout-btn {
+            background: var(--rust);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: var(--deep-rust);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Page Title */
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--deep-rust);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        /* Layout */
+        .dashboard-layout {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            height: fit-content;
+            position: sticky;
+            top: 120px;
+        }
+
+        .user-profile {
+            text-align: center;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid var(--light-sage);
+            margin-bottom: 2rem;
+        }
+
+        .user-avatar {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--rust), var(--gold));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin: 0 auto 1rem;
+            color: white;
+        }
+
+        .user-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--deep-rust);
+            margin-bottom: 0.5rem;
+        }
+
+        .user-email {
+            font-size: 0.9rem;
+            color: #666;
+            word-break: break-all;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .menu-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .menu-link {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: var(--charcoal);
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+            font-size: 1rem;
+        }
+
+        .menu-link:hover {
+            background: var(--light-sage);
+            color: var(--rust);
+        }
+
+        .menu-link.active {
+            background: var(--rust);
+            color: white;
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        .main-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--deep-rust);
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 3px solid var(--gold);
+        }
+
+        /* Order Card */
+        .order-card {
+            background: var(--light-sage);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--rust);
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+
+        .order-id {
+            font-weight: 700;
+            color: var(--deep-rust);
+            font-size: 1.1rem;
+        }
+
+        .order-date {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .order-status {
+            display: inline-block;
+            padding: 0.4rem 0.8rem;
+            background: var(--rust);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .order-status.delivered {
+            background: #4caf50;
+        }
+
+        .order-items {
+            margin: 1rem 0;
+        }
+
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem;
+            background: white;
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+        }
+
+        .item-info {
+            flex: 1;
+        }
+
+        .item-title {
+            font-weight: 600;
+            color: var(--charcoal);
+            margin-bottom: 0.25rem;
+        }
+
+        .item-format {
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .item-price {
+            font-weight: 700;
+            color: var(--rust);
+            min-width: 80px;
+            text-align: right;
+        }
+
+        .order-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(184, 92, 56, 0.2);
+        }
+
+        .order-total {
+            font-weight: 700;
+            color: var(--deep-rust);
+            font-size: 1.1rem;
+        }
+
+        .download-status {
+            font-size: 0.9rem;
+            color: #666;
+            text-align: right;
+        }
+
+        .download-counter {
+            display: inline-block;
+            background: white;
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            font-weight: 600;
+            margin-top: 0.5rem;
+            color: var(--rust);
+        }
+
+        /* Download Button */
+        .btn-download {
+            background: var(--rust);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .btn-download:hover:not(:disabled) {
+            background: var(--deep-rust);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(184, 92, 56, 0.3);
+        }
+
+        .btn-download:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: #666;
+        }
+
+        .empty-state-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .empty-state h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--deep-rust);
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-state p {
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background: var(--rust);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: var(--deep-rust);
+        }
+
+        /* Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--light-sage);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            border: 2px solid var(--gold);
+        }
+
+        .stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--rust);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-weight: 600;
+            color: var(--deep-rust);
+            font-size: 0.95rem;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--deep-rust);
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--light-sage);
+        }
+
+        .modal-close {
+            float: right;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+            background: none;
+            border: none;
+            padding: 0;
+            width: auto;
+        }
+
+        .modal-close:hover {
+            color: var(--rust);
+        }
+
+        /* Info Box */
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ff9800;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .dashboard-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: static;
+                top: auto;
+            }
+
+            .page-title {
+                font-size: 1.8rem;
+            }
+
+            .section-title {
+                font-size: 1.4rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .order-header {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .order-footer {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .download-status {
+                text-align: left;
+            }
+        }
+
+        /* Footer */
+        footer {
+            background: var(--charcoal);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+    </style>
+    <style>
+        .social-icons { display:flex; gap:0.8rem; align-items:center; }
+        .social-icon { width:48px; height:48px; display:inline-flex; align-items:center; justify-content:center; border-radius:12px; color:#fff; transition: transform 0.15s ease, box-shadow 0.15s ease; box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+        .social-icon svg { width:22px; height:22px; fill:currentColor; }
+        .social-icon.facebook { background:#1877F2; }
+        .social-icon.instagram { background: radial-gradient(circle at 30% 30%, #fdf497 0%, #fd5949 30%, #d6249f 60%, #285AEB 100%); }
+        .social-icon.tiktok { background: linear-gradient(135deg,#69C9D0,#010101); }
+        .social-icon.youtube { background:#FF0000; }
+        .social-icon:hover { transform: translateY(-4px); box-shadow:0 8px 20px rgba(0,0,0,0.18); }
+        .footer-social { display:flex; gap:0.8rem; justify-content:center; align-items:center; margin-top:1rem; }
+        .footer-social .social-icon { width:56px; height:56px; border-radius:14px; }
+        @media (max-width: 768px) { .footer-social { justify-content:center; } }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        function Navigation({ userEmail, onLogout }) {
+            return (
+                <nav>
+                    <div className="nav-content">
+                        <a href="homepage.html" className="logo">SamArtify</a>
+                        <div className="nav-links">
+                            <a href="homepage.html" className="nav-btn">Home</a>
+                            <a href="categories.html" className="nav-btn">Categories</a>
+                            <a href="faq.html" className="nav-btn">Support</a>
+                            <span className="nav-btn" style={{cursor: 'default'}}>👤 {userEmail}</span>
+                            <button className="logout-btn" onClick={onLogout}>Logout</button>
+                        </div>
+
+                    </div>
+                </nav>
+            );
+        }
+
+        function AccountDashboard() {
+            const [activeTab, setActiveTab] = useState('orders');
+            const [user, setUser] = useState({
+                name: 'Sarah Johnson',
+                email: 'sarah.johnson@email.com',
+                joined: 'January 15, 2026'
+            });
+
+            // Sample orders with download tracking
+            const [orders, setOrders] = useState([
+                {
+                    id: 'ORD-001-20260115',
+                    date: 'January 15, 2026',
+                    status: 'Delivered',
+                    total: 24.99,
+                    items: [
+                        {
+                            id: 1,
+                            title: 'Classic Agbada Pattern',
+                            formats: ['EMB', 'DST', 'PES', 'JEF'],
+                            price: 24.99,
+                            downloadAttempts: 2,
+                            maxDownloads: 5
+                        }
+                    ]
+                },
+                {
+                    id: 'ORD-002-20260120',
+                    date: 'January 20, 2026',
+                    status: 'Delivered',
+                    total: 59.97,
+                    items: [
+                        {
+                            id: 2,
+                            title: 'Royal Agbada Gold',
+                            formats: ['EMB', 'DST', 'PES', 'JEF'],
+                            price: 34.99,
+                            downloadAttempts: 0,
+                            maxDownloads: 5
+                        },
+                        {
+                            id: 3,
+                            title: 'Pocket & Flap Design',
+                            formats: ['EMB', 'DST', 'PES'],
+                            price: 24.99,
+                            downloadAttempts: 1,
+                            maxDownloads: 5
+                        }
+                    ]
+                },
+                {
+                    id: 'ORD-003-20260201',
+                    date: 'February 1, 2026',
+                    status: 'Delivered',
+                    total: 39.97,
+                    items: [
+                        {
+                            id: 4,
+                            title: 'Agbada Heritage',
+                            formats: ['EMB', 'PES'],
+                            price: 19.99,
+                            downloadAttempts: 3,
+                            maxDownloads: 5
+                        },
+                        {
+                            id: 5,
+                            title: 'Modern Floral Embroidery',
+                            formats: ['DST', 'JEF', 'EXP'],
+                            price: 19.99,
+                            downloadAttempts: 0,
+                            maxDownloads: 5
+                        }
+                    ]
+                }
+            ]);
+
+            const [selectedOrder, setSelectedOrder] = useState(null);
+            const [downloadNotification, setDownloadNotification] = useState(null);
+
+            // Handle logout
+            const handleLogout = () => {
+                if (confirm('Are you sure you want to logout?')) {
+                    window.location.href = 'homepage.html';
+                }
+            };
+
+            // Handle download
+            const handleDownload = (item) => {
+                if (item.downloadAttempts >= item.maxDownloads) {
+                    alert(`Maximum download attempts (${item.maxDownloads}) reached for this file. Please contact support@samartify.com for additional downloads.`);
+                    return;
+                }
+
+                // Update download attempt
+                const updatedOrders = orders.map(order => ({
+                    ...order,
+                    items: order.items.map(i => 
+                        i.id === item.id 
+                            ? { ...i, downloadAttempts: i.downloadAttempts + 1 }
+                            : i
+                    )
+                }));
+                setOrders(updatedOrders);
+
+                // Show notification
+                setDownloadNotification(`Downloaded: ${item.title} (Attempt ${item.downloadAttempts + 1}/${item.maxDownloads})`);
+                setTimeout(() => setDownloadNotification(null), 3000);
+
+                // Simulate download
+                console.log(`Downloading ${item.title}...`);
+            };
+
+            // Calculate stats
+            const totalOrders = orders.length;
+            const totalSpent = orders.reduce((sum, order) => sum + order.total, 0);
+            const totalDesigns = orders.reduce((sum, order) => sum + order.items.length, 0);
+
+            return (
+                <>
+                    <Navigation userEmail={user.email} onLogout={handleLogout} />
+
+                    <div className="container">
+                        <h1 className="page-title">My Account & Downloads</h1>
+
+                        <div className="dashboard-layout">
+                            {/* Sidebar */}
+                            <aside className="sidebar">
+                                <div className="user-profile">
+                                    <div className="user-avatar">👤</div>
+                                    <div className="user-name">{user.name}</div>
+                                    <div className="user-email">{user.email}</div>
+                                    <div className="user-email" style={{fontSize: '0.85rem', marginTop: '0.5rem'}}>Member since {user.joined}</div>
+                                </div>
+
+                                <ul className="sidebar-menu">
+                                    <li className="menu-item">
+                                        <button 
+                                            className={`menu-link ${activeTab === 'orders' ? 'active' : ''}`}
+                                            onClick={() => setActiveTab('orders')}
+                                        >
+                                            📦 My Orders
+                                        </button>
+                                    </li>
+                                    <li className="menu-item">
+                                        <button 
+                                            className={`menu-link ${activeTab === 'downloads' ? 'active' : ''}`}
+                                            onClick={() => setActiveTab('downloads')}
+                                        >
+                                            ⬇️ Downloads
+                                        </button>
+                                    </li>
+                                    <li className="menu-item">
+                                        <button 
+                                            className={`menu-link ${activeTab === 'settings' ? 'active' : ''}`}
+                                            onClick={() => setActiveTab('settings')}
+                                        >
+                                            ⚙️ Settings
+                                        </button>
+                                    </li>
+                                    <li className="menu-item">
+                                        <a href="policies.html" className="menu-link">📋 Policies</a>
+                                    </li>
+                                    <li className="menu-item">
+                                        <a href="faq.html" className="menu-link">❓ FAQ</a>
+                                    </li>
+                                </ul>
+                            </aside>
+
+                            {/* Main Content */}
+                            <main className="main-content">
+                                {/* Orders Tab */}
+                                {activeTab === 'orders' && (
+                                    <>
+                                        <h2 className="section-title">📦 Order History</h2>
+
+                                        <div className="stats-grid">
+                                            <div className="stat-card">
+                                                <div className="stat-number">{totalOrders}</div>
+                                                <div className="stat-label">Total Orders</div>
+                                            </div>
+                                            <div className="stat-card">
+                                                <div className="stat-number">{totalDesigns}</div>
+                                                <div className="stat-label">Designs Purchased</div>
+                                            </div>
+                                            <div className="stat-card">
+                                                <div className="stat-number">${totalSpent.toFixed(2)}</div>
+                                                <div className="stat-label">Total Spent</div>
+                                            </div>
+                                        </div>
+
+                                        {orders.length > 0 ? (
+                                            <div>
+                                                {orders.map((order) => (
+                                                    <div key={order.id} className="order-card">
+                                                        <div className="order-header">
+                                                            <div>
+                                                                <div className="order-id">Order #{order.id}</div>
+                                                                <div className="order-date">{order.date}</div>
+                                                            </div>
+                                                            <div className={`order-status ${order.status.toLowerCase()}`}>
+                                                                {order.status}
+                                                            </div>
+                                                        </div>
+
+                                                        <div className="order-items">
+                                                            {order.items.map((item) => (
+                                                                <div key={item.id} className="order-item">
+                                                                    <div className="item-info">
+                                                                        <div className="item-title">{item.title}</div>
+                                                                        <div className="item-format">Formats: {item.formats.join(', ')}</div>
+                                                                    </div>
+                                                                    <div className="item-price">${item.price.toFixed(2)}</div>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+
+                                                        <div className="order-footer">
+                                                            <div className="order-total">Total: ${order.total.toFixed(2)}</div>
+                                                            <button 
+                                                                className="btn-download"
+                                                                onClick={() => setSelectedOrder(order)}
+                                                            >
+                                                                View & Download
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        ) : (
+                                            <div className="empty-state">
+                                                <div className="empty-state-icon">📭</div>
+                                                <h3>No Orders Yet</h3>
+                                                <p>You haven't made any purchases yet.</p>
+                                                <a href="homepage.html" className="btn-primary">Browse Designs</a>
+                                            </div>
+                                        )}
+                                    </>
+                                )}
+
+                                {/* Downloads Tab */}
+                                {activeTab === 'downloads' && (
+                                    <>
+                                        <h2 className="section-title">⬇️ My Downloads</h2>
+
+                                        <div className="info-box">
+                                            <strong>ℹ️ Download Limits:</strong> Each design can be downloaded up to 5 times. After reaching the limit, contact support@samartify.com for additional downloads.
+                                        </div>
+
+                                        {orders.length > 0 ? (
+                                            <div>
+                                                {orders.map((order) => (
+                                                    <div key={order.id}>
+                                                        {order.items.map((item) => (
+                                                            <div key={item.id} className="order-card" style={{marginBottom: '1rem'}}>
+                                                                <div className="order-header">
+                                                                    <div>
+                                                                        <div className="item-title">{item.title}</div>
+                                                                        <div className="item-format">From Order: {order.id}</div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div style={{margin: '1rem 0'}}>
+                                                                    <div className="download-counter">
+                                                                        Downloads: {item.downloadAttempts}/{item.maxDownloads}
+                                                                    </div>
+                                                                    <div style={{marginTop: '0.5rem', fontSize: '0.85rem', color: '#666'}}>
+                                                                        {item.downloadAttempts >= item.maxDownloads 
+                                                                            ? '⚠️ Download limit reached' 
+                                                                            : `${item.maxDownloads - item.downloadAttempts} download${item.maxDownloads - item.downloadAttempts !== 1 ? 's' : ''} remaining`
+                                                                        }
+                                                                    </div>
+                                                                </div>
+
+                                                                <div style={{margin: '1rem 0', fontSize: '0.9rem'}}>
+                                                                    <strong>Available Formats:</strong> {item.formats.join(', ')}
+                                                                </div>
+
+                                                                <button 
+                                                                    className="btn-download"
+                                                                    onClick={() => handleDownload(item)}
+                                                                    disabled={item.downloadAttempts >= item.maxDownloads}
+                                                                >
+                                                                    {item.downloadAttempts >= item.maxDownloads 
+                                                                        ? '❌ Download Limit Reached' 
+                                                                        : '⬇️ Download Now'
+                                                                    }
+                                                                </button>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        ) : (
+                                            <div className="empty-state">
+                                                <div className="empty-state-icon">📂</div>
+                                                <h3>No Downloads Available</h3>
+                                                <p>Purchase a design to start downloading files.</p>
+                                                <a href="categories.html" className="btn-primary">Browse Designs</a>
+                                            </div>
+                                        )}
+                                    </>
+                                )}
+
+                                {/* Settings Tab */}
+                                {activeTab === 'settings' && (
+                                    <>
+                                        <h2 className="section-title">⚙️ Account Settings</h2>
+
+                                        <div style={{marginBottom: '2rem'}}>
+                                            <h3 style={{fontFamily: "'Playfair Display', serif", color: 'var(--deep-rust)', marginBottom: '1rem'}}>Profile Information</h3>
+                                            <div style={{background: 'var(--light-sage)', padding: '1.5rem', borderRadius: '8px', marginBottom: '1.5rem'}}>
+                                                <p style={{marginBottom: '0.5rem'}}><strong>Name:</strong> {user.name}</p>
+                                                <p style={{marginBottom: '0.5rem'}}><strong>Email:</strong> {user.email}</p>
+                                                <p style={{marginBottom: '0.5rem'}}><strong>Member Since:</strong> {user.joined}</p>
+                                            </div>
+                                            <button className="btn-primary" style={{marginRight: '0.5rem'}}>Edit Profile</button>
+                                            <button className="btn-primary" style={{background: 'var(--sage)'}}>Change Password</button>
+                                        </div>
+
+                                        <div style={{marginBottom: '2rem'}}>
+                                            <h3 style={{fontFamily: "'Playfair Display', serif", color: 'var(--deep-rust)', marginBottom: '1rem'}}>Preferences</h3>
+                                            <div style={{background: 'var(--light-sage)', padding: '1.5rem', borderRadius: '8px'}}>
+                                                <label style={{display: 'block', marginBottom: '1rem'}}>
+                                                    <input type="checkbox" defaultChecked /> Receive order notifications
+                                                </label>
+                                                <label style={{display: 'block', marginBottom: '1rem'}}>
+                                                    <input type="checkbox" defaultChecked /> Receive promotional emails
+                                                </label>
+                                                <label style={{display: 'block', marginBottom: '1rem'}}>
+                                                    <input type="checkbox" /> Receive new design announcements
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div className="warning-box">
+                                            <strong>Danger Zone</strong>
+                                            <p style={{marginTop: '0.5rem'}}>Once you delete your account, there is no going back. Please be certain.</p>
+                                            <button style={{background: '#d32f2f', color: 'white', padding: '0.75rem 1.5rem', border: 'none', borderRadius: '6px', cursor: 'pointer', marginTop: '1rem'}}>Delete Account</button>
+                                        </div>
+                                    </>
+                                )}
+                            </main>
+                        </div>
+                    </div>
+
+                    {/* Download Notification */}
+                    {downloadNotification && (
+                        <div style={{
+                            position: 'fixed',
+                            bottom: '20px',
+                            right: '20px',
+                            background: 'var(--rust)',
+                            color: 'white',
+                            padding: '1rem 1.5rem',
+                            borderRadius: '6px',
+                            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)',
+                            zIndex: 1000,
+                            animation: 'slideIn 0.3s ease'
+                        }}>
+                            ✓ {downloadNotification}
+                        </div>
+                    )}
+
+                    {/* Order Details Modal */}
+                    {selectedOrder && (
+                        <div className="modal active" onClick={() => setSelectedOrder(null)}>
+                            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                                <div className="modal-header">
+                                    Order #{selectedOrder.id}
+                                    <button className="modal-close" onClick={() => setSelectedOrder(null)}>×</button>
+                                </div>
+
+                                <div style={{marginBottom: '1.5rem'}}>
+                                    <p><strong>Order Date:</strong> {selectedOrder.date}</p>
+                                    <p><strong>Status:</strong> <span className={`order-status ${selectedOrder.status.toLowerCase()}`}>{selectedOrder.status}</span></p>
+                                </div>
+
+                                <h3 style={{fontFamily: "'Playfair Display', serif", color: 'var(--deep-rust)', marginBottom: '1rem', marginTop: '1.5rem'}}>Items</h3>
+
+                                {selectedOrder.items.map((item) => (
+                                    <div key={item.id} style={{background: 'var(--light-sage)', padding: '1rem', borderRadius: '6px', marginBottom: '1rem'}}>
+                                        <div style={{marginBottom: '0.5rem'}}>
+                                            <strong>{item.title}</strong>
+                                        </div>
+                                        <div style={{fontSize: '0.9rem', color: '#666', marginBottom: '0.5rem'}}>
+                                            Formats: {item.formats.join(', ')}
+                                        </div>
+                                        <div style={{fontSize: '0.9rem', color: '#666', marginBottom: '1rem'}}>
+                                            Downloads: {item.downloadAttempts}/{item.maxDownloads}
+                                        </div>
+                                        <button 
+                                            className="btn-download"
+                                            onClick={() => {
+                                                handleDownload(item);
+                                                setSelectedOrder(null);
+                                            }}
+                                            disabled={item.downloadAttempts >= item.maxDownloads}
+                                        >
+                                            {item.downloadAttempts >= item.maxDownloads 
+                                                ? '❌ Download Limit Reached' 
+                                                : '⬇️ Download Now'
+                                            }
+                                        </button>
+                                    </div>
+                                ))}
+
+                                <div style={{marginTop: '1.5rem', textAlign: 'right'}}>
+                                    <strong>Order Total: ${selectedOrder.total.toFixed(2)}</strong>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    <footer>
+                        <p>&copy; 2026 SamArtify. All rights reserved. | <a href="policies.html">Policies</a> | <a href="faq.html">FAQ</a> | <a href="contact.html">Contact</a></p>
+                        <p>&copy; 2026 SamArtify. All rights reserved. | <a href="policies.html" style={{color: 'var(--gold)', textDecoration: 'none'}}>Policies</a> | <a href="refund-policy.html" style={{color: 'var(--gold)', textDecoration: 'none'}}>Refunds</a> | <a href="contact.html" style={{color: 'var(--gold)', textDecoration: 'none'}}>Contact</a></p>
+                        <div className="footer-social">
+                            <a className="social-icon facebook" href="https://facebook.com/samartify" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M22 12a10 10 0 10-11.5 9.9v-7h-2.2v-2.9h2.2V9.4c0-2.2 1.3-3.4 3.3-3.4.96 0 1.96.17 1.96.17v2.1h-1.06c-1.04 0-1.36.65-1.36 1.32v1.6h2.32l-.37 2.9h-1.95v7A10 10 0 0022 12z"/></svg>
+                            </a>
+                            <a className="social-icon instagram" href="https://instagram.com/samartify" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M7 2h10a5 5 0 015 5v10a5 5 0 01-5 5H7a5 5 0 01-5-5V7a5 5 0 015-5zm5 6.1A4.9 4.9 0 1016.9 13 4.9 4.9 0 0012 8.1zm5.2-2.3a1.2 1.2 0 11-1.2-1.2 1.2 1.2 0 011.2 1.2z"/></svg>
+                            </a>
+                            <a className="social-icon tiktok" href="https://www.tiktok.com/@samartify" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M17.5 6.5a4 4 0 01-4-4v9a5 5 0 11-5-5v2.1a2.9 2.9 0 102.9 2.9V6.5h4.1z"/></svg>
+                            </a>
+                            <a className="social-icon youtube" href="https://www.youtube.com/c/samartify" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M10 15l5.2-3L10 9v6zm12-3c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v0c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v0z"/></svg>
+                            </a>
+                        </div>
+                    </footer>
+
+                    <style>{`
+                        @keyframes slideIn {
+                            from {
+                                transform: translateX(400px);
+                                opacity: 0;
+                            }
+                            to {
+                                transform: translateX(0);
+                                opacity: 1;
+                            }
+                        }
+                    `}</style>
+                </>
+            );
+        }
+
+        // Render App
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<AccountDashboard />);
+    </script>
+</body>
+</html>

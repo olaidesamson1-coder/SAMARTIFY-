@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ & Support — SamArtify</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Lora:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cream: #F9FAFB;
+            --rust: #2E5EAA;
+            --deep-rust: #1E3F7A;
+            --sage: #00C3B1;
+            --charcoal: #1F2937;
+            --gold: #00C3B1;
+            --light-sage: #E0F7F5;
+            --white: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lora', serif;
+            background: var(--cream);
+            color: var(--charcoal);
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(250, 247, 240, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid rgba(184, 92, 56, 0.1);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--deep-rust);
+            text-decoration: none;
+            cursor: pointer;
+            letter-spacing: -1px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            color: var(--charcoal);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            font-family: 'Lora', serif;
+            text-decoration: none;
+        }
+
+        .nav-btn:hover {
+            color: var(--rust);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: var(--deep-rust);
+            margin-bottom: 1rem;
+            line-height: 1.1;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--charcoal);
+            opacity: 0.85;
+            max-width: 700px;
+            margin: 0 auto 3rem;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            padding: 2rem 0;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--deep-rust);
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 3px solid var(--gold);
+        }
+
+        .faq-item {
+            background: white;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            border-left: 4px solid var(--rust);
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            box-shadow: 0 8px 20px rgba(184, 92, 56, 0.12);
+            transform: translateX(4px);
+        }
+
+        .faq-question {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--deep-rust);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .faq-question:hover {
+            color: var(--rust);
+        }
+
+        .toggle-icon {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            display: none;
+            color: var(--charcoal);
+            font-size: 1rem;
+            line-height: 1.8;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--light-sage);
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        /* Category Sections */
+        .faq-category {
+            margin-bottom: 3rem;
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .category-icon {
+            font-size: 2rem;
+        }
+
+        .category-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--rust);
+        }
+
+        /* Support Box */
+        .support-box {
+            background: linear-gradient(135deg, var(--light-sage) 0%, rgba(184, 92, 56, 0.05) 100%);
+            padding: 2.5rem;
+            border-radius: 12px;
+            margin: 3rem 0;
+            border: 2px solid var(--sage);
+            text-align: center;
+        }
+
+        .support-box h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--deep-rust);
+            margin-bottom: 1rem;
+        }
+
+        .support-box p {
+            color: var(--charcoal);
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+        }
+
+        .support-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .support-link {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background: var(--rust);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .support-link:hover {
+            background: var(--deep-rust);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(184, 92, 56, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--charcoal);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .support-links {
+                flex-direction: column;
+            }
+
+            .support-link {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-content">
+            <a href="homepage.html" class="logo">SamArtify</a>
+            <div class="nav-links">
+                <a href="homepage.html" class="nav-btn">Home</a>
+                <a href="product.html" class="nav-btn">Product</a>
+                <a href="categories.html" class="nav-btn">Categories</a>
+                <a href="about.html" class="nav-btn">About</a>
+                <a href="faq.html" class="nav-btn">Support</a>
+                <a href="contact.html" class="nav-btn">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero container">
+            <h1>FAQ & Support</h1>
+            <p>Find answers to common questions about our digital embroidery designs, file delivery, machine compatibility, and site policies.</p>
+        </section>
+
+        <div class="container">
+            <!-- Digital Delivery Section -->
+            <section class="faq-category">
+                <div class="category-header">
+                    <span class="category-icon">📥</span>
+                    <h2 class="category-title">Digital Delivery</h2>
+                </div>
+
+                <div class="faq-item" onclick="toggleFAQ(event)">
+                    <div class="faq-question">
+                        How will I receive my design files after purchase?
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        After completing your purchase, you'll receive an instant download link via email. Your files are also available in your account dashboard under "My Downloads." You can access and download your files anytime within 30 days of purchase. No physical items will be shipped.
+                    </div>
+                </div>
+
+                <div class="faq-item" onclick="toggleFAQ(event)">
+                    <div class="faq-question">
+                        What file formats will I receive?
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        We provide embroidery design files in multiple formats including .PES, .JEF, .EXP, .VIP, and .ART. Each design package includes all compatible formats so you can use them with virtually any embroidery machine. High-resolution PDF preview files are also included.
+                    </div>
+                </div>
+
+                <div class="faq-item" onclick="toggleFAQ(event)">
+                    <div class="faq-question">
+                        How soon will I receive my download link?
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Download links are generated instantly upon successful payment. You'll receive an automated email within 5 minutes with your download link and access credentials. If you don't see it, please check your spam folder or contact our support team.
+                    </div>
+                </div>
+
+                <div class="faq-item" onclick="toggleFAQ(event)">
+                    <div class="faq-question">
+                        Can I re-download my files if I lose them?
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Yes! You can download your files anytime from your account dashboard. Simply log in, go to "My Downloads," and click the download button for any design you've purchased. Your files are stored securely for 30 days after purchase.
+                    </div>
+                </div>
+
+                <div class="faq-item" onclick="toggleFAQ(event)">
+                    <div class="faq-question">
+                        Is there a data size limit for files?
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Most design files are between 1-10MB. If you experience slow downloads, we recommend checking your internet connection or trying a different browser. Contact support if you experience issues larger than 5 minutes to download a complete package.
+                    </div>
+                </div>
+            </section>
+
+            <!-- File Usage Section -->
+            <section class="faq-category">
+                <div class="category-header">
+                    <span class="category-icon">⚖️</span>
+                    <h2 class="category-title">File Usage & Licensing</h2>
+                </div>
+
+                <div class="faq-item" onclick="toggleFAQ(event)">
+                    <div class="faq-question">
+                        What can I do with my downloaded design files?
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        You can use your purchased designs for personal embroidery projects, home decor, gifts, and small business ventures. You're licensed to create physical embroidered products (clothing, towels, bags, etc.) using these files for commercial purposes with proper attribution to SamArtify.
+                    </div>
+                </div>
+
+                <div class="faq-item" onclick="toggleFAQ(event)">
+                    <div class="faq-question">
+                        Can I modify or edit the design files?
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Yes, you can edit and customize the design files using compatible embroidery software. You may resize, recolor, and adapt the designs to suit your specific needs. However, you cannot redistribute, resell, or relicense the original design files.
+                    </div>
+                </div>
+
+                <div class="faq-item" onclick="toggleFAQ(event)">
+                    <div class="faq-question">
+                        Can I sell products made with these designs?
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Yes! Our commercial license allows you to create and sell physical products embroidered with our designs. This includes personalized items, custom orders, and small business production. You retain full rights to the finished embroidered products you create.
+                    </div>
+                </div>
+
+                <div class="faq-item" onclick="toggleFAQ(event)">
+                    <div class="faq-question">
+                        Can I share the design files with others?
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        No, design files cannot be shared, distributed, or transferred to others. Each purchase is licensed to a single user. If someone else wants to use the designs, they must purchase their own license from SamArtify.
+                    </div>
+                </div>
+
+                <div class="faq-item" onclick="toggleFAQ(event)">
+                    <div class="faq-question">
+                        What about copyright and attribution?
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        All designs are copyrighted by SamArtify or our contributing artists. While not required, we appreciate credit when possible (e.g., "Design by SamArtify" on product descriptions). Do not claim the design as your own original creation.
+                    </div>
+                </div>
+            </section>
+
+            <!-- Machine Compatibility Section -->
+            <section class="faq-category">
+                <div class="category-header">
+                    <span class="category-icon">🔧</span>
+                    <h2 class="category-title">Machine Compatibility</h2>
+                </div>
+
+                <div class="faq-item" onclick="toggleFAQ(event)">
+                    <div class="faq-question">
+                        Which embroidery machines are compatible with these files?
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Our designs work with virtually all modern embroidery machines. We provide files in formats compatible with machines from Brother, Janome, Bernina, Husqvarna, Singer, Pfaff, Babylock, and many others. Check your machine manual for supported file formats.
+                    </div>
+                </div>
+
+                <div class="faq-item" onclick="toggleFAQ(event)">
+                    <div class="faq-question">
+                        What if my machine doesn't recognize the file format?
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        We provide multiple file formats in each package. Try a different format included in your download. You can also use free conversion software like Inkscape or paid options like Wilcom Truesizer. If you're still having trouble, contact our support team with your machine model.
+                    </div>
+                </div>
+
+                <div class="faq-item" onclick="toggleFAQ(event)">
+                    <div class="faq-question">
+                        What's the maximum design size for different machines?
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Design sizes vary by machine hooping area. Our designs range from 2" x 2" to 6" x 6" to accommodate most machines. Check your machine's maximum embroidery field (e.g., 4" x 4", 5" x 7", 8" x 8"). All designs can be resized smaller, but enlarging may reduce stitch quality.
+                    </div>
+                </div>
+
+                <div class="faq-item" onclick="toggleFAQ(event)">
+                    <div class="faq-question">
+                        Can I resize the designs?
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Yes, you can resize designs using your embroidery machine software. We recommend reducing size rather than enlarging to maintain stitch quality. Our designs are optimized for 100% scale; resizing beyond 120% may affect quality. Most designs scale well down to 50%.
+                    </div>
+                </div>
+
+                <div class="faq-item" onclick="toggleFAQ(event)">
+                    <div class="faq-question">
+                        What embroidery software do I need?
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Most modern embroidery machines include free software (like Brother PE-Design, Janome Digitizer) that can load our files directly. For editing, you can use free options (Inkscape) or premium software (Wilcom, Bernina Software). Your machine's software is usually sufficient for just stitching our designs.
+                    </div>
+                </div>
+
+                <div class="faq-item" onclick="toggleFAQ(event)">
+                    <div class="faq-question">
+                        Are there stitch count requirements?
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Most machines support designs with 20,000+ stitches. Our designs typically range from 5,000-50,000 stitches. Check your machine manual for maximum stitch capacity. All file specifications are provided in the product details to help you decide before purchase.
+                    </div>
+                </div>
+            </section>
+
+            <!-- Site Rules & Policies Section -->
+            <section class="faq-category">
+                <div class="category-header">
+                    <span class="category-icon">📋</span>
+                    <h2 class="category-title">Site Rules & Policies</h2>
+                </div>
+
+                <div class="faq-item" onclick="toggleFAQ(event)">
+                    <div class="faq-question">
+                        What is SamArtify's return policy?
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Since digital files cannot be returned once downloaded, we offer a 7-day satisfaction guarantee. If you're unsatisfied with your purchase, contact us within 7 days with your order number. We'll review your case and provide a refund if the design didn't match the preview or had technical issues.
+                    </div>
+                </div>
+
+                <div class="faq-item" onclick="toggleFAQ(event)">
+                    <div class="faq-question">
+                        How is my payment information kept secure?
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        We use SSL encryption and PCI DSS compliant payment processors (Stripe and Paystack). Your credit card information is never stored on our servers. We only process payments and never have access to your complete card details. All transactions are secured and encrypted.
+                    </div>
+                </div>
+
+                <div class="faq-item" onclick="toggleFAQ(event)">
+                    <div class="faq-question">
+                        Is there an expiration date on my downloaded files?
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Downloaded files don't expire. You own the license permanently. However, download links from email expire after 30 days. If your link expires, log into your account and re-download from your library, or contact support for a new link.
+                    </div>
+                </div>
+
+                <div class="faq-item" onclick="toggleFAQ(event)">
+                    <div class="faq-question">
+                        What is your privacy policy?
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        We protect your personal data and never sell your information. Email addresses are only used for order confirmations and support. You can opt out of marketing emails anytime. See our full Privacy Policy for details on data collection, storage, and your rights.
+                    </div>
+                </div>
+
+                <div class="faq-item" onclick="toggleFAQ(event)">
+                    <div class="faq-question">
+                        What is prohibited on SamArtify?
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Prohibited activities include: reselling designs without modification, redistributing files, removing copyright marks, creating competing products claiming ownership, using designs for illegal purposes, or creating designs that infringe on third-party rights. Violations may result in account suspension and legal action.
+                    </div>
+                </div>
+
+                <div class="faq-item" onclick="toggleFAQ(event)">
+                    <div class="faq-question">
+                        Can I get a refund?
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Due to the digital nature of our products, refunds are limited to cases where you encounter technical issues or the design significantly differs from the preview. Request refunds within 7 days of purchase with a detailed explanation. Refunds are processed within 5-7 business days.
+                    </div>
+                </div>
+
+                <div class="faq-item" onclick="toggleFAQ(event)">
+                    <div class="faq-question">
+                        How do I report a problem or file issue?
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Contact our support team through the Contact page with your order number and a detailed description of the issue. Include screenshots if helpful. We respond to all support requests within 24 hours and will troubleshoot issues or provide replacements/refunds as needed.
+                    </div>
+                </div>
+
+                <div class="faq-item" onclick="toggleFAQ(event)">
+                    <div class="faq-question">
+                        Are there any fees for account creation?
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        No, creating a SamArtify account is completely free. There are no membership fees or hidden charges. You only pay when you purchase designs. Account creation helps you track orders, access downloads, and manage your library of purchased designs.
+                    </div>
+                </div>
+            </section>
+
+            <!-- Support Box -->
+            <section class="support-box">
+                <h3>Still need help?</h3>
+                <p>Can't find the answer you're looking for? Our support team is here to help! Reach out through any of these channels:</p>
+                <div class="support-links">
+                    <a href="contact.html" class="support-link">Contact Support</a>
+                    <a href="mailto:support@samartify.com" class="support-link">Email Us</a>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 SamArtify. All rights reserved. | Premium Embroidery Designs for Every Project</p>
+    </footer>
+
+    <script>
+        function toggleFAQ(event) {
+            const faqItem = event.currentTarget;
+            faqItem.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>

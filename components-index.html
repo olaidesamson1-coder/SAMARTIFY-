@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UI Components Library - SamArtify</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Lora:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cream: #F9FAFB;
+            --rust: #2E5EAA;
+            --deep-rust: #1E3F7A;
+            --sage: #00C3B1;
+            --charcoal: #1F2937;
+            --gold: #00C3B1;
+            --light-sage: #E0F7F5;
+            --white: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lora', serif;
+            background: var(--cream);
+            color: var(--charcoal);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--deep-rust), var(--rust));
+            color: var(--white);
+            padding: 4rem 2rem;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(44, 44, 44, 0.15);
+        }
+
+        .header__title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+            letter-spacing: -1px;
+        }
+
+        .header__subtitle {
+            font-size: 1.1rem;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        /* Section */
+        .section {
+            margin-bottom: 4rem;
+        }
+
+        .section__title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--deep-rust);
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--rust);
+        }
+
+        /* Component Grid */
+        .components-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .component-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 12px rgba(44, 44, 44, 0.08);
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--rust);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .component-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(44, 44, 44, 0.15);
+            border-left-color: var(--gold);
+        }
+
+        .component-card__icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .component-card__title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--charcoal);
+        }
+
+        .component-card__description {
+            font-size: 0.95rem;
+            color: #666;
+            margin-bottom: 1.5rem;
+            flex: 1;
+        }
+
+        .component-card__link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            background: var(--rust);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+
+        .component-card__link:hover {
+            background: var(--deep-rust);
+            transform: translateX(4px);
+        }
+
+        /* Category Groups */
+        .category-group {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(44, 44, 44, 0.05);
+        }
+
+        .category-group__title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            color: var(--sage);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .category-group__icon {
+            font-size: 1.8rem;
+        }
+
+        .component-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .component-item {
+            padding: 1rem;
+            background: var(--light-sage);
+            border-radius: 8px;
+            border-left: 4px solid var(--sage);
+            transition: all 0.2s ease;
+        }
+
+        .component-item:hover {
+            background: rgba(123, 158, 137, 0.15);
+            transform: translateX(4px);
+        }
+
+        .component-item__name {
+            font-weight: 600;
+            color: var(--charcoal);
+            margin-bottom: 0.3rem;
+        }
+
+        .component-item__note {
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        /* Features List */
+        .features {
+            background: linear-gradient(135deg, var(--light-sage), rgba(212, 165, 116, 0.1));
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .features__title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: var(--deep-rust);
+            margin-bottom: 1.5rem;
+        }
+
+        .features__list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .feature {
+            display: flex;
+            gap: 0.8rem;
+            align-items: flex-start;
+        }
+
+        .feature__icon {
+            font-size: 1.5rem;
+            margin-top: 0.2rem;
+            flex-shrink: 0;
+        }
+
+        .feature__text {
+            font-size: 0.95rem;
+            color: var(--charcoal);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--charcoal);
+            color: var(--white);
+            text-align: center;
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer__text {
+            margin-bottom: 1rem;
+        }
+
+        .footer__links {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            font-size: 0.9rem;
+        }
+
+        .footer__link {
+            color: var(--gold);
+            text-decoration: none;
+            transition: opacity 0.2s ease;
+        }
+
+        .footer__link:hover {
+            opacity: 0.8;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header__title {
+                font-size: 2rem;
+            }
+
+            .section__title {
+                font-size: 1.5rem;
+            }
+
+            .components-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+    <h1 class="header__title">UI Components Library</h1>
+    <p class="header__subtitle">Reusable components organized by category for SamArtify Platform</p>
+</header>
+
+<!-- MAIN CONTENT -->
+<div class="container">
+
+    <!-- QUICK START -->
+    <section class="section">
+        <h2 class="section__title">📚 Quick Start</h2>
+        <p style="font-size: 1.1rem; color: #666; margin-bottom: 1.5rem;">
+            This library contains pre-built, fully-styled UI components organized by category. Each component file 
+            includes HTML markup, CSS styling, and JavaScript functionality ready to integrate into your project.
+        </p>
+    </section>
+
+    <!-- COMPONENT FILES -->
+    <section class="section">
+        <h2 class="section__title">🎨 Component Files</h2>
+        <div class="components-grid">
+            <div class="component-card">
+                <div class="component-card__icon">🎴</div>
+                <h3 class="component-card__title">Cards</h3>
+                <p class="component-card__description">
+                    Product cards and category cards with hover effects, badges, and responsive layouts.
+                </p>
+                <a href="components-cards.html" class="component-card__link">View Components →</a>
+            </div>
+
+            <div class="component-card">
+                <div class="component-card__icon">✨</div>
+                <h3 class="component-card__title">Badges</h3>
+                <p class="component-card__description">
+                    Price badges, format badges (DST/PES/JEF), and review stars display components.
+                </p>
+                <a href="components-badges.html" class="component-card__link">View Components →</a>
+            </div>
+
+            <div class="component-card">
+                <div class="component-card__icon">🎛️</div>
+                <h3 class="component-card__title">Inputs</h3>
+                <p class="component-card__description">
+                    Filter checkboxes, add-to-cart buttons, and quantity selectors with full interactivity.
+                </p>
+                <a href="components-inputs.html" class="component-card__link">View Components →</a>
+            </div>
+
+            <div class="component-card">
+                <div class="component-card__icon">🪟</div>
+                <h3 class="component-card__title">Modals</h3>
+                <p class="component-card__description">
+                    Product preview modal and lightbox gallery with smooth animations and keyboard navigation.
+                </p>
+                <a href="components-modal.html" class="component-card__link">View Components →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="section">
+        <div class="features">
+            <h3 class="features__title">✓ Component Features</h3>
+            <div class="features__list">
+                <div class="feature">
+                    <div class="feature__icon">🎨</div>
+                    <div class="feature__text"><strong>Design System:</strong> Consistent color palette & typography</div>
+                </div>
+                <div class="feature">
+                    <div class="feature__icon">📱</div>
+                    <div class="feature__text"><strong>Responsive:</strong> Mobile-first, works on all devices</div>
+                </div>
+                <div class="feature">
+                    <div class="feature__icon">⚡</div>
+                    <div class="feature__text"><strong>Interactive:</strong> Smooth animations & transitions</div>
+                </div>
+                <div class="feature">
+                    <div class="feature__icon">♿</div>
+                    <div class="feature__text"><strong>Accessible:</strong> Semantic HTML & keyboard navigation</div>
+                </div>
+                <div class="feature">
+                    <div class="feature__icon">🔧</div>
+                    <div class="feature__text"><strong>Customizable:</strong> CSS variables for easy theming</div>
+                </div>
+                <div class="feature">
+                    <div class="feature__icon">📋</div>
+                    <div class="feature__text"><strong>Ready to Use:</strong> Copy & paste into your project</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- COMPONENT CATEGORIES -->
+    <section class="section">
+        <h2 class="section__title">📦 All Components</h2>
+
+        <!-- Cards -->
+        <div class="category-group">
+            <h3 class="category-group__title">
+                <span class="category-group__icon">🎴</span>
+                Card Components
+            </h3>
+            <div class="component-list">
+                <div class="component-item">
+                    <div class="component-item__name">Product Card</div>
+                    <div class="component-item__note">Displays product with image, price, formats, and rating</div>
+                </div>
+                <div class="component-item">
+                    <div class="component-item__name">Category Card</div>
+                    <div class="component-item__note">Category showcase with background image and overlay</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Badges -->
+        <div class="category-group">
+            <h3 class="category-group__title">
+                <span class="category-group__icon">✨</span>
+                Badge Components
+            </h3>
+            <div class="component-list">
+                <div class="component-item">
+                    <div class="component-item__name">Price Badge</div>
+                    <div class="component-item__note">Multiple variants: default, sale, secondary, accent, outline</div>
+                </div>
+                <div class="component-item">
+                    <div class="component-item__name">Format Badge</div>
+                    <div class="component-item__note">Circular badges for DST, PES, JEF formats with active state</div>
+                </div>
+                <div class="component-item">
+                    <div class="component-item__name">Review Stars</div>
+                    <div class="component-item__note">Star ratings display with review count and interactive mode</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Inputs -->
+        <div class="category-group">
+            <h3 class="category-group__title">
+                <span class="category-group__icon">🎛️</span>
+                Input Components
+            </h3>
+            <div class="component-list">
+                <div class="component-item">
+                    <div class="component-item__name">Filter Checkbox</div>
+                    <div class="component-item__note">Styled checkboxes with labels and item counts</div>
+                </div>
+                <div class="component-item">
+                    <div class="component-item__name">Add-to-Cart Button</div>
+                    <div class="component-item__note">Multiple sizes and states: default, secondary, outline, loading</div>
+                </div>
+                <div class="component-item">
+                    <div class="component-item__name">Quantity Selector</div>
+                    <div class="component-item__note">Plus/minus controls with integrated add-to-cart button</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modals -->
+        <div class="category-group">
+            <h3 class="category-group__title">
+                <span class="category-group__icon">🪟</span>
+                Modal Components
+            </h3>
+            <div class="component-list">
+                <div class="component-item">
+                    <div class="component-item__name">Product Preview Modal</div>
+                    <div class="component-item__note">Full product details with image, formats, and action buttons</div>
+                </div>
+                <div class="component-item">
+                    <div class="component-item__name">Lightbox / Gallery Modal</div>
+                    <div class="component-item__note">Full-screen image viewer with navigation and keyboard support</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DESIGN SYSTEM -->
+    <section class="section">
+        <h2 class="section__title">🎨 Design System</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
+            <div style="background: var(--cream); padding: 2rem; border-radius: 8px; text-align: center;">
+                <div style="font-weight: 600; color: var(--charcoal); margin-bottom: 0.5rem;">Primary Cream</div>
+                <div style="font-size: 0.9rem; color: #666;">#FAF7F0</div>
+            </div>
+            <div style="background: var(--rust); padding: 2rem; border-radius: 8px; text-align: center; color: white;">
+                <div style="font-weight: 600; margin-bottom: 0.5rem;">Rust (Primary)</div>
+                <div style="font-size: 0.9rem; opacity: 0.9;">#B85C38</div>
+            </div>
+            <div style="background: var(--deep-rust); padding: 2rem; border-radius: 8px; text-align: center; color: white;">
+                <div style="font-weight: 600; margin-bottom: 0.5rem;">Deep Rust</div>
+                <div style="font-size: 0.9rem; opacity: 0.9;">#8B3A1F</div>
+            </div>
+            <div style="background: var(--sage); padding: 2rem; border-radius: 8px; text-align: center; color: white;">
+                <div style="font-weight: 600; margin-bottom: 0.5rem;">Sage (Secondary)</div>
+                <div style="font-size: 0.9rem; opacity: 0.9;">#7B9E89</div>
+            </div>
+            <div style="background: var(--gold); padding: 2rem; border-radius: 8px; text-align: center;">
+                <div style="font-weight: 600; color: var(--charcoal); margin-bottom: 0.5rem;">Gold (Accent)</div>
+                <div style="font-size: 0.9rem; color: #666;">#D4A574</div>
+            </div>
+            <div style="background: var(--light-sage); padding: 2rem; border-radius: 8px; text-align: center;">
+                <div style="font-weight: 600; color: var(--charcoal); margin-bottom: 0.5rem;">Light Sage</div>
+                <div style="font-size: 0.9rem; color: #666;">#E8F0EC</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FONTS -->
+    <section class="section">
+        <h2 class="section__title">🔤 Typography</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+            <div style="background: var(--white); padding: 2rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(44, 44, 44, 0.05);">
+                <div style="font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem;">Playfair Display</div>
+                <div style="font-size: 0.9rem; color: #666; margin-bottom: 1rem;">Headings, titles, and bold statements</div>
+                <div style="display: flex; gap: 1rem; font-size: 0.85rem;">
+                    <span>Regular</span>
+                    <span style="font-weight: 600;">Semi-bold</span>
+                    <span style="font-weight: 700;">Bold</span>
+                    <span style="font-weight: 900;">Black</span>
+                </div>
+            </div>
+            <div style="background: var(--white); padding: 2rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(44, 44, 44, 0.05);">
+                <div style="font-family: 'Lora', serif; font-size: 1.3rem; margin-bottom: 0.5rem;">Lora</div>
+                <div style="font-size: 0.9rem; color: #666; margin-bottom: 1rem;">Body text, paragraphs, and descriptions</div>
+                <div style="display: flex; gap: 1rem; font-size: 0.85rem;">
+                    <span>Regular</span>
+                    <span style="font-weight: 500;">Medium</span>
+                    <span style="font-weight: 600;">Semi-bold</span>
+                    <span style="font-weight: 700;">Bold</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <p class="footer__text">📦 UI Components Library v1.0</p>
+    <div class="footer__links">
+        <a href="components-cards.html" class="footer__link">Cards</a>
+        <span>•</span>
+        <a href="components-badges.html" class="footer__link">Badges</a>
+        <span>•</span>
+        <a href="components-inputs.html" class="footer__link">Inputs</a>
+        <span>•</span>
+        <a href="components-modal.html" class="footer__link">Modals</a>
+    </div>
+    <p class="footer__text" style="margin-top: 1.5rem; font-size: 0.85rem; opacity: 0.8;">
+        Built for SamArtify Platform | Premium Design Components
+    </p>
+</footer>
+
+</body>
+</html>

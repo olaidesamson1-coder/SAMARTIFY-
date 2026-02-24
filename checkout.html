@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SamArtify - Checkout</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="https://checkout.paystack.com/js/paystack.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Lora:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cream: #F9FAFB;
+            --rust: #2E5EAA;
+            --deep-rust: #1E3F7A;
+            --sage: #00C3B1;
+            --charcoal: #1F2937;
+            --gold: #00C3B1;
+            --light-sage: #E0F7F5;
+            --white: #FFFFFF;
+        }
+
+        body.dark-mode {
+            --cream: #0d0d0d;
+            --charcoal: #e8e8e8;
+            --light-sage: #1a3a2a;
+            --white: #1a1a1a;
+            --rust: #ff7a54;
+            --deep-rust: #ff9d7a;
+            --gold: #ffc266;
+            --sage: #7dd3a8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lora', serif;
+            background: var(--cream);
+            color: var(--charcoal);
+            line-height: 1.6;
+        }
+
+        #root {
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(123, 158, 137, 0.03) 35px, rgba(123, 158, 137, 0.03) 70px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(250, 247, 240, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid rgba(184, 92, 56, 0.1);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--deep-rust);
+            cursor: pointer;
+            letter-spacing: -1px;
+            position: relative;
+            text-decoration: none;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 50%;
+            height: 2px;
+            background: var(--gold);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            color: var(--charcoal);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            font-family: 'Lora', serif;
+            text-decoration: none;
+        }
+
+        .nav-btn:hover {
+            color: var(--rust);
+        }
+
+        .dark-mode-toggle {
+            background: none;
+            border: 2px solid var(--charcoal);
+            color: var(--charcoal);
+            width: 50px;
+            height: 28px;
+            border-radius: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 2px;
+            transition: all 0.3s ease;
+            font-size: 0.8rem;
+        }
+
+        .dark-mode-toggle:hover {
+            border-color: var(--rust);
+            box-shadow: 0 2px 8px rgba(184, 92, 56, 0.2);
+        }
+
+        body.dark-mode .dark-mode-toggle {
+            justify-content: flex-end;
+            border-color: var(--gold);
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Lora', serif;
+            font-size: 1rem;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--rust);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--deep-rust);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(184, 92, 56, 0.3);
+        }
+
+        /* Checkout Layout */
+        .checkout-container {
+            padding: 3rem 0;
+        }
+
+        .checkout-grid {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        .checkout-form {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .order-summary {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--deep-rust);
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--light-sage);
+            padding-bottom: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 700;
+            color: var(--charcoal);
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.9rem;
+            border: 2px solid var(--light-sage);
+            border-radius: 6px;
+            font-family: 'Lora', serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--rust);
+            box-shadow: 0 0 0 3px rgba(184, 92, 56, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        /* Tabs */
+        .checkout-tabs {
+            display: flex;
+            gap: 0;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--light-sage);
+        }
+
+        .tab-button {
+            padding: 1rem 2rem;
+            background: none;
+            border: none;
+            color: var(--charcoal);
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+            font-family: 'Lora', serif;
+            font-size: 1rem;
+        }
+
+        .tab-button:hover {
+            color: var(--rust);
+        }
+
+        .tab-button.active {
+            color: var(--rust);
+            border-bottom-color: var(--rust);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Payment Methods */
+        .payment-methods {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .payment-option {
+            padding: 1.5rem;
+            border: 2px solid var(--light-sage);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .payment-option:hover {
+            border-color: var(--rust);
+            background: rgba(184, 92, 56, 0.05);
+        }
+
+        .payment-option.selected {
+            border-color: var(--rust);
+            background: rgba(184, 92, 56, 0.1);
+        }
+
+        .payment-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .payment-name {
+            font-weight: 700;
+            color: var(--charcoal);
+        }
+
+        .payment-region {
+            font-size: 0.85rem;
+            color: var(--charcoal);
+            opacity: 0.7;
+        }
+
+        /* Order Summary */
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--light-sage);
+        }
+
+        .summary-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-title {
+            font-weight: 500;
+        }
+
+        .item-price {
+            font-weight: 700;
+            color: var(--rust);
+        }
+
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid var(--rust);
+            font-size: 1.3rem;
+        }
+
+        .total-label {
+            font-weight: 700;
+            color: var(--charcoal);
+        }
+
+        .total-amount {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--rust);
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 1.2rem;
+            background: var(--rust);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 2rem;
+        }
+
+        .submit-button:hover {
+            background: var(--deep-rust);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(184, 92, 56, 0.3);
+        }
+
+        .submit-button:disabled {
+            background: var(--sage);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .stripe-element {
+            padding: 1rem;
+            border: 2px solid var(--light-sage);
+            border-radius: 6px;
+        }
+
+        .notification {
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .notification.success {
+            background: rgba(123, 158, 137, 0.2);
+            color: var(--sage);
+            border-left: 4px solid var(--sage);
+        }
+
+        .notification.error {
+            background: rgba(184, 92, 56, 0.2);
+            color: var(--rust);
+            border-left: 4px solid var(--rust);
+        }
+
+        .notification.info {
+            background: rgba(212, 165, 116, 0.2);
+            color: var(--gold);
+            border-left: 4px solid var(--gold);
+        }
+
+        footer {
+            background: var(--charcoal);
+            color: white;
+            padding: 3rem 0 1.5rem;
+            margin-top: 5rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @media (max-width: 968px) {
+            .checkout-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .order-summary {
+                position: static;
+                top: auto;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .payment-methods {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <style>
+        .social-icons { display:flex; gap:0.8rem; align-items:center; }
+        .social-icon { width:48px; height:48px; display:inline-flex; align-items:center; justify-content:center; border-radius:12px; color:#fff; transition: transform 0.15s ease, box-shadow 0.15s ease; box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+        .social-icon svg { width:22px; height:22px; fill:currentColor; }
+        .social-icon.facebook { background:#1877F2; }
+        .social-icon.instagram { background: radial-gradient(circle at 30% 30%, #fdf497 0%, #fd5949 30%, #d6249f 60%, #285AEB 100%); }
+        .social-icon.tiktok { background: linear-gradient(135deg,#69C9D0,#010101); }
+        .social-icon.youtube { background:#FF0000; }
+        .social-icon:hover { transform: translateY(-4px); box-shadow:0 8px 20px rgba(0,0,0,0.18); }
+        .footer-social { display:flex; gap:0.8rem; justify-content:center; align-items:center; margin-top:1rem; }
+        .footer-social .social-icon { width:56px; height:56px; border-radius:14px; }
+        @media (max-width: 768px) { .footer-social { justify-content:center; } }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        function Navigation() {
+            return (
+                <nav>
+                    <div className="nav-content">
+                        <a href="homepage.html" className="logo">SamArtify</a>
+                        <div className="nav-links">
+                            <a href="homepage.html" className="nav-btn">Home</a>
+                            <a href="categories.html" className="nav-btn">Categories</a>
+                            <a href="about.html" className="nav-btn">About</a>
+                            <a href="contact.html" className="nav-btn">Contact</a>
+                        </div>
+
+                    </div>
+                </nav>
+            );
+        }
+
+        function CheckoutPage() {
+            const [activeTab, setActiveTab] = useState('guest');
+            const [selectedPayment, setSelectedPayment] = useState('stripe');
+            const [loading, setLoading] = useState(false);
+            const [notification, setNotification] = useState(null);
+            const [formData, setFormData] = useState({
+                firstName: '',
+                lastName: '',
+                email: '',
+                phone: '',
+                address: '',
+                city: '',
+                state: '',
+                zipCode: '',
+                country: 'Nigeria'
+            });
+
+            const [cartItems] = useState([
+                { id: 1, name: 'Classic Agbada Pattern', price: 24.99, quantity: 1, formats: ['EMB', 'DST', 'PES', 'JEF'] },
+                { id: 2, name: 'Royal Agbada Gold', price: 34.99, quantity: 1, formats: ['EMB', 'DST', 'PES', 'JEF'] }
+            ]);
+
+            const handleInputChange = (e) => {
+                const { name, value } = e.target;
+                setFormData(prev => ({
+                    ...prev,
+                    [name]: value
+                }));
+            };
+
+            const calculateSubtotal = () => {
+                return cartItems.reduce((sum, item) => sum + item.price, 0);
+            };
+
+            const calculateTotal = () => {
+                const subtotal = calculateSubtotal();
+                const tax = subtotal * 0.1;
+                return subtotal + tax;
+            };
+
+            const handlePayWithStripe = async () => {
+                setLoading(true);
+                try {
+                    // Stripe integration placeholder
+                    setNotification({ type: 'success', message: 'Processing Stripe payment...' });
+                    setTimeout(() => {
+                        setNotification({ type: 'success', message: '✓ Payment successful! Order #12345 confirmed.' });
+                        setLoading(false);
+                    }, 2000);
+                } catch (error) {
+                    setNotification({ type: 'error', message: 'Payment failed. Please try again.' });
+                    setLoading(false);
+                }
+            };
+
+            const handlePayWithPaystack = async () => {
+                setLoading(true);
+                try {
+                    // Paystack integration
+                    const handler = PaystackPop.setup({
+                        key: 'YOUR_PAYSTACK_PUBLIC_KEY',
+                        email: formData.email,
+                        amount: calculateTotal() * 100,
+                        ref: '' + Math.floor(Math.random() * 1000000000),
+                        onClose: function() {
+                            setNotification({ type: 'info', message: 'Payment window closed.' });
+                            setLoading(false);
+                        },
+                        onSuccess: function(response) {
+                            setNotification({ type: 'success', message: `✓ Payment successful! Order #${response.reference} confirmed.` });
+                            setLoading(false);
+                        }
+                    });
+                    handler.openIframe();
+                } catch (error) {
+                    setNotification({ type: 'error', message: 'Paystack configuration error.' });
+                    setLoading(false);
+                }
+            };
+
+            const handleSubmitOrder = async (e) => {
+                e.preventDefault();
+                
+                if (!formData.email || !formData.firstName || !formData.lastName || !formData.address) {
+                    setNotification({ type: 'error', message: 'Please fill in all required fields.' });
+                    return;
+                }
+
+                if (selectedPayment === 'stripe') {
+                    handlePayWithStripe();
+                } else if (selectedPayment === 'paystack') {
+                    handlePayWithPaystack();
+                }
+            };
+
+            const subtotal = calculateSubtotal();
+            const tax = subtotal * 0.1;
+            const total = calculateTotal();
+
+            return (
+                <>
+                    <Navigation />
+
+                    <div className="checkout-container">
+                        <div className="container">
+                            <h1 style={{fontSize: '2.5rem', marginBottom: '3rem', color: 'var(--deep-rust)'}}>Secure Checkout</h1>
+
+                            {notification && (
+                                <div className={`notification ${notification.type}`}>
+                                    {notification.message}
+                                </div>
+                            )}
+
+                            <div className="checkout-grid">
+                                {/* Checkout Form */}
+                                <div className="checkout-form">
+                                    <div className="checkout-tabs">
+                                        <button 
+                                            className={`tab-button ${activeTab === 'guest' ? 'active' : ''}`}
+                                            onClick={() => setActiveTab('guest')}
+                                        >
+                                            Guest Checkout
+                                        </button>
+                                        <button 
+                                            className={`tab-button ${activeTab === 'account' ? 'active' : ''}`}
+                                            onClick={() => setActiveTab('account')}
+                                        >
+                                            Sign In
+                                        </button>
+                                    </div>
+
+                                    <form onSubmit={handleSubmitOrder}>
+                                        <div className="tab-content active">
+                                            <h2 className="section-title">Billing Information</h2>
+
+                                            <div className="form-group">
+                                                <label className="form-label">Email Address *</label>
+                                                <input
+                                                    type="email"
+                                                    name="email"
+                                                    className="form-input"
+                                                    value={formData.email}
+                                                    onChange={handleInputChange}
+                                                    required
+                                                    placeholder="your@email.com"
+                                                />
+                                            </div>
+
+                                            <div className="form-row">
+                                                <div className="form-group">
+                                                    <label className="form-label">First Name *</label>
+                                                    <input
+                                                        type="text"
+                                                        name="firstName"
+                                                        className="form-input"
+                                                        value={formData.firstName}
+                                                        onChange={handleInputChange}
+                                                        required
+                                                        placeholder="John"
+                                                    />
+                                                </div>
+                                                <div className="form-group">
+                                                    <label className="form-label">Last Name *</label>
+                                                    <input
+                                                        type="text"
+                                                        name="lastName"
+                                                        className="form-input"
+                                                        value={formData.lastName}
+                                                        onChange={handleInputChange}
+                                                        required
+                                                        placeholder="Doe"
+                                                    />
+                                                </div>
+                                            </div>
+
+                                            <div className="form-group">
+                                                <label className="form-label">Phone Number *</label>
+                                                <input
+                                                    type="tel"
+                                                    name="phone"
+                                                    className="form-input"
+                                                    value={formData.phone}
+                                                    onChange={handleInputChange}
+                                                    required
+                                                    placeholder="+234 801 234 5678"
+                                                />
+                                            </div>
+
+                                            <h2 className="section-title">Shipping Address</h2>
+
+                                            <div className="form-group">
+                                                <label className="form-label">Street Address *</label>
+                                                <input
+                                                    type="text"
+                                                    name="address"
+                                                    className="form-input"
+                                                    value={formData.address}
+                                                    onChange={handleInputChange}
+                                                    required
+                                                    placeholder="123 Main Street"
+                                                />
+                                            </div>
+
+                                            <div className="form-row">
+                                                <div className="form-group">
+                                                    <label className="form-label">City *</label>
+                                                    <input
+                                                        type="text"
+                                                        name="city"
+                                                        className="form-input"
+                                                        value={formData.city}
+                                                        onChange={handleInputChange}
+                                                        required
+                                                        placeholder="Lagos"
+                                                    />
+                                                </div>
+                                                <div className="form-group">
+                                                    <label className="form-label">State/Province</label>
+                                                    <input
+                                                        type="text"
+                                                        name="state"
+                                                        className="form-input"
+                                                        value={formData.state}
+                                                        onChange={handleInputChange}
+                                                        placeholder="Lagos State"
+                                                    />
+                                                </div>
+                                            </div>
+
+                                            <div className="form-row">
+                                                <div className="form-group">
+                                                    <label className="form-label">ZIP/Postal Code</label>
+                                                    <input
+                                                        type="text"
+                                                        name="zipCode"
+                                                        className="form-input"
+                                                        value={formData.zipCode}
+                                                        onChange={handleInputChange}
+                                                        placeholder="100001"
+                                                    />
+                                                </div>
+                                                <div className="form-group">
+                                                    <label className="form-label">Country *</label>
+                                                    <select 
+                                                        name="country"
+                                                        className="form-input"
+                                                        value={formData.country}
+                                                        onChange={handleInputChange}
+                                                    >
+                                                        <option value="NG">Nigeria</option>
+                                                        <option value="US">United States</option>
+                                                        <option value="UK">United Kingdom</option>
+                                                        <option value="CA">Canada</option>
+                                                        <option value="AU">Australia</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <h2 className="section-title">Payment Method</h2>
+
+                                            <div className="payment-methods">
+                                                <div 
+                                                    className={`payment-option ${selectedPayment === 'stripe' ? 'selected' : ''}`}
+                                                    onClick={() => setSelectedPayment('stripe')}
+                                                >
+                                                    <div className="payment-icon">💳</div>
+                                                    <div className="payment-name">Stripe</div>
+                                                    <div className="payment-region">Global</div>
+                                                </div>
+
+                                                <div 
+                                                    className={`payment-option ${selectedPayment === 'paystack' ? 'selected' : ''}`}
+                                                    onClick={() => setSelectedPayment('paystack')}
+                                                >
+                                                    <div className="payment-icon">🇳🇬</div>
+                                                    <div className="payment-name">Paystack</div>
+                                                    <div className="payment-region">Nigeria</div>
+                                                </div>
+                                            </div>
+
+                                            {selectedPayment === 'stripe' && (
+                                                <div className="form-group">
+                                                    <label className="form-label">Card Details</label>
+                                                    <div className="stripe-element" id="card-element">
+                                                        {/* Stripe card element will be mounted here */}
+                                                        <input type="text" className="form-input" placeholder="Card details will load here" disabled />
+                                                    </div>
+                                                </div>
+                                            )}
+
+                                            {selectedPayment === 'paystack' && (
+                                                <div style={{padding: '1rem', background: 'rgba(123, 158, 137, 0.1)', borderRadius: '6px', marginBottom: '1.5rem'}}>
+                                                    <p style={{color: 'var(--sage)'}}>
+                                                        💵 Click "Complete Order" to proceed to secure Paystack payment gateway
+                                                    </p>
+                                                </div>
+                                            )}
+
+                                            <button 
+                                                type="submit" 
+                                                className="submit-button"
+                                                disabled={loading}
+                                            >
+                                                {loading ? 'Processing...' : '✓ Complete Order'}
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                {/* Order Summary */}
+                                <div className="order-summary">
+                                    <h2 className="section-title">Order Summary</h2>
+
+                                    {cartItems.map(item => (
+                                        <div key={item.id} className="summary-item">
+                                            <span className="item-title">{item.title}</span>
+                                            <span className="item-price">${item.price.toFixed(2)}</span>
+                                        </div>
+                                    ))}
+
+                                    <div className="summary-item">
+                                        <span className="item-title">Subtotal</span>
+                                        <span className="item-price">${subtotal.toFixed(2)}</span>
+                                    </div>
+
+                                    <div className="summary-item">
+                                        <span className="item-title">Tax (10%)</span>
+                                        <span className="item-price">${tax.toFixed(2)}</span>
+                                    </div>
+
+                                    <div className="summary-total">
+                                        <span className="total-label">Total</span>
+                                        <span className="total-amount">${total.toFixed(2)}</span>
+                                    </div>
+
+                                    <div style={{background: 'rgba(123, 158, 137, 0.1)', padding: '1rem', borderRadius: '6px', marginTop: '1.5rem', textAlign: 'center'}}>
+                                        <p style={{fontSize: '0.9rem', color: 'var(--sage)', fontWeight: '600'}}>
+                                            🔒 Secure Payment Protected
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <footer>
+                        <div className="container">
+                            <div className="footer-content">
+                                <div className="footer-section">
+                                    <h3>🧵 SamArtify</h3>
+                                    <p style={{color: 'rgba(255, 255, 255, 0.7)', marginBottom: '1rem'}}>
+                                        Premium embroidery designs for creative makers.
+                                    </p>
+                                </div>
+                                <div className="footer-section">
+                                    <h3>Navigation</h3>
+                                    <ul style={{listStyle: 'none', color: 'rgba(255, 255, 255, 0.7)'}}>
+                                        <li style={{marginBottom: '0.5rem'}}><a href="homepage.html" style={{color: 'inherit', textDecoration: 'none'}}>Home</a></li>
+                                        <li style={{marginBottom: '0.5rem'}}><a href="categories.html" style={{color: 'inherit', textDecoration: 'none'}}>Categories</a></li>
+                                        <li style={{marginBottom: '0.5rem'}}><a href="blog.html" style={{color: 'inherit', textDecoration: 'none'}}>Blog</a></li>
+                                        <li style={{marginBottom: '0.5rem'}}><a href="account.html" style={{color: 'inherit', textDecoration: 'none'}}>Account</a></li>
+                                    </ul>
+                                </div>
+                                <div className="footer-section">
+                                    <h3>Support</h3>
+                                    <ul style={{listStyle: 'none', color: 'rgba(255, 255, 255, 0.7)'}}>
+                                        <li style={{marginBottom: '0.5rem'}}><a href="faq.html" style={{color: 'inherit', textDecoration: 'none'}}>FAQ</a></li>
+                                        <li style={{marginBottom: '0.5rem'}}><a href="contact.html" style={{color: 'inherit', textDecoration: 'none'}}>Contact Us</a></li>
+                                        <li style={{marginBottom: '0.5rem'}}><a href="policies.html" style={{color: 'inherit', textDecoration: 'none'}}>Policies</a></li>
+                                        <li style={{marginBottom: '0.5rem'}}><a href="refund-policy.html" style={{color: 'inherit', textDecoration: 'none'}}>Refunds</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div className="footer-bottom">
+                                <p>&copy; 2026 SamArtify. All rights reserved. | <a href="policies.html" style={{color: 'var(--gold)', textDecoration: 'none'}}>Policies</a> | <a href="refund-policy.html" style={{color: 'var(--gold)', textDecoration: 'none'}}>Refunds</a> | <a href="contact.html" style={{color: 'var(--gold)', textDecoration: 'none'}}>Contact</a></p>
+                                <div className="footer-social">
+                                    <a className="social-icon facebook" href="https://facebook.com/samartify" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M22 12a10 10 0 10-11.5 9.9v-7h-2.2v-2.9h2.2V9.4c0-2.2 1.3-3.4 3.3-3.4.96 0 1.96.17 1.96.17v2.1h-1.06c-1.04 0-1.36.65-1.36 1.32v1.6h2.32l-.37 2.9h-1.95v7A10 10 0 0022 12z"/></svg>
+                                    </a>
+                                    <a className="social-icon instagram" href="https://instagram.com/samartify" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M7 2h10a5 5 0 015 5v10a5 5 0 01-5 5H7a5 5 0 01-5-5V7a5 5 0 015-5zm5 6.1A4.9 4.9 0 1016.9 13 4.9 4.9 0 0012 8.1zm5.2-2.3a1.2 1.2 0 11-1.2-1.2 1.2 1.2 0 011.2 1.2z"/></svg>
+                                    </a>
+                                    <a className="social-icon tiktok" href="https://www.tiktok.com/@samartify" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+                                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M17.5 6.5a4 4 0 01-4-4v9a5 5 0 11-5-5v2.1a2.9 2.9 0 102.9 2.9V6.5h4.1z"/></svg>
+                                    </a>
+                                    <a className="social-icon youtube" href="https://www.youtube.com/c/samartify" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+                                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M10 15l5.2-3L10 9v6zm12-3c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v0c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v0z"/></svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
+                </>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<CheckoutPage />);
+    </script>
+</body>
+</html>

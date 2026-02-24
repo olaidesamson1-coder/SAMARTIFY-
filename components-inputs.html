@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input Components</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Lora:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cream: #F9FAFB;
+            --rust: #2E5EAA;
+            --deep-rust: #1E3F7A;
+            --sage: #00C3B1;
+            --charcoal: #1F2937;
+            --gold: #00C3B1;
+            --light-sage: #E0F7F5;
+            --white: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lora', serif;
+            background: var(--cream);
+            color: var(--charcoal);
+            padding: 2rem;
+        }
+
+        .component-section {
+            margin-bottom: 3rem;
+        }
+
+        .component-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--deep-rust);
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .demo-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        /* ============================================
+           FILTER CHECKBOX COMPONENT
+           ============================================ */
+        .filter-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .filter-checkbox__input {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 22px;
+            height: 22px;
+            border: 2px solid var(--sage);
+            border-radius: 4px;
+            background: var(--white);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .filter-checkbox__input:hover {
+            border-color: var(--rust);
+            background: var(--light-sage);
+        }
+
+        .filter-checkbox__input:checked {
+            background: var(--rust);
+            border-color: var(--rust);
+        }
+
+        .filter-checkbox__input:checked::after {
+            content: '✓';
+            color: var(--white);
+            font-size: 0.9rem;
+            font-weight: bold;
+            display: flex;
+        }
+
+        .filter-checkbox__label {
+            font-size: 0.95rem;
+            color: var(--charcoal);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+        }
+
+        .filter-checkbox__count {
+            font-size: 0.85rem;
+            color: #999;
+            font-weight: 400;
+            margin-left: auto;
+        }
+
+        .filter-checkbox--disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .filter-checkbox--disabled .filter-checkbox__input {
+            cursor: not-allowed;
+            background: #f5f5f5;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(44, 44, 44, 0.05);
+            max-width: 300px;
+        }
+
+        .filter-group__title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            color: var(--charcoal);
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* ============================================
+           ADD-TO-CART BUTTON COMPONENT
+           ============================================ */
+        .btn-add-cart {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            padding: 0.9rem 1.8rem;
+            background: var(--rust);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            box-shadow: 0 4px 12px rgba(184, 92, 56, 0.2);
+        }
+
+        .btn-add-cart:hover {
+            background: var(--deep-rust);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(139, 58, 31, 0.3);
+        }
+
+        .btn-add-cart:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 8px rgba(139, 58, 31, 0.2);
+        }
+
+        .btn-add-cart:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-add-cart--secondary {
+            background: var(--sage);
+        }
+
+        .btn-add-cart--secondary:hover {
+            background: #698B7E;
+        }
+
+        .btn-add-cart--outline {
+            background: transparent;
+            color: var(--rust);
+            border: 2px solid var(--rust);
+            box-shadow: none;
+        }
+
+        .btn-add-cart--outline:hover {
+            background: var(--light-sage);
+            border-color: var(--deep-rust);
+            color: var(--deep-rust);
+        }
+
+        .btn-add-cart--accent {
+            background: var(--gold);
+            color: var(--charcoal);
+        }
+
+        .btn-add-cart--accent:hover {
+            background: #C99763;
+            color: var(--charcoal);
+        }
+
+        .btn-add-cart--small {
+            padding: 0.6rem 1.2rem;
+            font-size: 0.85rem;
+        }
+
+        .btn-add-cart--large {
+            padding: 1.2rem 2.4rem;
+            font-size: 1.1rem;
+        }
+
+        .btn-add-cart--block {
+            width: 100%;
+            display: flex;
+        }
+
+        .btn-add-cart__icon {
+            font-size: 1.2rem;
+        }
+
+        .btn-add-cart--loading {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .btn-add-cart--loading::after {
+            content: '';
+            display: inline-block;
+            margin-left: 0.5rem;
+            width: 1rem;
+            height: 1rem;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Quantity selector with add-to-cart */
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 12px;
+            max-width: 400px;
+            box-shadow: 0 2px 8px rgba(44, 44, 44, 0.05);
+        }
+
+        .quantity-group {
+            display: flex;
+            align-items: center;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            background: var(--light-sage);
+        }
+
+        .quantity-btn {
+            width: 36px;
+            height: 36px;
+            border: none;
+            background: transparent;
+            color: var(--sage);
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .quantity-btn:hover {
+            background: rgba(123, 158, 137, 0.1);
+            color: var(--rust);
+        }
+
+        .quantity-input {
+            width: 50px;
+            border: none;
+            background: transparent;
+            text-align: center;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--charcoal);
+        }
+
+        .quantity-input:focus {
+            outline: none;
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- FILTER CHECKBOXES -->
+<div class="component-section">
+    <h2 class="component-title">Filter Checkbox</h2>
+    
+    <div style="margin-top: 1.5rem;">
+        <h3 style="font-size: 1rem; margin-bottom: 1rem; color: var(--sage);">Price Range Filter</h3>
+        <div class="filter-group">
+            <div class="filter-group__title">Price Range</div>
+            
+            <label class="filter-checkbox">
+                <input type="checkbox" class="filter-checkbox__input" checked>
+                <span class="filter-checkbox__label">Under $10</span>
+                <span class="filter-checkbox__count">(124)</span>
+            </label>
+
+            <label class="filter-checkbox">
+                <input type="checkbox" class="filter-checkbox__input">
+                <span class="filter-checkbox__label">$10 - $25</span>
+                <span class="filter-checkbox__count">(389)</span>
+            </label>
+
+            <label class="filter-checkbox">
+                <input type="checkbox" class="filter-checkbox__input">
+                <span class="filter-checkbox__label">$25 - $50</span>
+                <span class="filter-checkbox__count">(221)</span>
+            </label>
+
+            <label class="filter-checkbox">
+                <input type="checkbox" class="filter-checkbox__input">
+                <span class="filter-checkbox__label">$50+</span>
+                <span class="filter-checkbox__count">(67)</span>
+            </label>
+        </div>
+    </div>
+
+    <div style="margin-top: 2rem;">
+        <h3 style="font-size: 1rem; margin-bottom: 1rem; color: var(--sage);">Format Filter</h3>
+        <div class="filter-group">
+            <div class="filter-group__title">File Formats</div>
+            
+            <label class="filter-checkbox">
+                <input type="checkbox" class="filter-checkbox__input" checked>
+                <span class="filter-checkbox__label">DST (Tajima)</span>
+                <span class="filter-checkbox__count">(456)</span>
+            </label>
+
+            <label class="filter-checkbox">
+                <input type="checkbox" class="filter-checkbox__input" checked>
+                <span class="filter-checkbox__label">PES (Brother)</span>
+                <span class="filter-checkbox__count">(438)</span>
+            </label>
+
+            <label class="filter-checkbox">
+                <input type="checkbox" class="filter-checkbox__input">
+                <span class="filter-checkbox__label">JEF (Janome)</span>
+                <span class="filter-checkbox__count">(312)</span>
+            </label>
+
+            <label class="filter-checkbox filter-checkbox--disabled">
+                <input type="checkbox" class="filter-checkbox__input" disabled>
+                <span class="filter-checkbox__label">EXP (Melco)</span>
+                <span class="filter-checkbox__count">(0)</span>
+            </label>
+        </div>
+    </div>
+</div>
+
+<!-- ADD-TO-CART BUTTONS -->
+<div class="component-section">
+    <h2 class="component-title">Add-to-Cart Button</h2>
+    
+    <div style="margin-top: 1.5rem;">
+        <h3 style="font-size: 1rem; margin-bottom: 1rem; color: var(--sage);">Button Variants</h3>
+        <div class="demo-grid" style="gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+            <div class="demo-item">
+                <button class="btn-add-cart">
+                    <span class="btn-add-cart__icon">🛒</span>
+                    Add to Cart
+                </button>
+                <small>Default</small>
+            </div>
+            
+            <div class="demo-item">
+                <button class="btn-add-cart btn-add-cart--secondary">
+                    <span class="btn-add-cart__icon">✓</span>
+                    Add to Wishlist
+                </button>
+                <small>Secondary</small>
+            </div>
+            
+            <div class="demo-item">
+                <button class="btn-add-cart btn-add-cart--outline">
+                    <span class="btn-add-cart__icon">+</span>
+                    View Details
+                </button>
+                <small>Outline</small>
+            </div>
+            
+            <div class="demo-item">
+                <button class="btn-add-cart btn-add-cart--accent">
+                    <span class="btn-add-cart__icon">⭐</span>
+                    Premium
+                </button>
+                <small>Accent</small>
+            </div>
+            
+            <div class="demo-item">
+                <button class="btn-add-cart btn-add-cart--small">Add to Cart</button>
+                <small>Small</small>
+            </div>
+            
+            <div class="demo-item">
+                <button class="btn-add-cart btn-add-cart--large">Add to Cart</button>
+                <small>Large</small>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin-top: 2rem;">
+        <h3 style="font-size: 1rem; margin-bottom: 1rem; color: var(--sage);">Other States</h3>
+        <div class="demo-grid" style="gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+            <div class="demo-item">
+                <button class="btn-add-cart btn-add-cart--block">Add to Cart</button>
+                <small>Block (Full Width)</small>
+            </div>
+            
+            <div class="demo-item">
+                <button class="btn-add-cart" disabled>Add to Cart</button>
+                <small>Disabled</small>
+            </div>
+            
+            <div class="demo-item">
+                <button class="btn-add-cart btn-add-cart--loading">Processing</button>
+                <small>Loading State</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- QUANTITY SELECTOR WITH ADD-TO-CART -->
+<div class="component-section">
+    <h2 class="component-title">Quantity Selector + Add-to-Cart</h2>
+    
+    <div style="margin-top: 1.5rem;">
+        <div class="quantity-selector">
+            <div style="font-weight: 600; color: var(--charcoal);">Quantity:</div>
+            <div class="quantity-group">
+                <button class="quantity-btn">−</button>
+                <input type="number" class="quantity-input" value="1" min="1">
+                <button class="quantity-btn">+</button>
+            </div>
+            <button class="btn-add-cart" style="margin-left: auto;">
+                <span class="btn-add-cart__icon">🛒</span>
+                Add to Cart
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Quantity selector functionality
+    const quantityInputs = document.querySelectorAll('.quantity-input');
+    const quantityBtns = document.querySelectorAll('.quantity-btn');
+
+    quantityBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const input = this.parentElement.querySelector('.quantity-input');
+            const currentValue = parseInt(input.value);
+            
+            if (this.textContent === '−' && currentValue > 1) {
+                input.value = currentValue - 1;
+            } else if (this.textContent === '+') {
+                input.value = currentValue + 1;
+            }
+        });
+    });
+
+    // Loading button demo
+    document.querySelectorAll('.btn-add-cart--loading').forEach(btn => {
+        btn.addEventListener('click', function() {
+            this.disabled = true;
+            setTimeout(() => {
+                this.disabled = false;
+                this.classList.remove('btn-add-cart--loading');
+                this.textContent = '✓ Added!';
+                setTimeout(() => {
+                    this.classList.add('btn-add-cart--loading');
+                    this.textContent = 'Processing';
+                }, 1500);
+            }, 2000);
+        });
+    });
+</script>
+
+</body>
+</html>

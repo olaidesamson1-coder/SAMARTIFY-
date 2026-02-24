@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Badge Components</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Lora:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cream: #F9FAFB;
+            --rust: #2E5EAA;
+            --deep-rust: #1E3F7A;
+            --sage: #00C3B1;
+            --charcoal: #1F2937;
+            --gold: #00C3B1;
+            --light-sage: #E0F7F5;
+            --white: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lora', serif;
+            background: var(--cream);
+            color: var(--charcoal);
+            padding: 2rem;
+        }
+
+        .component-section {
+            margin-bottom: 3rem;
+        }
+
+        .component-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--deep-rust);
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .demo-item {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        /* ============================================
+           PRICE BADGE COMPONENT
+           ============================================ */
+        .price-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--rust);
+            color: var(--white);
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.2s ease;
+        }
+
+        .price-badge:hover {
+            background: var(--deep-rust);
+            transform: scale(1.05);
+        }
+
+        .price-badge--sale {
+            background: linear-gradient(135deg, var(--deep-rust), var(--rust));
+        }
+
+        .price-badge--secondary {
+            background: var(--sage);
+        }
+
+        .price-badge--accent {
+            background: var(--gold);
+            color: var(--charcoal);
+        }
+
+        .price-badge--outline {
+            background: transparent;
+            border: 2px solid var(--rust);
+            color: var(--rust);
+        }
+
+        .price-badge__strike {
+            text-decoration: line-through;
+            opacity: 0.7;
+            font-size: 0.85rem;
+        }
+
+        /* ============================================
+           FORMAT BADGE COMPONENT
+           ============================================ */
+        .format-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--light-sage);
+            color: var(--sage);
+            font-family: 'Playfair Display', serif;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .format-badge:hover {
+            background: var(--sage);
+            color: var(--white);
+            border-color: var(--rust);
+            transform: scale(1.1);
+        }
+
+        .format-badge--active {
+            background: var(--sage);
+            color: var(--white);
+            border-color: var(--rust);
+            box-shadow: 0 0 0 3px rgba(123, 158, 137, 0.2);
+        }
+
+        .format-badge--large {
+            width: 64px;
+            height: 64px;
+            font-size: 0.9rem;
+        }
+
+        .format-badge__icon {
+            font-size: 1.5rem;
+            margin-right: 0.4rem;
+        }
+
+        .format-badge-group {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        /* ============================================
+           REVIEW STARS COMPONENT
+           ============================================ */
+        .review-stars {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .review-stars__stars {
+            font-size: 1.2rem;
+            letter-spacing: 3px;
+            color: var(--gold);
+            font-weight: bold;
+            line-height: 1;
+        }
+
+        .review-stars__rating {
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--charcoal);
+        }
+
+        .review-stars__count {
+            font-size: 0.9rem;
+            color: #999;
+        }
+
+        /* Hover effect for interactive stars */
+        .review-stars--interactive .review-stars__star {
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #ddd;
+            font-size: 1.5rem;
+        }
+
+        .review-stars--interactive .review-stars__star:hover,
+        .review-stars--interactive .review-stars__star--active {
+            color: var(--gold);
+            transform: scale(1.2);
+        }
+
+        .review-stars__compact {
+            display: inline-flex;
+            gap: 0.2rem;
+            font-size: 0.9rem;
+        }
+
+        /* ============================================
+           COMBO BADGES
+           ============================================ */
+        .badge-combo {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(44, 44, 44, 0.05);
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- PRICE BADGES -->
+<div class="component-section">
+    <h2 class="component-title">Price Badge</h2>
+    
+    <div class="demo-grid">
+        <div class="demo-item">
+            <div class="price-badge">$24.99</div>
+            <small>Default</small>
+        </div>
+        <div class="demo-item">
+            <div class="price-badge price-badge--sale">$24.99 <span class="price-badge__strike">$34.99</span></div>
+            <small>Sale / On Sale</small>
+        </div>
+        <div class="demo-item">
+            <div class="price-badge price-badge--secondary">PREMIUM</div>
+            <small>Secondary</small>
+        </div>
+        <div class="demo-item">
+            <div class="price-badge price-badge--accent">$14.99</div>
+            <small>Accent</small>
+        </div>
+        <div class="demo-item">
+            <div class="price-badge price-badge--outline">$19.99</div>
+            <small>Outline</small>
+        </div>
+    </div>
+</div>
+
+<!-- FORMAT BADGES -->
+<div class="component-section">
+    <h2 class="component-title">Format Badge (DST / PES / JEF)</h2>
+    
+    <div style="margin-top: 1.5rem;">
+        <h3 style="font-size: 1rem; margin-bottom: 1rem; color: var(--sage);">Standard Size (48px)</h3>
+        <div class="format-badge-group">
+            <div class="format-badge format-badge--active">DST</div>
+            <div class="format-badge">PES</div>
+            <div class="format-badge">JEF</div>
+        </div>
+    </div>
+
+    <div style="margin-top: 2rem;">
+        <h3 style="font-size: 1rem; margin-bottom: 1rem; color: var(--sage);">Large Size (64px)</h3>
+        <div class="format-badge-group">
+            <div class="format-badge format-badge--large format-badge--active">DST</div>
+            <div class="format-badge format-badge--large">PES</div>
+            <div class="format-badge format-badge--large">JEF</div>
+        </div>
+    </div>
+
+    <div style="margin-top: 2rem;">
+        <h3 style="font-size: 1rem; margin-bottom: 1rem; color: var(--sage);">With Icons</h3>
+        <div class="format-badge-group">
+            <div class="format-badge">🧵 DST</div>
+            <div class="format-badge">🎀 PES</div>
+            <div class="format-badge">✨ JEF</div>
+        </div>
+    </div>
+</div>
+
+<!-- REVIEW STARS -->
+<div class="component-section">
+    <h2 class="component-title">Review Stars</h2>
+    
+    <div style="margin-top: 1.5rem;">
+        <h3 style="font-size: 1rem; margin-bottom: 1.5rem; color: var(--sage);">Full Rating Display</h3>
+        <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+            <div class="review-stars">
+                <div class="review-stars__stars">★★★★★</div>
+                <div class="review-stars__rating">4.8</div>
+                <div class="review-stars__count">(324 reviews)</div>
+            </div>
+            <div class="review-stars">
+                <div class="review-stars__stars">★★★★☆</div>
+                <div class="review-stars__rating">4.2</div>
+                <div class="review-stars__count">(156 reviews)</div>
+            </div>
+            <div class="review-stars">
+                <div class="review-stars__stars">★★★☆☆</div>
+                <div class="review-stars__rating">3.5</div>
+                <div class="review-stars__count">(89 reviews)</div>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin-top: 2rem;">
+        <h3 style="font-size: 1rem; margin-bottom: 1.5rem; color: var(--sage);">Compact Display</h3>
+        <div class="review-stars__compact">
+            <span>★★★★★</span>
+            <span style="color: #999;">4.8 (324)</span>
+        </div>
+    </div>
+
+    <div style="margin-top: 2rem;">
+        <h3 style="font-size: 1rem; margin-bottom: 1.5rem; color: var(--sage);">Interactive (Hover to highlight)</h3>
+        <div class="review-stars--interactive" style="font-size: 2rem; cursor: pointer;">
+            <span class="review-stars__star review-stars__star--active">★</span>
+            <span class="review-stars__star review-stars__star--active">★</span>
+            <span class="review-stars__star review-stars__star--active">★</span>
+            <span class="review-stars__star review-stars__star--active">★</span>
+            <span class="review-stars__star">★</span>
+        </div>
+    </div>
+</div>
+
+<!-- COMBO EXAMPLE -->
+<div class="component-section">
+    <h2 class="component-title">Badge Combination Example</h2>
+    
+    <div class="badge-combo">
+        <div class="price-badge price-badge--sale">$14.99 <span class="price-badge__strike">$24.99</span></div>
+        <div class="format-badge-group">
+            <div class="format-badge format-badge--active">DST</div>
+            <div class="format-badge">PES</div>
+            <div class="format-badge">JEF</div>
+        </div>
+        <div class="review-stars">
+            <div class="review-stars__stars">★★★★★</div>
+            <div class="review-stars__count">(428)</div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

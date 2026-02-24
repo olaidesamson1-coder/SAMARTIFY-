@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us — SamArtify</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Lora:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root{
+            --cream: #F9FAFB;
+            --rust: #2E5EAA;
+            --deep-rust: #1E3F7A;
+            --charcoal: #1F2937;
+            --gold: #00C3B1;
+        }
+        body.dark-mode {
+            --cream: #0d0d0d;
+            --charcoal: #e8e8e8;
+            --rust: #ff7a54;
+            --deep-rust: #ff9d7a;
+            --gold: #ffc266;
+        }
+        *{box-sizing:border-box;margin:0;padding:0}
+        body{font-family:'Lora', serif;background:var(--cream);color:var(--charcoal);line-height:1.6}
+        .container{max-width:1100px;margin:0 auto;padding:2rem}
+        nav{background:rgba(250,247,240,0.95);padding:1rem 2rem;border-bottom:1px solid rgba(0,0,0,0.05)}
+        .nav-content{display:flex;justify-content:space-between;align-items:center}
+        .logo{font-family:'Playfair Display', serif;font-size:1.6rem;color:var(--deep-rust);font-weight:800}
+        .nav-links{display:flex;gap:1rem;align-items:center}
+        .nav-btn{background:none;border:none;color:var(--charcoal);font-weight:600;text-decoration:none}
+        .hero{padding:3rem 0}
+        .section{background:white;padding:2rem;border-radius:10px;margin-bottom:1.5rem;box-shadow:0 6px 20px rgba(0,0,0,0.04)}
+        h1,h2{font-family:'Playfair Display', serif;color:var(--deep-rust)}
+        p{margin-top:0.5rem}
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-content container">
+            <a href="homepage.html" class="logo">SamArtify</a>
+            <div class="nav-links">
+                <a href="homepage.html" class="nav-btn">Home</a>
+                <a href="product.html" class="nav-btn">Product</a>
+                <a href="categories.html" class="nav-btn">Categories</a>
+                <a href="about.html" class="nav-btn">About</a>
+                <a href="checkout.html" class="nav-btn">Cart</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section class="hero">
+            <h1>About SamArtify</h1>
+            <p style="max-width:70%;margin-top:0.75rem;">I’m a Nigerian entrepreneur building SamArtify to bring professional embroidery designs to makers everywhere. Rooted in a deep love for textiles and craft, my goal is to make beautiful, unique designs accessible to hobbyists and businesses globally.</p>
+        </section>
+
+        <section class="section">
+            <h2>Our Story</h2>
+            <p>Growing up in Nigeria, I was surrounded by rich textile traditions and bold patterns. My journey into digital embroidery began when I combined traditional motifs with modern machine-ready formats. What started as a passion project quickly became SamArtify — a platform to share curated, high-quality embroidery files with the world.</p>
+        </section>
+
+        <section class="section">
+            <h2>Our Mission</h2>
+            <p>We exist to expand global access to exceptional embroidery patterns. Our mission is to remove barriers for creators everywhere by offering easy-to-use, professionally digitized designs, clear format support, and trustworthy customer service.</p>
+        </section>
+
+        <section class="section">
+            <h2>Unique Designs</h2>
+            <p>Every design blends cultural inspiration with precise digitizing techniques so your finished work looks crisp and professional. We focus on unique motifs, clean stitch paths, and multi-format delivery for popular embroidery machines.</p>
+        </section>
+
+        <section class="section">
+            <h2>Get In Touch</h2>
+            <p>If you’d like to collaborate, license designs, or request a custom pattern, email <a href="mailto:hello@samartify.example">hello@samartify.example</a>. We’re excited to support your creative projects.</p>
+        </section>
+    </main>
+</body>
+</html>

@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Policies & Terms — SamArtify</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Lora:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cream: #F9FAFB;
+            --rust: #2E5EAA;
+            --deep-rust: #1E3F7A;
+            --sage: #00C3B1;
+            --charcoal: #1F2937;
+            --gold: #00C3B1;
+            --light-sage: #E0F7F5;
+            --white: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lora', serif;
+            background: var(--cream);
+            color: var(--charcoal);
+            line-height: 1.8;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(250, 247, 240, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid rgba(184, 92, 56, 0.1);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--deep-rust);
+            text-decoration: none;
+            cursor: pointer;
+            letter-spacing: -1px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            color: var(--charcoal);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            font-family: 'Lora', serif;
+            text-decoration: none;
+        }
+
+        .nav-btn:hover {
+            color: var(--rust);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--deep-rust);
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--charcoal);
+            opacity: 0.85;
+        }
+
+        /* Table of Contents */
+        .toc {
+            background: var(--light-sage);
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+            border-left: 4px solid var(--rust);
+        }
+
+        .toc h2 {
+            font-family: 'Playfair Display', serif;
+            color: var(--deep-rust);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .toc ul {
+            list-style: none;
+        }
+
+        .toc li {
+            margin-bottom: 0.5rem;
+        }
+
+        .toc a {
+            color: var(--rust);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .toc a:hover {
+            color: var(--deep-rust);
+            text-decoration: underline;
+        }
+
+        /* Policy Sections */
+        .policy-section {
+            margin: 3rem 0;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid var(--light-sage);
+        }
+
+        .policy-section:last-child {
+            border-bottom: none;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--deep-rust);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--gold);
+            scroll-margin-top: 100px;
+        }
+
+        .subsection-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--rust);
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .policy-content {
+            color: var(--charcoal);
+            line-height: 1.9;
+        }
+
+        .policy-content p {
+            margin-bottom: 1.2rem;
+        }
+
+        .policy-content ul, .policy-content ol {
+            margin-left: 2rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .policy-content li {
+            margin-bottom: 0.8rem;
+        }
+
+        .highlight-box {
+            background: rgba(184, 92, 56, 0.08);
+            border-left: 4px solid var(--rust);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+
+        .highlight-box strong {
+            color: var(--deep-rust);
+        }
+
+        .important-notice {
+            background: #fff3cd;
+            border-left: 4px solid #ff9800;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+            color: #333;
+        }
+
+        .important-notice strong {
+            color: #d84315;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+
+        table th, table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--light-sage);
+        }
+
+        table th {
+            background: var(--light-sage);
+            font-weight: 700;
+            color: var(--deep-rust);
+        }
+
+        table tr:hover {
+            background: rgba(184, 92, 56, 0.05);
+        }
+
+        .contact-info {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            border-left: 4px solid var(--gold);
+        }
+
+        .contact-info h3 {
+            color: var(--deep-rust);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .contact-info p {
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-info a {
+            color: var(--rust);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--charcoal);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .subsection-title {
+                font-size: 1.1rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-content">
+            <a href="homepage.html" class="logo">SamArtify</a>
+            <div class="nav-links">
+                <a href="homepage.html" class="nav-btn">Home</a>
+                <a href="product.html" class="nav-btn">Product</a>
+                <a href="categories.html" class="nav-btn">Categories</a>
+                <a href="about.html" class="nav-btn">About</a>
+                <a href="faq.html" class="nav-btn">Support</a>
+                <a href="contact.html" class="nav-btn">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero container">
+            <h1>Policies & Terms</h1>
+            <p>Please review our refund policy, license terms, data handling practices, and site rules before purchasing.</p>
+            <p style="font-size: 0.95rem; color: #666; margin-top: 1rem;"><em>Last updated: February 5, 2026</em></p>
+        </section>
+
+        <div class="container">
+            <!-- Table of Contents -->
+            <div class="toc">
+                <h2>Quick Navigation</h2>
+                <ul>
+                    <li><a href="#refund-policy">Refund Policy</a></li>
+                    <li><a href="#license-agreement">Design License Agreement</a></li>
+                    <li><a href="#data-handling">Data Handling & Privacy</a></li>
+                    <li><a href="#site-rules">Site Rules & Prohibited Activities</a></li>
+                    <li><a href="#contact">Contact & Support</a></li>
+                </ul>
+            </div>
+
+            <!-- Refund Policy -->
+            <section class="policy-section" id="refund-policy">
+                <h2 class="section-title">Refund Policy</h2>
+
+                <div class="policy-content">
+                    <div class="subsection-title">Eligibility for Refunds</div>
+                    <p>SamArtify offers refunds for digital design files within 7 days of purchase under the following circumstances:</p>
+                    <ul>
+                        <li><strong>Technical Issues:</strong> File corruption, missing formats, or inability to open the design files</li>
+                        <li><strong>Description Mismatch:</strong> The design significantly differs from the product preview or description</li>
+                        <li><strong>Quality Issues:</strong> Stitch errors, distorted designs, or quality defects not visible in preview</li>
+                        <li><strong>File Format Problems:</strong> Provided formats are incompatible with advertised machine types</li>
+                    </ul>
+
+                    <div class="subsection-title">Non-Refundable Items</div>
+                    <p>Refunds cannot be issued for:</p>
+                    <ul>
+                        <li>Change of mind or buyer's remorse after reviewing files</li>
+                        <li>Personal preference or style changes</li>
+                        <li>Designs already transferred to your embroidery machine</li>
+                        <li>Downloads made more than 7 days after purchase</li>
+                        <li>Products purchased during sales or with promotional discounts (excluding defective items)</li>
+                        <li>User error in converting or modifying files</li>
+                    </ul>
+
+                    <div class="subsection-title">Refund Process</div>
+                    <p><strong>Step 1:</strong> Contact our support team at support@samartify.com within 7 days of purchase with your order number</p>
+                    <p><strong>Step 2:</strong> Provide a detailed description of the issue, including screenshots or error messages if applicable</p>
+                    <p><strong>Step 3:</strong> Our team reviews your claim within 24 business hours</p>
+                    <p><strong>Step 4:</strong> If approved, refunds are processed to your original payment method within 5-7 business days</p>
+                    <p><strong>Step 5:</strong> You will receive an email confirmation once the refund is complete</p>
+
+                    <div class="subsection-title">Refund Timeline</div>
+                    <table>
+                        <tr>
+                            <th>Scenario</th>
+                            <th>Refund Window</th>
+                            <th>Processing Time</th>
+                        </tr>
+                        <tr>
+                            <td>Technical Issues (verified)</td>
+                            <td>30 days from purchase</td>
+                            <td>5-7 business days</td>
+                        </tr>
+                        <tr>
+                            <td>Design Quality Issues</td>
+                            <td>7 days from purchase</td>
+                            <td>5-7 business days</td>
+                        </tr>
+                        <tr>
+                            <td>Description Mismatch</td>
+                            <td>7 days from purchase</td>
+                            <td>5-7 business days</td>
+                        </tr>
+                        <tr>
+                            <td>File Format Incompatibility</td>
+                            <td>7 days from purchase</td>
+                            <td>5-7 business days</td>
+                        </tr>
+                    </table>
+
+                    <div class="important-notice">
+                        <strong>⚠️ Important:</strong> Bank processing times may add 2-3 business days. Your bank may show the refund as "pending" for up to 10 days before it appears in your account.
+                    </div>
+
+                    <div class="subsection-title">No Refund for Duplicate Purchases</div>
+                    <p>If you accidentally purchase the same design twice, we can provide a store credit for one purchase instead of a refund. Store credits are valid for 12 months and can be applied to any future purchase on SamArtify.</p>
+
+                    <div class="subsection-title">Exceptional Circumstances</div>
+                    <p>SamArtify reserves the right to issue refunds for exceptional circumstances outside the standard policy, including system errors, billing disputes, or at our sole discretion. Contact support@samartify.com with details for consideration.</p>
+                </div>
+            </section>
+
+            <!-- License Agreement -->
+            <section class="policy-section" id="license-agreement">
+                <h2 class="section-title">Design License Agreement</h2>
+
+                <div class="policy-content">
+                    <div class="subsection-title">License Grant</div>
+                    <p>Upon purchase, SamArtify grants you a non-exclusive, non-transferable, revocable license to use the purchased design files in accordance with the terms outlined below. You do not own the designs; you are licensed to use them subject to these restrictions.</p>
+
+                    <div class="subsection-title">Personal Use License</div>
+                    <p>The Personal Use License permits you to:</p>
+                    <ul>
+                        <li>Download and store design files for your personal use</li>
+                        <li>Embroider designs on personal items (clothing, home decor, gifts)</li>
+                        <li>Resize and recolor designs to fit your needs</li>
+                        <li>Modify designs using compatible embroidery software</li>
+                        <li>Create physical embroidered products for yourself and family members</li>
+                        <li>Display finished embroidered items in your home or as personal gifts</li>
+                    </ul>
+
+                    <div class="highlight-box">
+                        <strong>Personal Use Restrictions:</strong> You may NOT sell any product embroidered with a Personal Use licensed design, nor may you distribute the design files to others.
+                    </div>
+
+                    <div class="subsection-title">Commercial Use License</div>
+                    <p>The Commercial Use License permits you to:</p>
+                    <ul>
+                        <li>Use design files for business and commercial purposes</li>
+                        <li>Create and sell physical products embroidered with designs (clothing, towels, bags, home goods, etc.)</li>
+                        <li>Offer custom embroidery services using the designs</li>
+                        <li>Fulfill client orders and custom requests incorporating the designs</li>
+                        <li>Embroider designs for resale through retail or online channels</li>
+                        <li>Create personalized items for customers using the design templates</li>
+                        <li>Modify designs for specific customer requests (colors, text, sizing)</li>
+                        <li>Produce items on-demand or in bulk using the designs</li>
+                    </ul>
+
+                    <div class="important-notice">
+                        <strong>✓ Commercial License Benefits:</strong> Create unlimited finished products, modify designs for customer specifications, and scale your business without additional licensing fees.
+                    </div>
+
+                    <div class="subsection-title">Commercial Use Restrictions</div>
+                    <ul>
+                        <li>You cannot resell or redistribute the design files themselves</li>
+                        <li>You cannot claim the design as your original creation</li>
+                        <li>You cannot sub-license the designs to other users or businesses</li>
+                        <li>You cannot create a competing design library or library of design collections</li>
+                        <li>You must provide appropriate attribution to SamArtify (e.g., "Embroidery design by SamArtify")</li>
+                        <li>You cannot use designs for creating derivative designs that are then sold as new designs</li>
+                    </ul>
+
+                    <div class="subsection-title">Prohibited Uses (All License Types)</div>
+                    <p>Regardless of license type, you cannot:</p>
+                    <ul>
+                        <li>Share, distribute, or transfer design files to other individuals or businesses</li>
+                        <li>Use designs for illegal activities or purposes</li>
+                        <li>Create content that infringes on third-party intellectual property rights</li>
+                        <li>Remove, alter, or obscure copyright notices or attribution</li>
+                        <li>Use designs on items that promote hate, violence, or discrimination</li>
+                        <li>Rent, lease, or lend design files to others</li>
+                        <li>Upload designs to public design sharing platforms or websites</li>
+                        <li>Reverse-engineer, decompile, or analyze designs to extract code or techniques</li>
+                    </ul>
+
+                    <div class="subsection-title">License Expiration & Revocation</div>
+                    <p>Your license to use the designs is perpetual for designs properly purchased. However, SamArtify reserves the right to revoke licenses in cases of:</p>
+                    <ul>
+                        <li>Violation of this license agreement</li>
+                        <li>Unauthorized sharing or redistribution of files</li>
+                        <li>Use for illegal or prohibited purposes</li>
+                        <li>Infringement on third-party rights</li>
+                        <li>Breach of SamArtify's Terms of Service</li>
+                    </ul>
+
+                    <p>Upon revocation, you must cease all use of the design files and may be required to delete all copies. Revocation does not affect finished embroidered products already created.</p>
+
+                    <div class="subsection-title">Attribution</div>
+                    <p>While not legally required, SamArtify appreciates acknowledgment when possible. Suggested attribution formats:</p>
+                    <ul>
+                        <li>"Design by SamArtify" on product listings or descriptions</li>
+                        <li>"Embroidery design courtesy of SamArtify" in handmade product tags</li>
+                        <li>Mention SamArtify in business social media when appropriate</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Data Handling & Privacy -->
+            <section class="policy-section" id="data-handling">
+                <h2 class="section-title">Data Handling & Privacy</h2>
+
+                <div class="policy-content">
+                    <div class="subsection-title">Information We Collect</div>
+                    <p>SamArtify collects the following types of information:</p>
+                    <ul>
+                        <li><strong>Account Information:</strong> Name, email address, password, and profile preferences</li>
+                        <li><strong>Payment Information:</strong> Billing address, purchase history, and transaction records (NOT credit card numbers)</li>
+                        <li><strong>Device Information:</strong> Browser type, IP address, device type, and operating system</li>
+                        <li><strong>Behavioral Data:</strong> Pages visited, search queries, downloads, and user interactions</li>
+                        <li><strong>Communication Data:</strong> Support inquiries, feedback, and correspondence</li>
+                    </ul>
+
+                    <div class="subsection-title">Payment Processing & Security</div>
+                    <p>Payment information is processed through PCI-DSS compliant payment processors:</p>
+                    <ul>
+                        <li><strong>Stripe:</strong> For international and credit card payments</li>
+                        <li><strong>Paystack:</strong> For Nigerian and African payment methods</li>
+                    </ul>
+                    <p>SamArtify never stores complete credit card numbers or sensitive payment data on our servers. All payment data is encrypted using SSL/TLS protocols and stored only for transaction verification.</p>
+
+                    <div class="highlight-box">
+                        <strong>Security Assurance:</strong> Your payment information is protected using industry-standard encryption. We only process payments and never have access to your complete card details.
+                    </div>
+
+                    <div class="subsection-title">How We Use Your Data</div>
+                    <ul>
+                        <li><strong>Service Delivery:</strong> Process orders, send downloads, and manage your account</li>
+                        <li><strong>Communication:</strong> Send order confirmations, support responses, and account updates</li>
+                        <li><strong>Safety & Compliance:</strong> Prevent fraud, enforce terms of service, and comply with laws</li>
+                        <li><strong>Improvement:</strong> Analyze usage patterns to improve website functionality and user experience</li>
+                        <li><strong>Marketing:</strong> Send promotional emails (only with your consent)</li>
+                    </ul>
+
+                    <div class="subsection-title">Data Retention</div>
+                    <table>
+                        <tr>
+                            <th>Data Type</th>
+                            <th>Retention Period</th>
+                            <th>Purpose</th>
+                        </tr>
+                        <tr>
+                            <td>Account Information</td>
+                            <td>Duration of account + 2 years</td>
+                            <td>Service delivery and legal compliance</td>
+                        </tr>
+                        <tr>
+                            <td>Transaction Records</td>
+                            <td>7 years</td>
+                            <td>Tax and accounting compliance</td>
+                        </tr>
+                        <tr>
+                            <td>Download History</td>
+                            <td>30 days (or until deleted)</td>
+                            <td>File access management</td>
+                        </tr>
+                        <tr>
+                            <td>Support Communications</td>
+                            <td>2 years</td>
+                            <td>Dispute resolution and quality improvement</td>
+                        </tr>
+                        <tr>
+                            <td>Behavioral/Analytics Data</td>
+                            <td>12 months</td>
+                            <td>Website optimization</td>
+                        </tr>
+                    </table>
+
+                    <div class="subsection-title">Sharing Your Information</div>
+                    <p>We do NOT sell your personal data. We only share information with:</p>
+                    <ul>
+                        <li><strong>Payment Processors:</strong> Stripe and Paystack (limited to transaction data)</li>
+                        <li><strong>Email Service Providers:</strong> For sending download links and notifications</li>
+                        <li><strong>Legal Requirements:</strong> When required by law or court order</li>
+                        <li><strong>Service Providers:</strong> Cloud hosting and analytics providers (under strict confidentiality agreements)</li>
+                    </ul>
+
+                    <div class="subsection-title">Your Data Rights</div>
+                    <p>You have the right to:</p>
+                    <ul>
+                        <li><strong>Access:</strong> Request a copy of your personal data held by SamArtify</li>
+                        <li><strong>Correction:</strong> Update or correct inaccurate information</li>
+                        <li><strong>Deletion:</strong> Request deletion of your data (right to be forgotten)</li>
+                        <li><strong>Opt-Out:</strong> Unsubscribe from marketing communications anytime</li>
+                        <li><strong>Data Portability:</strong> Receive your data in machine-readable format</li>
+                    </ul>
+
+                    <p>To exercise these rights, contact privacy@samartify.com with your request and we'll respond within 30 days.</p>
+
+                    <div class="subsection-title">Cookies & Tracking</div>
+                    <p>SamArtify uses cookies to:</p>
+                    <ul>
+                        <li>Keep you logged into your account</li>
+                        <li>Remember your preferences and cart items</li>
+                        <li>Analyze website traffic and user behavior</li>
+                        <li>Improve website functionality</li>
+                    </ul>
+                    <p>You can disable cookies in your browser settings, though this may limit website functionality. We do not use third-party tracking services for advertising purposes.</p>
+
+                    <div class="subsection-title">Data Breach Notification</div>
+                    <p>In the event of a data breach affecting your personal information, SamArtify will notify you within 72 hours via email with details of the breach, affected data, and recommended steps.</p>
+
+                    <div class="subsection-title">GDPR & Data Protection</div>
+                    <p>For users in the EU or under GDPR, we process personal data only with a lawful basis and comply with all GDPR requirements. Your data is not automatically transferred outside your country without explicit consent.</p>
+                </div>
+            </section>
+
+            <!-- Site Rules & Prohibited Activities -->
+            <section class="policy-section" id="site-rules">
+                <h2 class="section-title">Site Rules & Prohibited Activities</h2>
+
+                <div class="policy-content">
+                    <div class="subsection-title">Acceptable Use</div>
+                    <p>By using SamArtify, you agree to use the site only for lawful purposes and in a way that doesn't infringe upon the rights of others or restrict their use and enjoyment of the website.</p>
+
+                    <div class="subsection-title">Account Responsibilities</div>
+                    <ul>
+                        <li>You are responsible for maintaining confidentiality of your account credentials</li>
+                        <li>You are liable for all activities under your account</li>
+                        <li>You must provide accurate and truthful information during registration</li>
+                        <li>You must not create multiple accounts to circumvent limitations or policies</li>
+                        <li>You must not use other users' accounts without permission</li>
+                    </ul>
+
+                    <div class="subsection-title">Prohibited Activities</div>
+                    <p>You are strictly prohibited from:</p>
+                    <ul>
+                        <li><strong>File Sharing:</strong> Distributing design files to others without authorization</li>
+                        <li><strong>Unauthorized Resale:</strong> Reselling design files or providing them as freebies</li>
+                        <li><strong>Copyright Infringement:</strong> Creating designs that violate third-party intellectual property</li>
+                        <li><strong>Illegal Content:</strong> Uploading or promoting illegal content or services</li>
+                        <li><strong>Harassment:</strong> Harassing, threatening, or defaming other users or staff</li>
+                        <li><strong>Spam:</strong> Posting spam, advertisements, or solicitations</li>
+                        <li><strong>Malware:</strong> Uploading files containing viruses, malware, or harmful code</li>
+                        <li><strong>Fraud:</strong> Making false claims, misrepresenting designs, or fraudulent transactions</li>
+                        <li><strong>System Abuse:</strong> Hacking, scraping, overloading servers, or accessing unauthorized areas</li>
+                        <li><strong>Privacy Violation:</strong> Posting personal information of others without consent</li>
+                        <li><strong>Impersonation:</strong> Pretending to be another person or entity</li>
+                        <li><strong>Reverse Engineering:</strong> Attempting to decompile, decrypt, or reverse-engineer designs</li>
+                    </ul>
+
+                    <div class="subsection-title">Hate Content & Discrimination</div>
+                    <p>SamArtify has zero tolerance for content promoting hate, discrimination, or violence based on:</p>
+                    <ul>
+                        <li>Race, ethnicity, or national origin</li>
+                        <li>Religion or belief</li>
+                        <li>Gender identity or sexual orientation</li>
+                        <li>Disability or health status</li>
+                        <li>Age or socioeconomic status</li>
+                        <li>Any other protected characteristic</li>
+                    </ul>
+                    <p>Violations will result in immediate account suspension and potential legal action.</p>
+
+                    <div class="subsection-title">Design Content Standards</div>
+                    <p>Designs uploaded or used through SamArtify must not:</p>
+                    <ul>
+                        <li>Contain trademarked logos or brand names without permission</li>
+                        <li>Infringe on copyrighted artwork or designs</li>
+                        <li>Depict real people without consent</li>
+                        <li>Promote illegal activities or substances</li>
+                        <li>Contain sexually explicit or adult content</li>
+                        <li>Promote violence, self-harm, or dangerous activities</li>
+                    </ul>
+
+                    <div class="subsection-title">Enforcement & Consequences</div>
+                    <p>SamArtify enforces these policies through:</p>
+                    <ul>
+                        <li><strong>Warnings:</strong> First-time minor violations receive written warning</li>
+                        <li><strong>Suspension:</strong> Repeated violations result in temporary account suspension (7-30 days)</li>
+                        <li><strong>Permanent Ban:</strong> Serious violations result in permanent account termination</li>
+                        <li><strong>Legal Action:</strong> Criminal violations (fraud, hacking) will be reported to authorities</li>
+                        <li><strong>Refund Forfeiture:</strong> Users violating terms may forfeit refunds</li>
+                    </ul>
+
+                    <div class="subsection-title">Intellectual Property Rights</div>
+                    <p><strong>SamArtify's IP:</strong> All content on SamArtify website (logos, design images, text, code) is the property of SamArtify or its content providers and protected by copyright laws.</p>
+                    <p><strong>Design Copyright:</strong> All designs purchased through SamArtify are copyrighted. The original designer retains ownership while you receive a limited license to use the design files.</p>
+                    <p><strong>DMCA Complaints:</strong> If you believe design content infringes on your copyright, contact legal@samartify.com with proof of ownership.</p>
+
+                    <div class="subsection-title">Limitation of Liability</div>
+                    <p>SamArtify provides designs "as-is" without warranties. We are not liable for:</p>
+                    <ul>
+                        <li>Machine compatibility issues or embroidery machine damage</li>
+                        <li>Lost profits or business interruption</li>
+                        <li>Indirect or consequential damages</li>
+                        <li>Loss of data or files</li>
+                        <li>Third-party claims related to design usage</li>
+                    </ul>
+
+                    <div class="subsection-title">Dispute Resolution</div>
+                    <p>All disputes will be handled through the following process:</p>
+                    <ol>
+                        <li>Submit a written complaint to support@samartify.com</li>
+                        <li>Await response within 48 business hours</li>
+                        <li>Participate in mediation (if requested)</li>
+                        <li>Accept binding arbitration under Nigerian law (if dispute cannot be resolved)</li>
+                    </ol>
+
+                    <div class="subsection-title">Policy Changes</div>
+                    <p>SamArtify reserves the right to modify these policies at any time. Changes become effective immediately upon posting to the website. Continued use of the site constitutes acceptance of updated policies. We will notify users of major changes via email.</p>
+
+                    <div class="subsection-title">Entire Agreement</div>
+                    <p>These Policies & Terms, together with our Privacy Policy and any other agreements posted on the site, constitute the entire agreement between you and SamArtify regarding the use of our services.</p>
+                </div>
+            </section>
+
+            <!-- Contact Section -->
+            <section class="policy-section" id="contact">
+                <h2 class="section-title">Questions or Concerns?</h2>
+
+                <div class="contact-info">
+                    <h3>Contact SamArtify Support</h3>
+                    <p><strong>General Support:</strong> <a href="mailto:support@samartify.com">support@samartify.com</a></p>
+                    <p><strong>Refund Requests:</strong> <a href="mailto:support@samartify.com">support@samartify.com</a> (include order number)</p>
+                    <p><strong>Privacy Concerns:</strong> <a href="mailto:privacy@samartify.com">privacy@samartify.com</a></p>
+                    <p><strong>Legal Issues:</strong> <a href="mailto:legal@samartify.com">legal@samartify.com</a></p>
+                    <p><strong>Copyright Claims:</strong> <a href="mailto:legal@samartify.com">legal@samartify.com</a></p>
+                    <p style="margin-top: 1.5rem;"><strong>Response Time:</strong> We aim to respond to all inquiries within 24 business hours.</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 SamArtify. All rights reserved. | <a href="policies.html" style="color: white; text-decoration: underline;">Policies & Terms</a> | <a href="faq.html" style="color: white; text-decoration: underline;">FAQ</a> | Premium Embroidery Designs</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us — SamArtify</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Lora:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root{
+            --cream: #F9FAFB;
+            --rust: #2E5EAA;
+            --deep-rust: #1E3F7A;
+            --charcoal: #1F2937;
+            --gold: #00C3B1;
+            --light-sage: #E0F7F5;
+        }
+        body.dark-mode {
+            --cream: #0d0d0d;
+            --charcoal: #e8e8e8;
+            --rust: #ff7a54;
+            --deep-rust: #ff9d7a;
+            --gold: #ffc266;
+            --light-sage: #1a3a2a;
+        }
+        *{box-sizing:border-box;margin:0;padding:0}
+        body{font-family:'Lora', serif;background:var(--cream);color:var(--charcoal);line-height:1.6}
+        .container{max-width:1100px;margin:0 auto;padding:2rem}
+        nav{background:rgba(250,247,240,0.95);padding:1rem 2rem;border-bottom:1px solid rgba(0,0,0,0.05);position:sticky;top:0;z-index:100}
+        .nav-content{display:flex;justify-content:space-between;align-items:center;max-width:1100px;margin:0 auto}
+        .logo{font-family:'Playfair Display', serif;font-size:1.6rem;color:var(--deep-rust);font-weight:800;text-decoration:none}
+        .nav-links{display:flex;gap:1.5rem;align-items:center;flex-wrap:wrap}
+        .nav-btn{background:none;border:none;color:var(--charcoal);font-weight:600;text-decoration:none;cursor:pointer;font-size:1rem}
+        .nav-btn:hover{color:var(--rust)}
+        .hero{padding:3rem 0;text-align:center}
+        .hero h1{font-family:'Playfair Display', serif;font-size:3.5rem;color:var(--deep-rust);margin-bottom:1rem}
+        .hero p{font-size:1.1rem;color:var(--charcoal);opacity:0.85;max-width:70%;margin:1rem auto}
+        .content-wrapper{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-top:2rem}
+        .form-section, .info-section{background:white;padding:2.5rem;border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,0.05)}
+        .form-group{margin-bottom:1.5rem}
+        .form-group label{display:block;font-weight:600;margin-bottom:0.5rem;color:var(--deep-rust)}
+        .form-group input, .form-group textarea{width:100%;padding:0.75rem;border:2px solid var(--light-sage);border-radius:6px;font-family:'Lora', serif;font-size:1rem;transition:border-color 0.3s}
+        .form-group input:focus, .form-group textarea:focus{outline:none;border-color:var(--rust)}
+        .form-group textarea{resize:vertical;min-height:120px}
+        .submit-btn{background:var(--rust);color:white;padding:0.75rem 2rem;border:none;border-radius:6px;font-weight:600;cursor:pointer;font-size:1rem;transition:background 0.3s}
+        .submit-btn:hover{background:var(--deep-rust)}
+        .info-block{margin-bottom:2rem}
+        .info-block h3{color:var(--deep-rust);margin-bottom:0.5rem;font-size:1.2rem}
+        .contact-item{display:flex;align-items:center;gap:1rem;margin-top:0.75rem}
+        .contact-icon{font-size:1.5rem}
+        .contact-link{color:var(--rust);text-decoration:none;font-weight:600}
+        .contact-link:hover{text-decoration:underline}
+        .support-hours{background:var(--light-sage);padding:1.5rem;border-radius:8px;margin-top:1rem}
+        .support-hours h4{color:var(--deep-rust);margin-bottom:0.75rem}
+        .hours-list{list-style:none}
+        .hours-list li{padding:0.3rem 0}
+        .status-badge{display:inline-block;background:var(--rust);color:white;padding:0.3rem 0.8rem;border-radius:20px;font-size:0.85rem;margin-top:0.5rem}
+        .success-message{display:none;background:#d4edda;color:#155724;padding:1rem;border-radius:6px;margin-bottom:1rem;border:1px solid #c3e6cb}
+        .error-message{display:none;background:#f8d7da;color:#721c24;padding:1rem;border-radius:6px;margin-bottom:1rem;border:1px solid #f5c6cb}
+        @media (max-width:768px){
+            .content-wrapper{grid-template-columns:1fr}
+            .hero h1{font-size:2.5rem}
+            .nav-links{gap:0.75rem}
+            .nav-btn{font-size:0.9rem}
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-content">
+            <a href="homepage.html" class="logo">SamArtify</a>
+            <div class="nav-links">
+                <a href="homepage.html" class="nav-btn">Home</a>
+                <a href="product.html" class="nav-btn">Product</a>
+                <a href="categories.html" class="nav-btn">Categories</a>
+                <a href="about.html" class="nav-btn">About</a>
+                <a href="contact.html" class="nav-btn">Contact</a>
+                <a href="checkout.html" class="nav-btn" style="color:var(--rust);font-weight:700">Cart</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section class="hero">
+            <h1>Get In Touch</h1>
+            <p>Have questions about our embroidery designs or need custom work? We're here to help. Reach out via our contact form, email, WhatsApp, or check our support hours to know when we're available.</p>
+        </section>
+
+        <div class="content-wrapper">
+            <!-- Contact Form -->
+            <section class="form-section">
+                <h2 style="font-family:'Playfair Display', serif;color:var(--deep-rust);margin-bottom:1.5rem">Send Us a Message</h2>
+                <div class="success-message" id="successMsg">Thank you! Your message has been sent successfully. We'll get back to you soon.</div>
+                <div class="error-message" id="errorMsg">There was an error sending your message. Please try again.</div>
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Full Name *</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject *</label>
+                        <input type="text" id="subject" name="subject" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message *</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+            </section>
+
+            <!-- Contact Information -->
+            <section class="info-section">
+                <h2 style="font-family:'Playfair Display', serif;color:var(--deep-rust);margin-bottom:1.5rem">Contact Information</h2>
+
+                <div class="info-block">
+                    <h3>📧 Email</h3>
+                    <div class="contact-item">
+                        <span class="contact-icon">✉️</span>
+                        <a href="mailto:hello@samartify.com" class="contact-link">hello@samartify.com</a>
+                    </div>
+                    <p style="font-size:0.9rem;color:#666;margin-top:0.5rem">For general inquiries and design requests</p>
+                </div>
+
+                <div class="info-block">
+                    <h3>💬 WhatsApp</h3>
+                    <div class="contact-item">
+                        <span class="contact-icon">📱</span>
+                        <a href="https://wa.me/2349020466502" class="contact-link" target="_blank">+234 902 046 6502</a>
+                    </div>
+                    <p style="font-size:0.9rem;color:#666;margin-top:0.5rem">Quick messages and urgent support</p>
+                </div>
+
+                <div class="support-hours">
+                    <h4>🕐 Support Hours</h4>
+                    <ul class="hours-list">
+                        <li><strong>Monday – Friday:</strong> 9:00 AM – 6:00 PM (WAT)</li>
+                        <li><strong>Saturday:</strong> 10:00 AM – 4:00 PM (WAT)</li>
+                        <li><strong>Sunday:</strong> Closed (emails answered Monday)</li>
+                    </ul>
+                    <div class="status-badge" id="statusBadge">Response within 24 hours</div>
+                </div>
+
+                <div style="margin-top:1.5rem;padding:1rem;background:#fef9f3;border-left:4px solid var(--gold);border-radius:4px">
+                    <p style="font-size:0.95rem"><strong>💡 Tip:</strong> WhatsApp messages receive the fastest response. For detailed design requests, email is best.</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+
+            // In a real application, this would send to a backend
+            // For now, we'll simulate success
+            const successMsg = document.getElementById('successMsg');
+            const errorMsg = document.getElementById('errorMsg');
+            
+            successMsg.style.display = 'block';
+            errorMsg.style.display = 'none';
+            
+            // Clear form
+            this.reset();
+            
+            // Hide success message after 5 seconds
+            setTimeout(() => {
+                successMsg.style.display = 'none';
+            }, 5000);
+        });
+
+        // Update status badge based on current time
+        function updateStatusBadge() {
+            const now = new Date();
+            const hours = now.getHours();
+            const day = now.getDay();
+            const badge = document.getElementById('statusBadge');
+            
+            if ((day >= 1 && day <= 5 && hours >= 9 && hours < 18) || (day === 6 && hours >= 10 && hours < 16)) {
+                badge.textContent = '🟢 Open now';
+                badge.style.background = '#28a745';
+            } else {
+                badge.textContent = '🔴 Offline - reply soon';
+                badge.style.background = '#dc3545';
+            }
+        }
+        
+        updateStatusBadge();
+        setInterval(updateStatusBadge, 60000); // Update every minute
+    </script>
+</body>
+</html>

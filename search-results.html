@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Search Results - Find embroidery designs, patterns, and formats on SamArtify.">
+    <title>Search Results — SamArtify</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Lora:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cream: #F9FAFB;
+            --rust: #2E5EAA;
+            --deep-rust: #1E3F7A;
+            --sage: #00C3B1;
+            --charcoal: #1F2937;
+            --gold: #00C3B1;
+            --light-sage: #E0F7F5;
+            --white: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lora', serif;
+            background: var(--cream);
+            color: var(--charcoal);
+            line-height: 1.6;
+        }
+
+        #root {
+            min-height: 100vh;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(250, 247, 240, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid rgba(184, 92, 56, 0.1);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--deep-rust);
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        /* Social icons in header */
+        .social-icons { display:none; }
+        .social-icon { display:inline-flex; align-items:center; justify-content:center; width:48px; height:48px; border-radius:12px; color:#fff; transition:transform 0.15s ease,box-shadow 0.15s ease; box-shadow:0 2px 6px rgba(0,0,0,0.08); }
+        .social-icon svg { width:22px; height:22px; fill:currentColor; }
+        .social-icon.facebook { background:#1877F2; }
+        .social-icon.instagram { background:radial-gradient(circle at 30% 30%,#fdf497 0%,#fd5949 30%,#d6249f 60%,#285AEB 100%); }
+        .social-icon.tiktok { background:linear-gradient(135deg,#69C9D0,#010101); }
+        .social-icon.youtube { background:#FF0000; }
+        .social-icon:hover { transform:translateY(-4px); box-shadow:0 8px 20px rgba(0,0,0,0.18); }
+        .footer-social { display:flex; gap:0.8rem; justify-content:center; align-items:center; margin-top:1rem; }
+        .footer-social .social-icon { width:56px; height:56px; border-radius:14px; }
+
+        .nav-btn {
+            color: var(--charcoal);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            text-decoration: none;
+            background: none;
+            border: none;
+        }
+
+        .nav-btn:hover {
+            color: var(--rust);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Search Bar */
+        .search-hero {
+            background: linear-gradient(135deg, var(--deep-rust), var(--rust));
+            color: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+
+        .search-hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .search-form {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .search-form input {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: none;
+            border-radius: 6px;
+            font-family: 'Lora', serif;
+            font-size: 1rem;
+        }
+
+        .search-form input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
+        }
+
+        .search-form button {
+            padding: 0.75rem 1.5rem;
+            background: var(--gold);
+            color: var(--deep-rust);
+            border: none;
+            border-radius: 6px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .search-form button:hover {
+            background: white;
+            transform: translateY(-2px);
+        }
+
+        /* Results Layout */
+        .results-layout {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+        }
+
+        /* Sidebar Filters */
+        .filters-sidebar {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            height: fit-content;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        }
+
+        .filter-section {
+            margin-bottom: 2rem;
+        }
+
+        .filter-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .filter-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--deep-rust);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-sage);
+        }
+
+        .filter-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .filter-option input {
+            margin-right: 0.5rem;
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+            accent-color: var(--rust);
+        }
+
+        .filter-option label {
+            cursor: pointer;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            flex: 1;
+        }
+
+        .filter-count {
+            font-size: 0.85rem;
+            color: #999;
+            margin-left: 0.5rem;
+        }
+
+        .price-slider {
+            margin-top: 1rem;
+        }
+
+        .price-slider input[type="range"] {
+            width: 100%;
+            margin: 0.5rem 0;
+        }
+
+        .price-display {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* Results Section */
+        .results-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--light-sage);
+        }
+
+        .results-info {
+            font-size: 1rem;
+            color: #666;
+        }
+
+        .results-info strong {
+            color: var(--rust);
+            font-weight: 700;
+        }
+
+        .sort-dropdown {
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--gold);
+            border-radius: 6px;
+            background: white;
+            cursor: pointer;
+            font-family: 'Lora', serif;
+            transition: all 0.3s ease;
+        }
+
+        .sort-dropdown:hover {
+            border-color: var(--rust);
+        }
+
+        .sort-dropdown:focus {
+            outline: none;
+            border-color: var(--rust);
+        }
+
+        /* Design Grid */
+        .design-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .design-card {
+            background: var(--light-sage);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .design-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 16px rgba(184, 92, 56, 0.15);
+        }
+
+        .design-image {
+            width: 100%;
+            height: 180px;
+            background: linear-gradient(135deg, var(--gold), var(--rust));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+
+        .design-info {
+            padding: 1rem;
+        }
+
+        .design-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--deep-rust);
+            margin-bottom: 0.5rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* Footer social icons */
+        .footer-social { display:flex; gap:0.5rem; justify-content:center; margin-bottom:1rem; }
+        .footer-social .social-icon { width:40px; height:40px; border-radius:8px; background:white; border:2px solid transparent; display:inline-flex; align-items:center; justify-content:center }
+        .footer-social .social-icon svg { width:18px; height:18px; }
+
+        .design-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .design-formats {
+            display: flex;
+            gap: 0.25rem;
+            margin-bottom: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .format-badge {
+            background: var(--rust);
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .design-price {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--rust);
+            margin-bottom: 0.75rem;
+        }
+
+        .quick-add-btn {
+            width: 100%;
+            padding: 0.6rem;
+            background: var(--rust);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quick-add-btn:hover {
+            background: var(--deep-rust);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 3rem 2rem;
+        }
+
+        .empty-state-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .empty-state h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--deep-rust);
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-state p {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background: var(--rust);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background: var(--deep-rust);
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+        }
+
+        .pagination-btn {
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--gold);
+            background: white;
+            color: var(--charcoal);
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .pagination-btn:hover,
+        .pagination-btn.active {
+            background: var(--rust);
+            border-color: var(--rust);
+            color: white;
+        }
+
+        /* Related Designs */
+        .related-section {
+            background: var(--light-sage);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-top: 2rem;
+        }
+
+        .related-section h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--deep-rust);
+            margin-bottom: 1.5rem;
+        }
+
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 1.5rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .results-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .filters-sidebar {
+                position: sticky;
+                top: 100px;
+            }
+
+            .design-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+
+            .results-header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+
+            .search-form {
+                flex-direction: column;
+            }
+        }
+
+        /* Footer */
+        footer {
+            background: var(--charcoal);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        footer a {
+            color: var(--gold);
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        function Navigation() {
+            return (
+                <nav>
+                    <div className="nav-content">
+                        <a href="homepage.html" className="logo">SamArtify</a>
+                        <div className="nav-links">
+                            <a href="homepage.html" className="nav-btn">Home</a>
+                            <a href="categories.html" className="nav-btn">Categories</a>
+                            <a href="blog.html" className="nav-btn">Blog</a>
+                            <a href="faq.html" className="nav-btn">Support</a>
+                            <a href="account.html" className="nav-btn">Account</a>
+                        </div>
+                    </div>
+                </nav>
+            );
+        }
+
+        const ALL_DESIGNS = [
+            { id: 1, title: 'Classic Agbada Pattern', price: 24.99, category: 'Agbada', formats: ['EMB', 'DST', 'PES', 'JEF'], emoji: '👗', rating: 4.8 },
+            { id: 2, title: 'Royal Agbada Gold', price: 34.99, category: 'Agbada', formats: ['EMB', 'DST', 'PES', 'JEF'], emoji: '👑', rating: 4.9 },
+            { id: 3, title: 'Pocket & Flap Design', price: 24.99, category: 'Pocket & Flap', formats: ['EMB', 'DST', 'PES'], emoji: '📦', rating: 4.7 },
+            { id: 4, title: 'Agbada Heritage', price: 19.99, category: 'Agbada', formats: ['EMB', 'PES'], emoji: '🏛️', rating: 4.6 },
+            { id: 5, title: 'Modern Floral Embroidery', price: 19.99, category: 'Floral', formats: ['DST', 'JEF', 'EXP'], emoji: '🌸', rating: 4.8 },
+            { id: 6, title: 'Geometric Patterns Collection', price: 29.99, category: 'Geometric', formats: ['EMB', 'DST', 'PES', 'JEF'], emoji: '✨', rating: 4.7 },
+            { id: 7, title: 'African Tribal Design', price: 22.99, category: 'Tribal', formats: ['EMB', 'DST', 'PES'], emoji: '🎨', rating: 4.5 },
+            { id: 8, title: 'Elegant Script Letters', price: 17.99, category: 'Text', formats: ['EMB', 'PES', 'JEF'], emoji: '✍️', rating: 4.6 },
+            { id: 9, title: 'Premium Monogram Set', price: 29.99, category: 'Monogram', formats: ['EMB', 'DST', 'PES', 'JEF'], emoji: '🔤', rating: 4.9 },
+            { id: 10, title: 'Nature Inspired Leaves', price: 18.99, category: 'Nature', formats: ['DST', 'PES', 'JEF'], emoji: '🍃', rating: 4.7 },
+            { id: 11, title: 'Vintage Lace Patterns', price: 26.99, category: 'Vintage', formats: ['EMB', 'DST', 'PES'], emoji: '🎀', rating: 4.8 },
+            { id: 12, title: 'Contemporary Abstract', price: 21.99, category: 'Abstract', formats: ['EMB', 'PES', 'EXP'], emoji: '🌀', rating: 4.5 }
+        ];
+
+        function SearchResults() {
+            const searchParams = new URLSearchParams(window.location.search);
+            const searchQuery = searchParams.get('q') || '';
+            
+            const [displayedResults, setDisplayedResults] = useState([]);
+            const [selectedCategories, setSelectedCategories] = useState([]);
+            const [selectedFormats, setSelectedFormats] = useState([]);
+            const [priceRange, setPriceRange] = useState([0, 50]);
+            const [sortBy, setSortBy] = useState('relevance');
+            const [currentPage, setCurrentPage] = useState(1);
+
+            const itemsPerPage = 8;
+
+            useEffect(() => {
+                let filtered = ALL_DESIGNS;
+
+                // Search filter
+                if (searchQuery) {
+                    filtered = filtered.filter(design =>
+                        design.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                        design.category.toLowerCase().includes(searchQuery.toLowerCase())
+                    );
+                }
+
+                // Category filter
+                if (selectedCategories.length > 0) {
+                    filtered = filtered.filter(design => selectedCategories.includes(design.category));
+                }
+
+                // Format filter
+                if (selectedFormats.length > 0) {
+                    filtered = filtered.filter(design =>
+                        design.formats.some(format => selectedFormats.includes(format))
+                    );
+                }
+
+                // Price filter
+                filtered = filtered.filter(design => design.price >= priceRange[0] && design.price <= priceRange[1]);
+
+                // Sort
+                if (sortBy === 'price-low') {
+                    filtered.sort((a, b) => a.price - b.price);
+                } else if (sortBy === 'price-high') {
+                    filtered.sort((a, b) => b.price - a.price);
+                } else if (sortBy === 'rating') {
+                    filtered.sort((a, b) => b.rating - a.rating);
+                } else if (sortBy === 'newest') {
+                    filtered.reverse();
+                }
+
+                setDisplayedResults(filtered);
+                setCurrentPage(1);
+            }, [searchQuery, selectedCategories, selectedFormats, priceRange, sortBy]);
+
+            const handleCategoryChange = (category) => {
+                setSelectedCategories(prev =>
+                    prev.includes(category) ? prev.filter(c => c !== category) : [...prev, category]
+                );
+            };
+
+            const handleFormatChange = (format) => {
+                setSelectedFormats(prev =>
+                    prev.includes(format) ? prev.filter(f => f !== format) : [...prev, format]
+                );
+            };
+
+            const handleQuickAdd = (design) => {
+                alert(`Added "${design.title}" to cart!`);
+            };
+
+            const categories = [...new Set(ALL_DESIGNS.map(d => d.category))];
+            const formats = [...new Set(ALL_DESIGNS.flatMap(d => d.formats))];
+            const paginatedResults = displayedResults.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+            const totalPages = Math.ceil(displayedResults.length / itemsPerPage);
+            const relatedDesigns = ALL_DESIGNS.filter(d => !displayedResults.includes(d)).slice(0, 4);
+
+            return (
+                <>
+                    <Navigation />
+
+                    <div className="container">
+                        <div className="search-hero">
+                            <h1>Search Embroidery Designs</h1>
+                            <form className="search-form" onSubmit={(e) => {
+                                e.preventDefault();
+                                const input = e.target.querySelector('input');
+                                window.location.href = `search-results.html?q=${encodeURIComponent(input.value)}`;
+                            }}>
+                                <input 
+                                    type="text" 
+                                    placeholder="Search designs..." 
+                                    defaultValue={searchQuery}
+                                />
+                                <button type="submit">Search</button>
+                            </form>
+                        </div>
+
+                        {searchQuery && (
+                            <div style={{marginBottom: '1.5rem', padding: '1rem', background: 'white', borderRadius: '8px', borderLeft: '4px solid var(--rust)'}}>
+                                Results for: <strong>"{searchQuery}"</strong> — Found {displayedResults.length} design{displayedResults.length !== 1 ? 's' : ''}
+                            </div>
+                        )}
+
+                        <div className="results-layout">
+                            {/* Filters */}
+                            <aside className="filters-sidebar">
+                                <div className="filter-section">
+                                    <div className="filter-title">Categories</div>
+                                    {categories.map(cat => (
+                                        <div key={cat} className="filter-option">
+                                            <input 
+                                                type="checkbox" 
+                                                id={`cat-${cat}`}
+                                                checked={selectedCategories.includes(cat)}
+                                                onChange={() => handleCategoryChange(cat)}
+                                            />
+                                            <label htmlFor={`cat-${cat}`}>
+                                                {cat}
+                                                <span className="filter-count">({ALL_DESIGNS.filter(d => d.category === cat).length})</span>
+                                            </label>
+                                        </div>
+                                    ))}
+                                </div>
+
+                                <div className="filter-section">
+                                    <div className="filter-title">File Formats</div>
+                                    {formats.map(fmt => (
+                                        <div key={fmt} className="filter-option">
+                                            <input 
+                                                type="checkbox" 
+                                                id={`fmt-${fmt}`}
+                                                checked={selectedFormats.includes(fmt)}
+                                                onChange={() => handleFormatChange(fmt)}
+                                            />
+                                            <label htmlFor={`fmt-${fmt}`}>
+                                                {fmt}
+                                                <span className="filter-count">({ALL_DESIGNS.filter(d => d.formats.includes(fmt)).length})</span>
+                                            </label>
+                                        </div>
+                                    ))}
+                                </div>
+
+                                <div className="filter-section">
+                                    <div className="filter-title">Price Range</div>
+                                    <div className="price-slider">
+                                        <input 
+                                            type="range" 
+                                            min="0" 
+                                            max="50" 
+                                            value={priceRange[0]}
+                                            onChange={(e) => setPriceRange([parseInt(e.target.value), priceRange[1]])}
+                                        />
+                                        <input 
+                                            type="range" 
+                                            min="0" 
+                                            max="50" 
+                                            value={priceRange[1]}
+                                            onChange={(e) => setPriceRange([priceRange[0], parseInt(e.target.value)])}
+                                        />
+                                        <div className="price-display">
+                                            <span>₦${priceRange[0].toFixed(2)}</span>
+                                            <span>₦${priceRange[1].toFixed(2)}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </aside>
+
+                            {/* Results */}
+                            <section className="results-section">
+                                {displayedResults.length > 0 ? (
+                                    <>
+                                        <div className="results-header">
+                                            <div className="results-info">
+                                                Showing <strong>{paginatedResults.length}</strong> of <strong>{displayedResults.length}</strong> results
+                                            </div>
+                                            <select className="sort-dropdown" value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+                                                <option value="relevance">Relevance</option>
+                                                <option value="price-low">Price: Low to High</option>
+                                                <option value="price-high">Price: High to Low</option>
+                                                <option value="rating">Highest Rated</option>
+                                                <option value="newest">Newest First</option>
+                                            </select>
+                                        </div>
+
+                                        <div className="design-grid">
+                                            {paginatedResults.map(design => (
+                                                <div key={design.id} className="design-card">
+                                                    <div className="design-image">{design.emoji}</div>
+                                                    <div className="design-info">
+                                                        <h4 className="design-title">{design.title}</h4>
+                                                        <div className="design-meta">
+                                                            <span>{design.category}</span>
+                                                            <span>⭐ {design.rating}</span>
+                                                        </div>
+                                                        <div className="design-formats">
+                                                            {design.formats.map(fmt => (
+                                                                <span key={fmt} className="format-badge">{fmt}</span>
+                                                            ))}
+                                                        </div>
+                                                        <div className="design-price">₦${design.price.toFixed(2)}</div>
+                                                        <button className="quick-add-btn" onClick={() => handleQuickAdd(design)}>
+                                                            + Add to Cart
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+
+                                        {totalPages > 1 && (
+                                            <div className="pagination">
+                                                {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+                                                    <button 
+                                                        key={page}
+                                                        className={`pagination-btn ${currentPage === page ? 'active' : ''}`}
+                                                        onClick={() => setCurrentPage(page)}
+                                                    >
+                                                        {page}
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        )}
+
+                                        {relatedDesigns.length > 0 && (
+                                            <div className="related-section">
+                                                <h3>💡 You Might Also Like</h3>
+                                                <div className="related-grid">
+                                                    {relatedDesigns.map(design => (
+                                                        <div key={design.id} className="design-card">
+                                                            <div className="design-image">{design.emoji}</div>
+                                                            <div className="design-info">
+                                                                <h4 className="design-title">{design.title}</h4>
+                                                                <div className="design-meta">
+                                                                    <span>{design.category}</span>
+                                                                </div>
+                                                                <div className="design-price">₦${design.price.toFixed(2)}</div>
+                                                                <button className="quick-add-btn" onClick={() => handleQuickAdd(design)}>
+                                                                    + Add to Cart
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        )}
+                                    </>
+                                ) : (
+                                    <div className="empty-state">
+                                        <div className="empty-state-icon">🔍</div>
+                                        <h2>No Designs Found</h2>
+                                        <p>We couldn't find any designs matching "{searchQuery}". Try adjusting your search or filters.</p>
+                                        <a href="categories.html" className="btn-primary">Browse All Designs</a>
+                                    </div>
+                                )}
+                            </section>
+                        </div>
+                    </div>
+
+                    <footer>
+                        <p>&copy; 2026 SamArtify. All rights reserved. | <a href="policies.html">Policies</a> | <a href="faq.html">FAQ</a> | <a href="contact.html">Contact</a></p>
+                        <div className="footer-social">
+                            <a className="social-icon facebook" href="https://facebook.com/samartify" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M22 12a10 10 0 10-11.5 9.9v-7h-2.2v-2.9h2.2V9.4c0-2.2 1.3-3.4 3.3-3.4.96 0 1.96.17 1.96.17v2.1h-1.06c-1.04 0-1.36.65-1.36 1.32v1.6h2.32l-.37 2.9h-1.95v7A10 10 0 0022 12z"/></svg>
+                            </a>
+                            <a className="social-icon instagram" href="https://instagram.com/samartify" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M7 2h10a5 5 0 015 5v10a5 5 0 01-5 5H7a5 5 0 01-5-5V7a5 5 0 015-5zm5 6.1A4.9 4.9 0 1016.9 13 4.9 4.9 0 0012 8.1zm5.2-2.3a1.2 1.2 0 11-1.2-1.2 1.2 1.2 0 011.2 1.2z"/></svg>
+                            </a>
+                            <a className="social-icon tiktok" href="https://www.tiktok.com/@samartify" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M17.5 6.5a4 4 0 01-4-4v9a5 5 0 11-5-5v2.1a2.9 2.9 0 102.9 2.9V6.5h4.1z"/></svg>
+                            </a>
+                            <a className="social-icon youtube" href="https://www.youtube.com/c/samartify" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M10 15l5.2-3L10 9v6zm12-3c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v0c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v0z"/></svg>
+                            </a>
+                        </div>
+                    </footer>
+                </>
+            );
+        }
+
+        // Render App
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<SearchResults />);
+    </script>
+</body>
+</html>

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card Components</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Lora:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cream: #F9FAFB;
+            --rust: #2E5EAA;
+            --deep-rust: #1E3F7A;
+            --sage: #00C3B1;
+            --charcoal: #1F2937;
+            --gold: #00C3B1;
+            --light-sage: #E0F7F5;
+            --white: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lora', serif;
+            background: var(--cream);
+            color: var(--charcoal);
+            padding: 2rem;
+        }
+
+        .component-section {
+            margin-bottom: 3rem;
+        }
+
+        .component-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--deep-rust);
+        }
+
+        /* ============================================
+           PRODUCT CARD COMPONENT
+           ============================================ */
+        .product-card {
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(44, 44, 44, 0.08);
+            transition: all 0.3s ease;
+            max-width: 280px;
+        }
+
+        .product-card:hover {
+            box-shadow: 0 8px 24px rgba(44, 44, 44, 0.15);
+            transform: translateY(-4px);
+        }
+
+        .product-card__image {
+            position: relative;
+            width: 100%;
+            padding-bottom: 100%;
+            background: var(--light-sage);
+            overflow: hidden;
+        }
+
+        .product-card__image img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover .product-card__image img {
+            transform: scale(1.05);
+        }
+
+        .product-card__badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: var(--rust);
+            color: var(--white);
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .product-card__badge--sale {
+            background: var(--deep-rust);
+        }
+
+        .product-card__content {
+            padding: 1.5rem;
+        }
+
+        .product-card__category {
+            font-size: 0.85rem;
+            color: var(--sage);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-card__title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--charcoal);
+            line-height: 1.3;
+        }
+
+        .product-card__price-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .product-card__price {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--rust);
+        }
+
+        .product-card__price--original {
+            text-decoration: line-through;
+            color: #999;
+            font-size: 0.95rem;
+            font-weight: 400;
+        }
+
+        .product-card__formats {
+            display: flex;
+            gap: 0.6rem;
+            margin-bottom: 1rem;
+        }
+
+        .product-card__format-badge {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--light-sage);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--sage);
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .product-card__format-badge:hover,
+        .product-card__format-badge--active {
+            background: var(--sage);
+            color: var(--white);
+            border-color: var(--rust);
+        }
+
+        .product-card__rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .product-card__stars {
+            color: var(--gold);
+            letter-spacing: 2px;
+        }
+
+        /* ============================================
+           CATEGORY CARD COMPONENT
+           ============================================ */
+        .category-card {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            height: 280px;
+            min-width: 220px;
+        }
+
+        .category-card__background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.3s ease;
+        }
+
+        .category-card:hover .category-card__background {
+            transform: scale(1.08);
+        }
+
+        .category-card__overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(139, 58, 31, 0.6) 0%, rgba(123, 158, 137, 0.4) 100%);
+            transition: all 0.3s ease;
+        }
+
+        .category-card:hover .category-card__overlay {
+            background: linear-gradient(135deg, rgba(139, 58, 31, 0.8) 0%, rgba(123, 158, 137, 0.6) 100%);
+        }
+
+        .category-card__content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 1.5rem;
+            color: var(--white);
+        }
+
+        .category-card__count {
+            font-size: 0.85rem;
+            opacity: 0.9;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .category-card__title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .category-card__arrow {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            opacity: 0;
+        }
+
+        .category-card:hover .category-card__arrow {
+            opacity: 1;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateX(4px);
+        }
+    </style>
+</head>
+<body>
+
+<!-- PRODUCT CARD -->
+<div class="component-section">
+    <h2 class="component-title">Product Card</h2>
+    
+    <div class="product-card">
+        <div class="product-card__image">
+            <img src="https://images.unsplash.com/photo-1600298881974-6be191ceeda1?w=400&h=400&fit=crop" alt="Premium Design Template">
+            <span class="product-card__badge">Featured</span>
+        </div>
+        <div class="product-card__content">
+            <div class="product-card__category">Embroidery Designs</div>
+            <h3 class="product-card__title">Luxury Monogram Bundle</h3>
+            
+            <div class="product-card__price-group">
+                <span class="product-card__price">$24.99</span>
+                <span class="product-card__price--original">$34.99</span>
+            </div>
+
+            <div class="product-card__formats">
+                <div class="product-card__format-badge product-card__format-badge--active">DST</div>
+                <div class="product-card__format-badge">PES</div>
+                <div class="product-card__format-badge">JEF</div>
+            </div>
+
+            <div class="product-card__rating">
+                <span class="product-card__stars">★★★★★</span>
+                <span>(128)</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CATEGORY CARD -->
+<div class="component-section">
+    <h2 class="component-title">Category Card</h2>
+    
+    <div class="category-card">
+        <div class="category-card__background" style="background-image: url('https://images.unsplash.com/photo-1527864357687-c2b1b4839d2f?w=500&h=500&fit=crop');"></div>
+        <div class="category-card__overlay"></div>
+        <div class="category-card__content">
+            <div class="category-card__count">127 Designs</div>
+            <h3 class="category-card__title">Floral Patterns</h3>
+        </div>
+        <div class="category-card__arrow">→</div>
+    </div>
+</div>
+
+</body>
+</html>

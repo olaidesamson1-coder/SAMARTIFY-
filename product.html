@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SamArtify - Product Details</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Lora:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cream: #F9FAFB;
+            --rust: #2E5EAA;
+            --deep-rust: #1E3F7A;
+            --sage: #00C3B1;
+            --charcoal: #1F2937;
+            --gold: #00C3B1;
+            --light-sage: #E0F7F5;
+            --white: #FFFFFF;
+        }
+
+        body.dark-mode {
+            --cream: #0d0d0d;
+            --charcoal: #e8e8e8;
+            --light-sage: #1a3a2a;
+            --white: #1a1a1a;
+            --rust: #ff7a54;
+            --deep-rust: #ff9d7a;
+            --gold: #ffc266;
+            --sage: #7dd3a8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lora', serif;
+            background: var(--cream);
+            color: var(--charcoal);
+            line-height: 1.6;
+        }
+
+        #root {
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(123, 158, 137, 0.03) 35px, rgba(123, 158, 137, 0.03) 70px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(250, 247, 240, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid rgba(184, 92, 56, 0.1);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--deep-rust);
+            cursor: pointer;
+            letter-spacing: -1px;
+            position: relative;
+            text-decoration: none;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 50%;
+            height: 2px;
+            background: var(--gold);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            color: var(--charcoal);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            font-family: 'Lora', serif;
+            position: relative;
+            text-decoration: none;
+        }
+
+        .nav-btn::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--rust);
+            transition: width 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            color: var(--rust);
+        }
+
+        .nav-btn:hover::after {
+            width: 100%;
+        }
+
+        .dark-mode-toggle {
+            background: none;
+            border: 2px solid var(--charcoal);
+            color: var(--charcoal);
+            width: 50px;
+            height: 28px;
+            border-radius: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 2px;
+            transition: all 0.3s ease;
+            font-size: 0.8rem;
+        }
+
+        .dark-mode-toggle:hover {
+            border-color: var(--rust);
+            box-shadow: 0 2px 8px rgba(184, 92, 56, 0.2);
+        }
+
+        body.dark-mode .dark-mode-toggle {
+            justify-content: flex-end;
+            border-color: var(--gold);
+        }
+
+        .toggle-icon {
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Lora', serif;
+            font-size: 1rem;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--rust);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--deep-rust);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(184, 92, 56, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--charcoal);
+            border: 2px solid var(--charcoal);
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            padding: 2rem 0;
+            font-size: 0.95rem;
+            color: var(--charcoal);
+            opacity: 0.8;
+        }
+
+        .breadcrumb a {
+            color: var(--rust);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .breadcrumb a:hover {
+            color: var(--deep-rust);
+        }
+
+        /* Product Section */
+        .product-detail {
+            padding: 3rem 0;
+        }
+
+        .product-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 4rem;
+            align-items: start;
+        }
+
+        .product-image-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-image-main {
+            width: 100%;
+            height: 500px;
+            background: linear-gradient(135deg, var(--cream), var(--light-sage));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+
+        .img-zoom-container { width:100%; height:100%; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+        .img-zoom-container img { width:100%; height:100%; object-fit:contain; transition: transform 0.18s ease; will-change: transform; }
+
+        .product-thumbnails .thumbnail { padding:0; height:100px; }
+        .product-thumbnails .thumbnail img { width:100%; height:100%; object-fit:cover; border-radius:6px; display:block; }
+
+        /* Tabs */
+        .tabs { margin-top: 1.5rem; }
+        .tab-buttons { display:flex; gap:0.5rem; margin-bottom:1rem; flex-wrap:wrap; }
+        .tab-button { padding:0.6rem 1rem; border-radius:6px; background:transparent; border:1px solid rgba(0,0,0,0.06); cursor:pointer; font-weight:600; }
+        .tab-button.active { background: var(--rust); color: #fff; border-color: var(--rust); }
+        .tab-content { background: #fff; padding:1rem; border-radius:8px; box-shadow: 0 6px 18px rgba(0,0,0,0.06); }
+
+        .product-thumbnails {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.8rem;
+        }
+
+        .thumbnail {
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(135deg, var(--cream), var(--light-sage));
+            border-radius: 6px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .thumbnail:hover {
+            border-color: var(--rust);
+            transform: scale(1.05);
+        }
+
+        .thumbnail.active {
+            border-color: var(--rust);
+            box-shadow: 0 4px 12px rgba(184, 92, 56, 0.3);
+        }
+
+        .product-info {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--deep-rust);
+            margin-bottom: 1rem;
+            font-weight: 900;
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .stars {
+            color: var(--gold);
+        }
+
+        .review-count {
+            color: var(--charcoal);
+            opacity: 0.7;
+        }
+
+        .product-price {
+            font-size: 2.5rem;
+            color: var(--rust);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .product-description {
+            color: var(--charcoal);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        /* Metadata */
+        .product-metadata {
+            background: var(--light-sage);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        .metadata-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .metadata-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .metadata-label {
+            font-weight: 700;
+            color: var(--deep-rust);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .metadata-value {
+            color: var(--charcoal);
+            font-size: 0.95rem;
+        }
+
+        .file-formats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .format-badge {
+            background: var(--rust);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        /* Buttons */
+        .product-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn-buy {
+            padding: 1rem;
+            background: var(--rust);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .btn-buy:hover {
+            background: var(--deep-rust);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(184, 92, 56, 0.3);
+        }
+
+        .btn-wishlist {
+            padding: 1rem;
+            background: transparent;
+            color: var(--rust);
+            border: 2px solid var(--rust);
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-wishlist:hover {
+            background: var(--rust);
+            color: white;
+        }
+
+        /* Testimonials Section */
+        .testimonials-section {
+            background: white;
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--deep-rust);
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: var(--gold);
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .testimonial-card {
+            background: var(--light-sage);
+            padding: 1.8rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--rust);
+        }
+
+        .testimonial-stars {
+            color: var(--gold);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .testimonial-text {
+            color: var(--charcoal);
+            margin-bottom: 1.2rem;
+            font-style: italic;
+            line-height: 1.6;
+        }
+
+        .testimonial-author {
+            font-weight: 700;
+            color: var(--deep-rust);
+            font-style: normal;
+        }
+
+        .testimonial-role {
+            color: var(--charcoal);
+            opacity: 0.7;
+            font-size: 0.9rem;
+            font-style: normal;
+        }
+
+        /* Related Products */
+        .related-section {
+            background: white;
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .related-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .related-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(184, 92, 56, 0.15);
+        }
+
+        .related-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, var(--cream), var(--light-sage));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+
+        .related-info {
+            padding: 1.5rem;
+        }
+
+        .related-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            color: var(--deep-rust);
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .related-price {
+            color: var(--rust);
+            font-weight: 700;
+            font-size: 1.3rem;
+        }
+
+        footer {
+            background: var(--charcoal);
+            color: white;
+            padding: 3rem 0 1.5rem;
+            margin-top: 5rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .notification {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--rust);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            animation: slideInRight 0.4s ease-out;
+            z-index: 3000;
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @media (max-width: 968px) {
+            .product-layout {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .product-title {
+                font-size: 2rem;
+            }
+
+            .product-image-main {
+                height: 400px;
+                font-size: 5rem;
+            }
+
+            .product-buttons {
+                grid-template-columns: 1fr;
+            }
+
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <style>
+        .social-icons { display:flex; gap:0.8rem; align-items:center; }
+        .social-icon { width:48px; height:48px; display:inline-flex; align-items:center; justify-content:center; border-radius:12px; color:#fff; transition: transform 0.15s ease, box-shadow 0.15s ease; box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+        .social-icon svg { width:22px; height:22px; fill:currentColor; }
+        .social-icon.facebook { background:#1877F2; }
+        .social-icon.instagram { background: radial-gradient(circle at 30% 30%, #fdf497 0%, #fd5949 30%, #d6249f 60%, #285AEB 100%); }
+        .social-icon.tiktok { background: linear-gradient(135deg,#69C9D0,#010101); }
+        .social-icon.youtube { background:#FF0000; }
+        .social-icon:hover { transform: translateY(-4px); box-shadow:0 8px 20px rgba(0,0,0,0.18); }
+        .footer-social { display:flex; gap:0.8rem; justify-content:center; align-items:center; margin-top:1rem; }
+        .footer-social .social-icon { width:56px; height:56px; border-radius:14px; }
+        @media (max-width: 768px) { .footer-social { justify-content:center; } }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        function Navigation() {
+            return (
+                <nav>
+                    <div className="nav-content">
+                        <a href="homepage.html" className="logo">SamArtify</a>
+                        <div className="nav-links">
+                            <a href="categories.html" className="nav-btn">Categories</a>
+                            <a href="about.html" className="nav-btn">About</a>
+                            <a href="contact.html" className="nav-btn">Contact</a>
+                            <a href="homepage.html" className="btn btn-primary">Cart</a>
+                        </div>
+
+                    </div>
+                </nav>
+            );
+        }
+
+        function ProductPage() {
+            const [notification, setNotification] = useState(null);
+            const [selectedThumbnail, setSelectedThumbnail] = useState(0);
+            const [isWishlisted, setIsWishlisted] = useState(false);
+            const [activeTab, setActiveTab] = useState('description');
+            const imgRef = React.useRef(null);
+
+            // Product data
+            const product = {
+                id: 1,
+                title: 'Classic Agbada Pattern',
+                category: 'Agbada',
+                price: 24.99,
+                rating: 4.8,
+                reviews: 128,
+                icon: '👔',
+                description: 'Premium embroidery design featuring an elegant traditional Agbada pattern. Perfect for creating stunning embroidery projects with authentic African cultural elements. This design showcases intricate details that will elevate any creative project.',
+                metadata: {
+                    fileSize: '2.5 MB',
+                    compatibility: ['EMB', 'DST', 'PES', 'JEF'],
+                    stitchCount: '15,420',
+                    dimensions: '4" x 6"',
+                    colors: 8,
+                    difficulty: 'Intermediate',
+                    hoopSizes: ['4x4', '5x7', '6x10'],
+                    license: 'Single commercial use'
+                },
+                thumbnails: [
+                    'https://placehold.co/1200x1200/png?text=View+1',
+                    'https://placehold.co/1200x1200/png?text=View+2',
+                    'https://placehold.co/1200x1200/png?text=View+3',
+                    'https://placehold.co/1200x1200/png?text=View+4'
+                ],
+                testimonials: [
+                    {
+                        author: 'Sarah Johnson',
+                        role: 'Embroidery Artist',
+                        rating: 5,
+                        text: 'Absolutely beautiful design! The stitch count is perfect and the pattern is so detailed. Highly recommend!'
+                    },
+                    {
+                        author: 'Michael Chen',
+                        role: 'Fashion Designer',
+                        rating: 5,
+                        text: 'The quality of this design is exceptional. My clients loved the finished product. Will definitely purchase again!'
+                    },
+                    {
+                        author: 'Amara Okafor',
+                        role: 'Craft Enthusiast',
+                        rating: 4,
+                        text: 'Great design with authentic African motifs. Easy to work with and turned out beautifully on fabric.'
+                    }
+                ],
+                relatedProducts: [
+                    { id: 2, title: 'Royal Agbada Gold', price: 34.99, icon: '👑' },
+                    { id: 3, title: 'Agbada Heritage', price: 19.99, icon: '✨' },
+                    { id: 4, title: 'Modern Pocket Design', price: 14.99, icon: '📌' }
+                ]
+            };
+
+            const handleBuyNow = () => {
+                setNotification(`${product.title} added to cart!`);
+                setTimeout(() => setNotification(null), 3000);
+            };
+
+            const handleAddToCart = () => {
+                setNotification(`${product.title} added to cart!`);
+                setTimeout(() => setNotification(null), 3000);
+            };
+
+            const handleZoom = (e) => {
+                const img = imgRef.current;
+                if (!img) return;
+                const rect = e.target.getBoundingClientRect();
+                const x = ((e.clientX - rect.left) / rect.width) * 100;
+                const y = ((e.clientY - rect.top) / rect.height) * 100;
+                img.style.transformOrigin = `${x}% ${y}%`;
+                img.style.transform = 'scale(2)';
+            };
+
+            const resetZoom = () => {
+                const img = imgRef.current;
+                if (!img) return;
+                img.style.transform = 'scale(1)';
+            };
+            const handleWishlist = () => {
+                setIsWishlisted(!isWishlisted);
+                setNotification(isWishlisted ? 'Removed from wishlist' : 'Added to wishlist!');
+                setTimeout(() => setNotification(null), 3000);
+            };
+
+            return (
+                <>
+                    <Navigation />
+
+                    <div className="product-detail">
+                        <div className="container">
+                            <div className="breadcrumb">
+                                <a href="homepage.html">Home</a> / <a href="categories.html">Categories</a> / <a href="categories.html">{product.category}</a> / <span>{product.title}</span>
+                            </div>
+
+                            <div className="product-layout">
+                                {/* Product Images */}
+                                <div className="product-image-section">
+                                    <div className="product-image-main">
+                                        <div className="img-zoom-container">
+                                            <img
+                                                ref={imgRef}
+                                                id="mainImage"
+                                                src={product.thumbnails[selectedThumbnail]}
+                                                alt={product.title}
+                                                onMouseMove={handleZoom}
+                                                onMouseLeave={resetZoom}
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="product-thumbnails">
+                                        {product.thumbnails.map((thumb, idx) => (
+                                            <div
+                                                key={idx}
+                                                className={`thumbnail ${idx === selectedThumbnail ? 'active' : ''}`}
+                                                onClick={() => setSelectedThumbnail(idx)}
+                                            >
+                                                <img src={thumb} alt={`Thumbnail ${idx+1}`} style={{width:'100%', height:'100%', objectFit:'cover', borderRadius:6}} />
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* Product Info */}
+                                <div className="product-info">
+                                    <h1 className="product-title">{product.title}</h1>
+
+                                    <div className="product-rating">
+                                        <span className="stars">{'⭐'.repeat(Math.floor(product.rating))}</span>
+                                        <span>{product.rating}</span>
+                                        <span className="review-count">({product.reviews} reviews)</span>
+                                    </div>
+
+                                    <div className="product-price">₦${product.price.toFixed(2)}</div>
+
+                                    <p className="product-description">
+                                        {product.description}
+                                    </p>
+
+                                    {/* Metadata */}
+                                    <div className="product-metadata">
+                                        <div className="metadata-grid">
+                                            <div className="metadata-item">
+                                                <span className="metadata-label">File Size</span>
+                                                <span className="metadata-value">{product.metadata.fileSize}</span>
+                                            </div>
+                                            <div className="metadata-item">
+                                                <span className="metadata-label">Stitch Count</span>
+                                                <span className="metadata-value">{product.metadata.stitchCount}</span>
+                                            </div>
+                                            <div className="metadata-item">
+                                                <span className="metadata-label">Dimensions</span>
+                                                <span className="metadata-value">{product.metadata.dimensions}</span>
+                                            </div>
+                                            <div className="metadata-item">
+                                                <span className="metadata-label">Colors</span>
+                                                <span className="metadata-value">{product.metadata.colors}</span>
+                                            </div>
+                                            <div className="metadata-item">
+                                                <span className="metadata-label">Difficulty</span>
+                                                <span className="metadata-value">{product.metadata.difficulty}</span>
+                                            </div>
+                                            <div className="metadata-item">
+                                                <span className="metadata-label">File Formats</span>
+                                                <div className="file-formats">
+                                                    {product.metadata.compatibility.map(fmt => (
+                                                        <span key={fmt} className="format-badge">{fmt}</span>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Buttons */}
+                                    <div className="product-buttons">
+                                        <button className="btn-buy" onClick={handleAddToCart}>
+                                            🛒 Add to Cart
+                                        </button>
+                                        <button className="btn-wishlist" onClick={handleBuyNow}>
+                                            💳 Buy Now
+                                        </button>
+                                        <button 
+                                            className="btn-wishlist" 
+                                            onClick={handleWishlist}
+                                            style={{background: isWishlisted ? 'var(--rust)' : 'transparent'}}
+                                        >
+                                            {isWishlisted ? '❤️' : '🤍'} Wishlist
+                                        </button>
+                                    </div>
+
+                                    {/* Tabs */}
+                                    <div className="tabs">
+                                        <div className="tab-buttons">
+                                            <button className={`tab-button ${activeTab === 'description' ? 'active' : ''}`} onClick={() => setActiveTab('description')}>Description</button>
+                                            <button className={`tab-button ${activeTab === 'technical' ? 'active' : ''}`} onClick={() => setActiveTab('technical')}>Technical Details</button>
+                                            <button className={`tab-button ${activeTab === 'formats' ? 'active' : ''}`} onClick={() => setActiveTab('formats')}>File Formats</button>
+                                            <button className={`tab-button ${activeTab === 'license' ? 'active' : ''}`} onClick={() => setActiveTab('license')}>License Terms</button>
+                                            <button className={`tab-button ${activeTab === 'reviews' ? 'active' : ''}`} onClick={() => setActiveTab('reviews')}>Reviews</button>
+                                        </div>
+
+                                        <div className="tab-content">
+                                            {activeTab === 'description' && (
+                                                <div>
+                                                    <p>{product.description}</p>
+                                                </div>
+                                            )}
+
+                                            {activeTab === 'technical' && (
+                                                <div>
+                                                    <ul>
+                                                        <li><strong>Stitch Count:</strong> {product.metadata.stitchCount}</li>
+                                                        <li><strong>Colors:</strong> {product.metadata.colors}</li>
+                                                        <li><strong>Dimensions:</strong> {product.metadata.dimensions}</li>
+                                                        <li><strong>Hoop Sizes:</strong> {product.metadata.hoopSizes.join(', ')}</li>
+                                                        <li><strong>Difficulty:</strong> {product.metadata.difficulty}</li>
+                                                        <li><strong>File Size:</strong> {product.metadata.fileSize}</li>
+                                                    </ul>
+                                                </div>
+                                            )}
+
+                                            {activeTab === 'formats' && (
+                                                <div>
+                                                    <div className="file-formats">
+                                                        {product.metadata.compatibility.map(fmt => (
+                                                            <span key={fmt} className="format-badge">{fmt}</span>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            )}
+
+                                            {activeTab === 'license' && (
+                                                <div>
+                                                    <p><strong>License:</strong> {product.metadata.license}</p>
+                                                    <p style={{marginTop:8}}>This license allows single commercial use on finished products. Contact us for extended or multi-use licensing.</p>
+                                                </div>
+                                            )}
+
+                                            {activeTab === 'reviews' && (
+                                                <div>
+                                                    {product.testimonials.map((t, i) => (
+                                                        <div key={i} style={{marginBottom:12}}>
+                                                            <div style={{fontWeight:700}}>{t.author} — <span style={{color:'var(--gold)'}}>{'⭐'.repeat(t.rating)}</span></div>
+                                                            <div style={{opacity:0.9}}>{t.text}</div>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Testimonials */}
+                            <div className="testimonials-section">
+                                <h2 className="section-title">Customer Testimonials</h2>
+                                <div className="testimonials-grid">
+                                    {product.testimonials.map((testimonial, idx) => (
+                                        <div key={idx} className="testimonial-card">
+                                            <div className="testimonial-stars">
+                                                {'⭐'.repeat(testimonial.rating)}
+                                            </div>
+                                            <p className="testimonial-text">
+                                                "{testimonial.text}"
+                                            </p>
+                                            <div className="testimonial-author">{testimonial.author}</div>
+                                            <div className="testimonial-role">{testimonial.role}</div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* Related Products */}
+                            <div className="related-section">
+                                <h2 className="section-title">Related Products</h2>
+                                <div className="related-grid">
+                                    {product.relatedProducts.map(related => (
+                                        <div key={related.id} className="related-card" onClick={() => window.location.hash = related.id}>
+                                            <div className="related-image">
+                                                {related.icon}
+                                            </div>
+                                            <div className="related-info">
+                                                <div className="related-title">{related.title}</div>
+                                                <div className="related-price">₦${related.price.toFixed(2)}</div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {notification && (
+                        <div className="notification">
+                            {notification}
+                        </div>
+                    )}
+
+                    <footer>
+                        <div className="container">
+                            <div className="footer-content">
+                                <div className="footer-section">
+                                    <h3>🧵 SamArtify</h3>
+                                    <p style={{color: 'rgba(255, 255, 255, 0.7)', marginBottom: '1rem'}}>
+                                        Premium embroidery designs for creative makers.
+                                    </p>
+                                </div>
+                                <div className="footer-section">
+                                    <h3>Navigation</h3>
+                                    <ul style={{listStyle: 'none', color: 'rgba(255, 255, 255, 0.7)'}}>
+                                        <li style={{marginBottom: '0.5rem'}}><a href="homepage.html" style={{color: 'inherit', textDecoration: 'none'}}>Home</a></li>
+                                        <li style={{marginBottom: '0.5rem'}}><a href="categories.html" style={{color: 'inherit', textDecoration: 'none'}}>Categories</a></li>
+                                        <li style={{marginBottom: '0.5rem'}}><a href="blog.html" style={{color: 'inherit', textDecoration: 'none'}}>Blog</a></li>
+                                        <li style={{marginBottom: '0.5rem'}}><a href="account.html" style={{color: 'inherit', textDecoration: 'none'}}>Account</a></li>
+                                    </ul>
+                                </div>
+                                <div className="footer-section">
+                                    <h3>Support</h3>
+                                    <ul style={{listStyle: 'none', color: 'rgba(255, 255, 255, 0.7)'}}>
+                                        <li style={{marginBottom: '0.5rem'}}><a href="faq.html" style={{color: 'inherit', textDecoration: 'none'}}>FAQ</a></li>
+                                        <li style={{marginBottom: '0.5rem'}}><a href="contact.html" style={{color: 'inherit', textDecoration: 'none'}}>Contact Us</a></li>
+                                        <li style={{marginBottom: '0.5rem'}}><a href="policies.html" style={{color: 'inherit', textDecoration: 'none'}}>Policies</a></li>
+                                        <li style={{marginBottom: '0.5rem'}}><a href="refund-policy.html" style={{color: 'inherit', textDecoration: 'none'}}>Refunds</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div className="footer-bottom">
+                                <p>&copy; 2026 SamArtify. All rights reserved. | <a href="policies.html" style={{color: 'var(--gold)', textDecoration: 'none'}}>Policies</a> | <a href="refund-policy.html" style={{color: 'var(--gold)', textDecoration: 'none'}}>Refunds</a> | <a href="contact.html" style={{color: 'var(--gold)', textDecoration: 'none'}}>Contact</a></p>
+                                <div className="footer-social">
+                                    <a className="social-icon facebook" href="https://facebook.com/samartify" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M22 12a10 10 0 10-11.5 9.9v-7h-2.2v-2.9h2.2V9.4c0-2.2 1.3-3.4 3.3-3.4.96 0 1.96.17 1.96.17v2.1h-1.06c-1.04 0-1.36.65-1.36 1.32v1.6h2.32l-.37 2.9h-1.95v7A10 10 0 0022 12z"/></svg>
+                                    </a>
+                                    <a className="social-icon instagram" href="https://instagram.com/samartify" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M7 2h10a5 5 0 015 5v10a5 5 0 01-5 5H7a5 5 0 01-5-5V7a5 5 0 015-5zm5 6.1A4.9 4.9 0 1016.9 13 4.9 4.9 0 0012 8.1zm5.2-2.3a1.2 1.2 0 11-1.2-1.2 1.2 1.2 0 011.2 1.2z"/></svg>
+                                    </a>
+                                    <a className="social-icon tiktok" href="https://www.tiktok.com/@samartify" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+                                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M17.5 6.5a4 4 0 01-4-4v9a5 5 0 11-5-5v2.1a2.9 2.9 0 102.9 2.9V6.5h4.1z"/></svg>
+                                    </a>
+                                    <a className="social-icon youtube" href="https://www.youtube.com/c/samartify" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+                                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M10 15l5.2-3L10 9v6zm12-3c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v0c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v0z"/></svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
+                </>
+            );
+        }
+
+        function App() {
+            return <ProductPage />;
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>

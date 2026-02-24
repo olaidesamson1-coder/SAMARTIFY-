@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modal Components</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Lora:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cream: #F9FAFB;
+            --rust: #2E5EAA;
+            --deep-rust: #1E3F7A;
+            --sage: #00C3B1;
+            --charcoal: #1F2937;
+            --gold: #00C3B1;
+            --light-sage: #E0F7F5;
+            --white: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lora', serif;
+            background: var(--cream);
+            color: var(--charcoal);
+            padding: 2rem;
+        }
+
+        .component-section {
+            margin-bottom: 3rem;
+        }
+
+        .component-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--deep-rust);
+        }
+
+        .demo-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .trigger-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            padding: 0.9rem 1.8rem;
+            background: var(--rust);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            box-shadow: 0 4px 12px rgba(184, 92, 56, 0.2);
+        }
+
+        .trigger-btn:hover {
+            background: var(--deep-rust);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(139, 58, 31, 0.3);
+        }
+
+        /* ============================================
+           MODAL OVERLAY & BACKDROP
+           ============================================ */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(44, 44, 44, 0.5);
+            z-index: 999;
+            animation: fadeIn 0.3s ease;
+            backdrop-filter: blur(2px);
+        }
+
+        .modal-overlay--active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* ============================================
+           PREVIEW MODAL COMPONENT
+           ============================================ */
+        .preview-modal {
+            background: var(--white);
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(44, 44, 44, 0.3);
+            max-width: 900px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideUp 0.3s ease;
+            z-index: 1000;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .preview-modal__header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.5rem;
+            border-bottom: 1px solid #eee;
+            background: var(--light-sage);
+            border-radius: 16px 16px 0 0;
+        }
+
+        .preview-modal__title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--charcoal);
+        }
+
+        .preview-modal__close {
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: rgba(184, 92, 56, 0.1);
+            color: var(--rust);
+            font-size: 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .preview-modal__close:hover {
+            background: var(--rust);
+            color: var(--white);
+        }
+
+        .preview-modal__content {
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .preview-modal__content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .preview-modal__image {
+            aspect-ratio: 1;
+            background: var(--light-sage);
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .preview-modal__image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .preview-modal__details h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--charcoal);
+        }
+
+        .preview-modal__category {
+            font-size: 0.85rem;
+            color: var(--sage);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        .preview-modal__price {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--rust);
+            margin-bottom: 1rem;
+        }
+
+        .preview-modal__description {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .preview-modal__formats {
+            margin-bottom: 1.5rem;
+        }
+
+        .preview-modal__formats-label {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--charcoal);
+            margin-bottom: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .preview-modal__formats-list {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .format-tag {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--light-sage);
+            color: var(--sage);
+            font-size: 0.8rem;
+            font-weight: 600;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+        }
+
+        .format-tag:hover,
+        .format-tag--active {
+            background: var(--sage);
+            color: var(--white);
+            border-color: var(--rust);
+        }
+
+        .preview-modal__rating {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: var(--light-sage);
+            border-radius: 10px;
+        }
+
+        .preview-modal__stars {
+            font-size: 1.2rem;
+            color: var(--gold);
+            letter-spacing: 2px;
+        }
+
+        .preview-modal__review-count {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+        }
+
+        .preview-modal__review-num {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            color: var(--charcoal);
+        }
+
+        .preview-modal__review-text {
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .preview-modal__actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .btn-modal {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-modal--primary {
+            background: var(--rust);
+            color: var(--white);
+            box-shadow: 0 4px 12px rgba(184, 92, 56, 0.2);
+        }
+
+        .btn-modal--primary:hover {
+            background: var(--deep-rust);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(139, 58, 31, 0.3);
+        }
+
+        .btn-modal--secondary {
+            background: transparent;
+            color: var(--rust);
+            border: 2px solid var(--rust);
+        }
+
+        .btn-modal--secondary:hover {
+            background: var(--light-sage);
+        }
+
+        .preview-modal__footer {
+            padding: 1.5rem;
+            border-top: 1px solid #eee;
+            background: #f9f9f9;
+            border-radius: 0 0 16px 16px;
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        /* ============================================
+           LIGHTBOX/GALLERY MODAL
+           ============================================ */
+        .lightbox-modal {
+            background: transparent;
+            border-radius: 0;
+            box-shadow: none;
+            max-width: 100%;
+            width: 100%;
+            max-height: 100vh;
+            overflow: visible;
+            animation: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox-modal__content {
+            position: relative;
+            width: 90%;
+            max-width: 1000px;
+        }
+
+        .lightbox-modal__image {
+            width: 100%;
+            aspect-ratio: 16/10;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .lightbox-modal__image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .lightbox-modal__nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 1rem;
+            pointer-events: none;
+        }
+
+        .lightbox-modal__nav-btn {
+            width: 48px;
+            height: 48px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: var(--white);
+            font-size: 1.5rem;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            pointer-events: all;
+        }
+
+        .lightbox-modal__nav-btn:hover {
+            background: rgba(255, 255, 255, 0.4);
+            transform: scale(1.1);
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- PREVIEW MODAL -->
+<div class="component-section">
+    <h2 class="component-title">Preview Modal</h2>
+    
+    <div style="margin-top: 1.5rem;">
+        <div class="demo-item">
+            <button class="trigger-btn" onclick="openPreviewModal()">
+                🔍 Open Preview Modal
+            </button>
+            <small>Click to open modal example</small>
+        </div>
+    </div>
+</div>
+
+<!-- PREVIEW MODAL MARKUP -->
+<div class="modal-overlay" id="previewModalOverlay">
+    <div class="preview-modal">
+        <div class="preview-modal__header">
+            <h2 class="preview-modal__title">Product Preview</h2>
+            <button class="preview-modal__close" onclick="closePreviewModal()">×</button>
+        </div>
+
+        <div class="preview-modal__content">
+            <div class="preview-modal__image">
+                <img src="https://images.unsplash.com/photo-1600298881974-6be191ceeda1?w=600&h=600&fit=crop" alt="Product Preview">
+            </div>
+
+            <div class="preview-modal__details">
+                <div class="preview-modal__category">Premium Embroidery</div>
+                <h3>Luxury Monogram Bundle</h3>
+                <div class="preview-modal__price">$24.99</div>
+
+                <div class="preview-modal__rating">
+                    <div class="preview-modal__stars">★★★★★</div>
+                    <div class="preview-modal__review-count">
+                        <div class="preview-modal__review-num">4.8 out of 5</div>
+                        <div class="preview-modal__review-text">(324 customer reviews)</div>
+                    </div>
+                </div>
+
+                <div class="preview-modal__description">
+                    High-quality monogram embroidery designs perfect for personalizing your projects. 
+                    This premium bundle includes multiple variations and sizes, compatible with all 
+                    major embroidery machines.
+                </div>
+
+                <div class="preview-modal__formats">
+                    <div class="preview-modal__formats-label">Available Formats</div>
+                    <div class="preview-modal__formats-list">
+                        <div class="format-tag format-tag--active">DST</div>
+                        <div class="format-tag">PES</div>
+                        <div class="format-tag">JEF</div>
+                    </div>
+                </div>
+
+                <div class="preview-modal__actions">
+                    <button class="btn-modal btn-modal--primary">🛒 Add to Cart</button>
+                    <button class="btn-modal btn-modal--secondary">❤ Wishlist</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="preview-modal__footer">
+            Instant download after purchase. All files are virus-scanned and tested. Money-back guarantee.
+        </div>
+    </div>
+</div>
+
+<!-- LIGHTBOX/GALLERY MODAL -->
+<div class="component-section">
+    <h2 class="component-title">Lightbox / Gallery Modal</h2>
+    
+    <div style="margin-top: 1.5rem;">
+        <div class="demo-item">
+            <button class="trigger-btn" onclick="openLightboxModal()">
+                🖼️ Open Lightbox Modal
+            </button>
+            <small>Full-screen image gallery viewer</small>
+        </div>
+    </div>
+</div>
+
+<!-- LIGHTBOX MODAL MARKUP -->
+<div class="modal-overlay" id="lightboxModalOverlay">
+    <div class="lightbox-modal">
+        <button class="preview-modal__close" style="position: absolute; top: 20px; right: 20px; z-index: 1001;" onclick="closeLightboxModal()">×</button>
+
+        <div class="lightbox-modal__content">
+            <div class="lightbox-modal__image">
+                <img id="lightboxImage" src="https://images.unsplash.com/photo-1600298881974-6be191ceeda1?w=1200&h=800&fit=crop" alt="Gallery Image">
+            </div>
+            
+            <div class="lightbox-modal__nav">
+                <button class="lightbox-modal__nav-btn" onclick="prevGalleryImage()">‹</button>
+                <button class="lightbox-modal__nav-btn" onclick="nextGalleryImage()">›</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Preview Modal Functions
+    function openPreviewModal() {
+        document.getElementById('previewModalOverlay').classList.add('modal-overlay--active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closePreviewModal() {
+        document.getElementById('previewModalOverlay').classList.remove('modal-overlay--active');
+        document.body.style.overflow = '';
+    }
+
+    // Close modal when clicking overlay
+    document.getElementById('previewModalOverlay').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closePreviewModal();
+        }
+    });
+
+    // Lightbox Modal Functions
+    const galleryImages = [
+        'https://images.unsplash.com/photo-1600298881974-6be191ceeda1?w=1200&h=800&fit=crop',
+        'https://images.unsplash.com/photo-1527864357687-c2b1b4839d2f?w=1200&h=800&fit=crop',
+        'https://images.unsplash.com/photo-1528991435120-da109ca7ecc8?w=1200&h=800&fit=crop'
+    ];
+
+    let currentImageIndex = 0;
+
+    function openLightboxModal() {
+        document.getElementById('lightboxModalOverlay').classList.add('modal-overlay--active');
+        document.body.style.overflow = 'hidden';
+        currentImageIndex = 0;
+        updateLightboxImage();
+    }
+
+    function closeLightboxModal() {
+        document.getElementById('lightboxModalOverlay').classList.remove('modal-overlay--active');
+        document.body.style.overflow = '';
+    }
+
+    function nextGalleryImage() {
+        currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
+        updateLightboxImage();
+    }
+
+    function prevGalleryImage() {
+        currentImageIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
+        updateLightboxImage();
+    }
+
+    function updateLightboxImage() {
+        document.getElementById('lightboxImage').src = galleryImages[currentImageIndex];
+    }
+
+    // Close lightbox modal when clicking overlay
+    document.getElementById('lightboxModalOverlay').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeLightboxModal();
+        }
+    });
+
+    // Keyboard navigation for lightbox
+    document.addEventListener('keydown', function(e) {
+        if (document.getElementById('lightboxModalOverlay').classList.contains('modal-overlay--active')) {
+            if (e.key === 'ArrowRight') nextGalleryImage();
+            if (e.key === 'ArrowLeft') prevGalleryImage();
+            if (e.key === 'Escape') closeLightboxModal();
+        }
+    });
+</script>
+
+</body>
+</html>

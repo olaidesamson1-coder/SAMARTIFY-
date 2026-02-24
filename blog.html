@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SamArtify Blog - Learn embroidery tips, machine guides, design tutorials, and industry insights for professional embroidery results.">
+    <meta name="keywords" content="embroidery machines, embroidery tips, design tutorials, machine guides, embroidery techniques, digital designs">
+    <meta name="author" content="SamArtify Team">
+    <title>Blog — Embroidery Tips, Tutorials & Guides | SamArtify</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Lora:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cream: #F9FAFB;
+            --rust: #2E5EAA;
+            --deep-rust: #1E3F7A;
+            --sage: #00C3B1;
+            --charcoal: #1F2937;
+            --gold: #00C3B1;
+            --light-sage: #E0F7F5;
+            --white: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lora', serif;
+            background: var(--cream);
+            color: var(--charcoal);
+            line-height: 1.6;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        #root {
+            min-height: 100vh;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(250, 247, 240, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid rgba(184, 92, 56, 0.1);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--deep-rust);
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-btn {
+            color: var(--charcoal);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            text-decoration: none;
+            background: none;
+            border: none;
+        }
+
+        .nav-btn:hover {
+            color: var(--rust);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--deep-rust), var(--rust));
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            border-radius: 12px;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0.95;
+        }
+
+        /* Search & Filter */
+        .blog-controls {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            align-items: center;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--gold);
+            border-radius: 6px;
+            font-family: 'Lora', serif;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--rust);
+        }
+
+        .search-box button {
+            padding: 0.75rem 1.5rem;
+            background: var(--rust);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .search-box button:hover {
+            background: var(--deep-rust);
+        }
+
+        .category-filter {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1.2rem;
+            border: 2px solid var(--rust);
+            background: white;
+            color: var(--rust);
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--rust);
+            color: white;
+        }
+
+        /* Featured Posts */
+        .featured-section {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--deep-rust);
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 3px solid var(--gold);
+        }
+
+        .featured-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        /* Blog Post Card */
+        .blog-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(184, 92, 56, 0.15);
+        }
+
+        .blog-image {
+            width: 100%;
+            height: 220px;
+            background: linear-gradient(135deg, var(--light-sage), var(--gold));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            overflow: hidden;
+        }
+
+        .blog-content {
+            padding: 1.5rem;
+        }
+
+        .blog-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .blog-category {
+            display: inline-block;
+            background: var(--light-sage);
+            color: var(--rust);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .blog-date {
+            font-size: 0.85rem;
+            color: #999;
+        }
+
+        .blog-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--deep-rust);
+            margin-bottom: 0.75rem;
+            line-height: 1.4;
+        }
+
+        .blog-excerpt {
+            color: #666;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .blog-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid var(--light-sage);
+        }
+
+        .blog-author {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .blog-author-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--rust), var(--gold));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        .read-more {
+            color: var(--rust);
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .read-more:hover {
+            color: var(--deep-rust);
+        }
+
+        /* Blog List */
+        .blog-list {
+            margin-bottom: 3rem;
+        }
+
+        .blog-list-item {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+            background: white;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .blog-list-item:hover {
+            box-shadow: 0 4px 16px rgba(184, 92, 56, 0.12);
+        }
+
+        .blog-list-image {
+            width: 250px;
+            height: 200px;
+            background: linear-gradient(135deg, var(--light-sage), var(--gold));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+
+        .blog-list-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        }
+
+        .empty-state-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .empty-state h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--deep-rust);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin: 2rem 0;
+        }
+
+        .pagination-btn {
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--gold);
+            background: white;
+            color: var(--charcoal);
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .pagination-btn:hover,
+        .pagination-btn.active {
+            background: var(--rust);
+            border-color: var(--rust);
+            color: white;
+        }
+
+        /* Newsletter */
+        .newsletter-section {
+            background: linear-gradient(135deg, var(--light-sage), var(--cream));
+            padding: 2.5rem;
+            border-radius: 12px;
+            margin: 3rem 0;
+            border: 2px solid var(--gold);
+            text-align: center;
+        }
+
+        .newsletter-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--deep-rust);
+            margin-bottom: 0.5rem;
+        }
+
+        .newsletter-section p {
+            margin-bottom: 1.5rem;
+            color: #666;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 0.5rem;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--rust);
+            border-radius: 6px;
+            font-family: 'Lora', serif;
+        }
+
+        .newsletter-form input:focus {
+            outline: none;
+            border-color: var(--deep-rust);
+        }
+
+        .newsletter-form button {
+            padding: 0.75rem 1.5rem;
+            background: var(--rust);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-form button:hover {
+            background: var(--deep-rust);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        .modal-close {
+            float: right;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: #999;
+            background: none;
+            border: none;
+            padding: 0;
+            width: auto;
+            transition: color 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: var(--rust);
+        }
+
+        .blog-full-image {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, var(--light-sage), var(--gold));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            margin-bottom: 2rem;
+        }
+
+        .blog-full-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: var(--deep-rust);
+            margin-bottom: 1rem;
+        }
+
+        .blog-full-meta {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+            color: #666;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid var(--light-sage);
+        }
+
+        .blog-full-content {
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 2rem;
+        }
+
+        .blog-full-content h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--deep-rust);
+            margin: 1.5rem 0 0.75rem 0;
+        }
+
+        .blog-full-content ul,
+        .blog-full-content ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .blog-full-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .blog-social {
+            display: flex;
+            gap: 1rem;
+            margin: 1.5rem 0;
+            padding: 1.5rem 0;
+            border-top: 1px solid var(--light-sage);
+            border-bottom: 1px solid var(--light-sage);
+        }
+
+        .social-btn {
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--rust);
+            background: white;
+            color: var(--rust);
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .social-btn:hover {
+            background: var(--rust);
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .blog-controls {
+                grid-template-columns: 1fr;
+            }
+
+            .category-filter {
+                justify-content: center;
+            }
+
+            .blog-list-item {
+                grid-template-columns: 1fr;
+            }
+
+            .blog-list-image {
+                width: 100%;
+                height: 200px;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+
+            .modal-content {
+                padding: 1.5rem;
+            }
+        }
+
+        /* Footer */
+        footer {
+            background: var(--charcoal);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        footer a {
+            color: var(--gold);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: white;
+        }
+    </style>
+    <style>
+        .social-icons { display:flex; gap:0.8rem; align-items:center; }
+        .social-icon { width:48px; height:48px; display:inline-flex; align-items:center; justify-content:center; border-radius:12px; color:#fff; transition: transform 0.15s ease, box-shadow 0.15s ease; box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+        .social-icon svg { width:22px; height:22px; fill:currentColor; }
+        .social-icon.facebook { background:#1877F2; }
+        .social-icon.instagram { background: radial-gradient(circle at 30% 30%, #fdf497 0%, #fd5949 30%, #d6249f 60%, #285AEB 100%); }
+        .social-icon.tiktok { background: linear-gradient(135deg,#69C9D0,#010101); }
+        .social-icon.youtube { background:#FF0000; }
+        .social-icon:hover { transform: translateY(-4px); box-shadow:0 8px 20px rgba(0,0,0,0.18); }
+        .footer-social { display:flex; gap:0.8rem; justify-content:center; align-items:center; margin-top:1rem; }
+        .footer-social .social-icon { width:56px; height:56px; border-radius:14px; }
+        @media (max-width: 768px) { .footer-social { justify-content:center; } }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        function Navigation() {
+            return (
+                <nav>
+                    <div className="nav-content">
+                        <a href="homepage.html" className="logo">SamArtify</a>
+                        <div className="nav-links">
+                            <a href="homepage.html" className="nav-btn">Home</a>
+                            <a href="categories.html" className="nav-btn">Designs</a>
+                            <a href="blog.html" className="nav-btn" style={{color: 'var(--rust)', fontWeight: '700'}}>Blog</a>
+                            <a href="faq.html" className="nav-btn">Support</a>
+                            <a href="account.html" className="nav-btn">Account</a>
+                        </div>
+
+                    </div>
+                </nav>
+            );
+        }
+
+        const BLOG_POSTS = [
+            {
+                id: 1,
+                title: "Complete Guide to Embroidery Machine Types & Features",
+                excerpt: "Learn about single-needle, multi-needle, industrial, and home embroidery machines. Discover which type suits your needs and budget.",
+                content: `Embroidery machines come in various types, each designed for specific purposes. Whether you're starting your embroidery journey or expanding your capabilities, understanding machine types is crucial.
+
+Single-Needle Machines: Perfect for home users and small businesses. These machines handle one thread at a time, making them versatile for small designs and detailed work. They're affordable, compact, and ideal for learning embroidery basics.
+
+Multi-Needle Machines: Ideal for creating designs with multiple colors efficiently. With 4-15 needles, these machines allow color changes without stopping, significantly reducing production time. Great for commercial operations.
+
+Industrial Machines: Heavy-duty machines designed for high-volume production. They offer wide hooping areas, fast speeds (up to 1200 RPM), and can run continuously for extended periods. Essential for large-scale operations.
+
+Home/Craft Machines: User-friendly options combining affordability with capability. Perfect for hobbyists and creative entrepreneurs starting their journey.
+
+Key Features to Consider:
+- Hoop size (larger hoops handle bigger designs)
+- Stitches per minute (speed affects production)
+- Built-in designs vs. design input capability
+- Memory capacity for custom designs
+- Automatic needle threading
+- Thread tension control
+- Free arm for cylindrical items
+
+Choosing the right machine depends on your budget, project types, volume needs, and available space.`,
+                category: "Machine Guides",
+                author: "Sarah Mitchell",
+                date: "February 3, 2026",
+                emoji: "🤖",
+                readTime: "8 min read"
+            },
+            {
+                id: 2,
+                title: "Master Embroidery Thread Types & Selection Guide",
+                excerpt: "Explore polyester, cotton, rayon, and metallic threads. Learn how to choose the right thread for stunning embroidery results.",
+                content: `Thread quality dramatically affects your embroidery results. Choosing the wrong thread type can lead to breakage, poor color quality, and wasted designs.
+
+Polyester Threads: The most popular choice for embroidery. Durable, colorfast, and resistant to fading. Polyester threads hold their sheen and work well with all fabric types. Perfect for commercial quality results.
+
+Cotton Threads: Ideal for natural fiber embroidery and vintage aesthetics. Less shiny than polyester, providing a matte finish. Great for heirloom pieces but less durable in frequent-use items.
+
+Rayon Threads: Luxurious, highly lustrous threads with excellent color vibrancy. Perfect for show-stopping designs. More delicate than polyester, requiring proper tension settings.
+
+Metallic & Specialty Threads: Add sparkle and dimension. Include gold, silver, holographic, and glow-in-the-dark options. Require slower machine speeds and careful handling.
+
+Selection Tips:
+- Match thread weight to fabric weight
+- Test colors on scrap fabric first
+- Store threads in cool, dry places
+- Use appropriate needle sizes
+- Maintain consistent tension
+- Keep thread quality consistent for uniform results
+
+Investing in quality threads transforms your embroidery from amateur to professional looking.`,
+                category: "Design Tips",
+                author: "Marcus Chen",
+                date: "February 1, 2026",
+                emoji: "🧵",
+                readTime: "6 min read"
+            },
+            {
+                id: 3,
+                title: "Preventing Common Embroidery Problems: Troubleshooting Guide",
+                excerpt: "Fix thread breakage, loose tension, bunching, and other issues with practical solutions from experienced embroiderers.",
+                content: `Even experienced embroiderers encounter problems. Understanding common issues and their solutions saves time and materials.
+
+Thread Breakage: Usually caused by incorrect tension, needle damage, or poor thread quality. Solutions: Check needle for bends or burrs, adjust tension gradually, use quality threads, ensure proper needle size for thread weight.
+
+Bunching & Puckering: When stitches bunch under the fabric. Often from incorrect stabilizer choice or tension issues. Use appropriate stabilizer type for your fabric weight. Adjust top and bobbin tension evenly.
+
+Loose Stitches: Typically caused by low tension or thread slipping. Increase tension gradually (small adjustments), check needle security, ensure thread feeds smoothly into tension discs.
+
+Skipped Stitches: Usually indicates a dull needle or improper needle installation. Replace needles regularly (every 6-8 hours), ensure needle is fully inserted and locked, check needle for deflection.
+
+Fraying Fabric: Stabilizer choice is critical. Use tear-away stabilizer for finished goods, cut-away for permanent backing needed items, water-soluble for delicate fabrics.
+
+Design Puckering: Happens with dense designs on lightweight fabrics. Reduce stitch density, increase stabilizer weight, use proper underlay stitches, test on scrap fabric first.
+
+Prevention Best Practices:
+- Replace needles regularly
+- Clean machine weekly
+- Use quality stabilizers
+- Test designs on scraps
+- Maintain proper tension
+- Keep machine serviced
+
+Troubleshooting is part of embroidery mastery. Each problem solved improves your skills.`,
+                category: "Machine Guides",
+                author: "Jennifer Lopez",
+                date: "January 28, 2026",
+                emoji: "🔧",
+                readTime: "7 min read"
+            },
+            {
+                id: 4,
+                title: "Creating Professional-Grade Embroidery Designs: Expert Tips",
+                excerpt: "Transform your design ideas into professional embroidery files. Master digitization, stitch density, and file formats.",
+                content: `Professional embroidery designs require attention to technical and creative details. Whether you're designing for personal use or commercial purposes, these principles apply.
+
+Design Complexity: Professional designs balance detail with practicality. Overly dense designs cause tension problems and longer stitching times. Typically, 70-150 stitches per square inch is ideal.
+
+Stitch Density: Controls how close stitches are together. Higher density creates bolder colors but increases stitching time and fabric strain. Lower density produces lighter coverage but risks fabric show-through.
+
+Underlay Stitches: Foundation stitches that prevent puckering and shifting. Pull compensate underlays support fill areas. Column underlays support long lines. Underlay stitches aren't visible in final design but crucial for quality.
+
+File Formats: Different machines require different formats.
+- EMB (Melco) - wide compatibility
+- DST (Tajima) - standard format
+- PES (Brother) - popular home machines
+- JEF (Janome) - Janome machines
+- EXP (Melco) - complex designs
+- VIP (Husqvarna Viking)
+
+Color Optimization: Use machine-compatible colors for accurate results. Test designs on intended fabrics. Consider thread limitations (not all colors available in all thread types).
+
+Lettering & Text: Requires proper density and supporting stitches. Avoid thin, delicate fonts for embroidery. Minimum character size depends on machine capabilities.
+
+Design Preparation:
+- Source quality digital images
+- Understand your machine's capabilities
+- Test on sample fabric
+- Document stitch counts and times
+- Optimize for target fabric type
+- Save multiple format versions
+
+Professional results come from understanding both creative and technical aspects of embroidery design.`,
+                category: "Design Tips",
+                author: "David Okafor",
+                date: "January 25, 2026",
+                emoji: "🎨",
+                readTime: "9 min read"
+            },
+            {
+                id: 5,
+                title: "Stabilizing Fabrics for Perfect Embroidery Results",
+                excerpt: "Discover tear-away, cut-away, and water-soluble stabilizers. Learn when and how to use each type for different fabrics.",
+                content: `Stabilizer choice is one of the most critical factors in successful embroidery. Incorrect stabilizer selection leads to puckering, bunching, and poor results.
+
+Tear-Away Stabilizers: Removed by tearing away after embroidery. Perfect for finished garments and projects. Doesn't leave permanent backing. Ideal for knits and delicate fabrics. Most economical option.
+
+Cut-Away Stabilizers: Remain permanently behind the design for extra support. Essential for stretchy fabrics and high-stitch-density designs. Required for items that experience stress (waistbands, edges). Creates stronger, more durable designs.
+
+Water-Soluble Stabilizers: Dissolves completely in water after embroidery. Perfect for open designs, hoops items, and delicate fabrics. No residue left behind. Slightly more expensive but worth it for quality-conscious work.
+
+Fusible Stabilizers: Bonds to fabric with heat. Prevents shifting during embroidery. Great for knits and lightweight fabrics. Can feel stiff if over-applied.
+
+Selection Guide by Fabric Type:
+- Cotton: Tear-away or cut-away
+- Knits: Cut-away or fusible
+- Delicate fabrics: Water-soluble
+- Thick fabrics: Lightweight options
+- Stretch fabrics: Cut-away for durability
+
+Stabilizer Weight Matters:
+- Lightweight: Thin fabrics, detailed designs
+- Medium: General purpose, most common use
+- Heavy: Dense designs, stretchy fabrics
+
+Application Techniques:
+- Hoop stabilizer first when possible
+- Use adhesive spray for difficult hooping
+- Layer stabilizers for extra support
+- Remove excess after embroidery
+- Test removal method on scrap fabric
+
+Professional embroiderers always have multiple stabilizer types available. Investment in quality stabilizers transforms results.`,
+                category: "Machine Guides",
+                author: "Amara Williams",
+                date: "January 20, 2026",
+                emoji: "🎯",
+                readTime: "8 min read"
+            },
+            {
+                id: 6,
+                title: "From Sketch to Digital: Embroidery Design Software Comparison",
+                excerpt: "Compare popular digitization software: Bernina, Wilcom, and free alternatives. Find the right tool for your workflow.",
+                content: `Digital embroidery software transforms sketches into machine-readable files. Choosing the right software depends on your needs, budget, and technical skill level.
+
+Professional Software:
+Wilcom EmbroideryStudio: Industry standard with powerful digitization tools. Supports all file formats. Advanced features for complex designs. Higher learning curve but exceptional results.
+
+Bernina Embroidery Software: Specialized for Bernina machines but works with others. Intuitive interface. Good for beginners moving to intermediate users. Moderate price point.
+
+Sierra Gold: User-friendly with good tracing capabilities. Great for converting artwork to embroidery files. Moderate cost, good value.
+
+Budget-Friendly Options:
+Embird: Affordable with surprising capabilities. Good community support. Suitable for hobbyists and small businesses.
+
+StitchFiddle: Free browser-based tool. Perfect for learning and small projects. Limited advanced features but accessible.
+
+Inkscape Plugins: Free open-source option with learning community. Steep learning curve but powerful results.
+
+Software Selection Criteria:
+- Design complexity needs
+- Supported file formats
+- Learning curve tolerance
+- Budget constraints
+- Community support availability
+- Update frequency and support
+
+Key Features to Consider:
+- Automatic tracing capabilities
+- Manual digitization tools
+- Stitch editing capabilities
+- Color separation
+- File format support
+- Speed and performance
+
+Workflow Integration:
+- Compatible with your machines
+- Export options for different formats
+- Batch processing capabilities
+- Template libraries available
+- Customer support quality
+
+Start with beginner-friendly options, upgrade as your skills grow. Many professionals use multiple software solutions for different purposes.`,
+                category: "Design Tips",
+                author: "Rebecca Foster",
+                date: "January 15, 2026",
+                emoji: "💻",
+                readTime: "7 min read"
+            },
+            {
+                id: 7,
+                title: "Agbada Embroidery: Traditional Patterns Meet Modern Techniques",
+                excerpt: "Explore traditional Agbada patterns, digitization challenges, and modern embroidery applications. Celebrate cultural heritage with technical excellence.",
+                content: `Agbada, the prestigious African traditional robe, offers rich embroidery opportunities combining cultural significance with technical precision.
+
+Traditional Patterns: Hand embroidery creates distinctive geometric and cultural designs. Gold thread traditionally adorns important Agbada pieces. Each pattern carries cultural meaning and family heritage.
+
+Modern Digitization: Converting traditional hand-embroidered patterns into digital designs preserves cultural heritage while enabling wider production. This requires understanding both traditional aesthetics and digital capabilities.
+
+Technical Challenges: Complex patterns demand high stitch density. Gold and metallic thread usage requires careful tension settings. Large design areas benefit from smart underlay stitches.
+
+Digitization Process:
+- Document traditional pattern details
+- Create vector artwork from photography
+- Decide on stitch density (balanced for detail and practicality)
+- Plan color transitions carefully
+- Test on appropriate fabrics
+- Consider cultural authenticity
+
+Fabric Considerations: Premium fabrics deserve quality digitization. Choose appropriate stabilizers for luxury textiles. Plan for potential fabric movement during embroidery.
+
+Color Selection: Traditional Agbada features rich jewel tones—deep reds, golds, navy blues. Modern interpretations can honor traditional palettes while exploring new color combinations.
+
+Machine Settings: Use high-quality threads for authentic appearance. Metallic threads require slower speeds (800-1000 RPM). Adjust tension for metallic thread compatibility.
+
+Cultural Respect: Understand the significance of patterns used. Recognize traditional craftsmanship while celebrating technological advancement. Proper attribution of traditional designs matters.
+
+The intersection of traditional African fashion and modern embroidery technology offers endless creative possibilities.`,
+                category: "Design Tips",
+                author: "Kwame Mensah",
+                date: "January 10, 2026",
+                emoji: "👗",
+                readTime: "8 min read"
+            },
+            {
+                id: 8,
+                title: "Building Your Embroidery Business: From Hobby to Hustle",
+                excerpt: "Practical steps for starting a profitable embroidery business, from equipment to marketing strategies and customer management.",
+                content: `Turning embroidery passion into profitable business requires strategic planning, quality execution, and smart marketing.
+
+Getting Started:
+Assess your market: Research local demand and online opportunities. Identify competitors and gaps. Survey potential customers about needs and preferences.
+
+Essential Equipment: Quality machine matching your production goals. Reliable stabilizers and threads. Professional hooping tools. Heat press for heat transfer applications.
+
+Business Structure: Decide on sole proprietorship, LLC, or partnership. Register business name and establish banking. Obtain necessary licenses and insurance. Plan tax structure with accountant.
+
+Costing & Pricing:
+- Calculate material costs per unit
+- Factor in machine depreciation
+- Include labor time fairly
+- Account for overhead (utilities, rent)
+- Add profit margin (30-50% typical)
+- Research competitive pricing
+- Consider volume discounts
+
+Design Management: Build a portfolio of popular designs. Protect original designs with watermarks. Keep design library organized. Track design performance and updates.
+
+Quality Control: Test all designs before delivery. Inspect finished products carefully. Establish quality standards and maintain them consistently. Handle customer feedback professionally.
+
+Customer Management: Build strong relationships. Document custom requests clearly. Communicate timelines honestly. Exceed expectations consistently. Ask for testimonials and referrals.
+
+Marketing Strategies:
+- Professional website or online shop
+- Social media presence (Instagram, Facebook, TikTok)
+- Email newsletter with design updates
+- Local craft shows and markets
+- Referral incentives
+- Customer testimonials and case studies
+- Collaborations with designers and retailers
+
+Scaling Production:
+- Hire employees or outsource as demand grows
+- Invest in additional machines
+- Optimize workflow and processes
+- Build supplier relationships
+- Manage inventory efficiently
+- Track metrics and analytics
+
+Success comes from combining excellent craftsmanship with smart business practices.`,
+                category: "Business Tips",
+                author: "Elena Rodriguez",
+                date: "January 5, 2026",
+                emoji: "💼",
+                readTime: "10 min read"
+            }
+        ];
+
+        function BlogPage() {
+            const [allPosts] = useState(BLOG_POSTS);
+            const [displayedPosts, setDisplayedPosts] = useState(BLOG_POSTS.slice(0, 6));
+            const [selectedPost, setSelectedPost] = useState(null);
+            const [searchTerm, setSearchTerm] = useState("");
+            const [selectedCategory, setSelectedCategory] = useState("All");
+            const [currentPage, setCurrentPage] = useState(1);
+
+            const categories = ["All", ...new Set(BLOG_POSTS.map(post => post.category))];
+
+            useEffect(() => {
+                let filtered = allPosts;
+
+                // Filter by category
+                if (selectedCategory !== "All") {
+                    filtered = filtered.filter(post => post.category === selectedCategory);
+                }
+
+                // Filter by search term
+                if (searchTerm) {
+                    filtered = filtered.filter(post =>
+                        post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                        post.excerpt.toLowerCase().includes(searchTerm.toLowerCase())
+                    );
+                }
+
+                setCurrentPage(1);
+                setDisplayedPosts(filtered);
+            }, [searchTerm, selectedCategory]);
+
+            const featuredPosts = allPosts.slice(0, 3);
+            const postsPerPage = 4;
+            const startIndex = (currentPage - 1) * postsPerPage;
+            const paginatedPosts = displayedPosts.slice(startIndex, startIndex + postsPerPage);
+            const totalPages = Math.ceil(displayedPosts.length / postsPerPage);
+
+            const handleSearch = (e) => {
+                e.preventDefault();
+            };
+
+            return (
+                <>
+                    <Navigation />
+
+                    <section className="hero">
+                        <h1>Embroidery Knowledge Hub</h1>
+                        <p>Master embroidery machines, design techniques, and business tips from industry experts. Get inspired and level up your skills.</p>
+                    </section>
+
+                    <div className="container">
+                        {/* Featured Posts */}
+                        <section className="featured-section">
+                            <h2 className="section-title">⭐ Featured Articles</h2>
+                            <div className="featured-grid">
+                                {featuredPosts.map(post => (
+                                    <div key={post.id} className="blog-card" onClick={() => setSelectedPost(post)}>
+                                        <div className="blog-image">{post.emoji}</div>
+                                        <div className="blog-content">
+                                            <div className="blog-meta">
+                                                <span className="blog-category">{post.category}</span>
+                                                <span className="blog-date">{post.date}</span>
+                                            </div>
+                                            <h3 className="blog-title">{post.title}</h3>
+                                            <p className="blog-excerpt">{post.excerpt}</p>
+                                            <div className="blog-footer">
+                                                <div className="blog-author">
+                                                    <div className="blog-author-avatar">{post.author.charAt(0)}</div>
+                                                    <div>{post.author}</div>
+                                                </div>
+                                                <a href="#" className="read-more">{post.readTime} →</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+
+                        {/* Search & Filter */}
+                        <div className="blog-controls">
+                            <form className="search-box" onSubmit={handleSearch}>
+                                <input 
+                                    type="text" 
+                                    placeholder="Search articles..." 
+                                    value={searchTerm}
+                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                />
+                                <button type="submit">Search</button>
+                            </form>
+                            <div className="category-filter">
+                                {categories.map(cat => (
+                                    <button 
+                                        key={cat}
+                                        className={`filter-btn ${selectedCategory === cat ? 'active' : ''}`}
+                                        onClick={() => setSelectedCategory(cat)}
+                                    >
+                                        {cat}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Blog List */}
+                        <section className="blog-list">
+                            <h2 className="section-title">📚 Latest Articles</h2>
+                            
+                            {paginatedPosts.length > 0 ? (
+                                <>
+                                    {paginatedPosts.map(post => (
+                                        <div 
+                                            key={post.id} 
+                                            className="blog-list-item"
+                                            onClick={() => setSelectedPost(post)}
+                                        >
+                                            <div className="blog-list-image">{post.emoji}</div>
+                                            <div className="blog-list-content">
+                                                <div>
+                                                    <div className="blog-meta">
+                                                        <span className="blog-category">{post.category}</span>
+                                                        <span className="blog-date">{post.date}</span>
+                                                        <span>{post.readTime}</span>
+                                                    </div>
+                                                    <h3 className="blog-title">{post.title}</h3>
+                                                    <p className="blog-excerpt">{post.excerpt}</p>
+                                                </div>
+                                                <div className="blog-footer">
+                                                    <div className="blog-author">
+                                                        <div className="blog-author-avatar">{post.author.charAt(0)}</div>
+                                                        <span>{post.author}</span>
+                                                    </div>
+                                                    <a href="#" className="read-more">Read Full Article →</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </>
+                            ) : (
+                                <div className="empty-state">
+                                    <div className="empty-state-icon">🔍</div>
+                                    <h3>No Articles Found</h3>
+                                    <p>Try adjusting your search or filter criteria.</p>
+                                </div>
+                            )}
+
+                            {/* Pagination */}
+                            {totalPages > 1 && (
+                                <div className="pagination">
+                                    {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+                                        <button 
+                                            key={page}
+                                            className={`pagination-btn ${currentPage === page ? 'active' : ''}`}
+                                            onClick={() => {
+                                                setCurrentPage(page);
+                                                window.scrollTo({ top: 0, behavior: 'smooth' });
+                                            }}
+                                        >
+                                            {page}
+                                        </button>
+                                    ))}
+                                </div>
+                            )}
+                        </section>
+
+                        {/* Newsletter */}
+                        <section className="newsletter-section">
+                            <h2>📧 Stay Updated</h2>
+                            <p>Get weekly embroidery tips, design trends, and exclusive discounts delivered to your inbox.</p>
+                            <form className="newsletter-form" onSubmit={(e) => {
+                                e.preventDefault();
+                                alert('Thank you for subscribing! Check your email for confirmation.');
+                            }}>
+                                <input type="email" placeholder="Enter your email" required />
+                                <button type="submit">Subscribe</button>
+                            </form>
+                        </section>
+                    </div>
+
+                    {/* Blog Post Modal */}
+                    {selectedPost && (
+                        <div className="modal active" onClick={() => setSelectedPost(null)}>
+                            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                                <button className="modal-close" onClick={() => setSelectedPost(null)}>×</button>
+                                
+                                <div className="blog-full-image">{selectedPost.emoji}</div>
+                                
+                                <h1 className="blog-full-title">{selectedPost.title}</h1>
+                                
+                                <div className="blog-full-meta">
+                                    <span>📅 {selectedPost.date}</span>
+                                    <span>✍️ {selectedPost.author}</span>
+                                    <span>🏷️ {selectedPost.category}</span>
+                                    <span>⏱️ {selectedPost.readTime}</span>
+                                </div>
+
+                                <div className="blog-full-content" dangerouslySetInnerHTML={{
+                                    __html: selectedPost.content
+                                        .split('\n\n')
+                                        .map((para, i) => {
+                                            // Handle headings (lines in all caps or ending with colon)
+                                            if (para.match(/^[A-Z][A-Za-z\s&:()-]+:?$/)) {
+                                                return `<h3>${para}</h3>`;
+                                            }
+                                            // Handle lists
+                                            if (para.includes('-') && para.split('\n').length > 2) {
+                                                const items = para.split('\n').filter(l => l.trim().startsWith('-')).map(l => `<li>${l.replace(/^-\s*/, '')}</li>`);
+                                                return `<ul>${items.join('')}</ul>`;
+                                            }
+                                            return `<p>${para}</p>`;
+                                        })
+                                        .join('')
+                                }} />
+
+                                <div className="blog-social">
+                                    <button className="social-btn" onClick={() => alert('Share on Twitter')}>Share on Twitter</button>
+                                    <button className="social-btn" onClick={() => alert('Share on Facebook')}>Share on Facebook</button>
+                                    <button className="social-btn" onClick={() => alert('Share on Pinterest')}>Share on Pinterest</button>
+                                </div>
+
+                                <div style={{marginTop: '2rem', padding: '1.5rem', background: 'var(--light-sage)', borderRadius: '8px'}}>
+                                    <strong>About the Author</strong>
+                                    <p style={{marginTop: '0.5rem'}}>{selectedPost.author} is an experienced embroidery professional with expertise in {selectedPost.category.toLowerCase()}. Passionate about sharing knowledge and helping others master their craft.</p>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    <footer>
+                        <p>&copy; 2026 SamArtify. All rights reserved. | <a href="policies.html" style={{color: 'var(--gold)', textDecoration: 'none'}}>Policies</a> | <a href="refund-policy.html" style={{color: 'var(--gold)', textDecoration: 'none'}}>Refunds</a> | <a href="contact.html" style={{color: 'var(--gold)', textDecoration: 'none'}}>Contact</a></p>
+                        <div className="footer-social">
+                            <a className="social-icon facebook" href="https://facebook.com/samartify" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M22 12a10 10 0 10-11.5 9.9v-7h-2.2v-2.9h2.2V9.4c0-2.2 1.3-3.4 3.3-3.4.96 0 1.96.17 1.96.17v2.1h-1.06c-1.04 0-1.36.65-1.36 1.32v1.6h2.32l-.37 2.9h-1.95v7A10 10 0 0022 12z"/></svg>
+                            </a>
+                            <a className="social-icon instagram" href="https://instagram.com/samartify" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M7 2h10a5 5 0 015 5v10a5 5 0 01-5 5H7a5 5 0 01-5-5V7a5 5 0 015-5zm5 6.1A4.9 4.9 0 1016.9 13 4.9 4.9 0 0012 8.1zm5.2-2.3a1.2 1.2 0 11-1.2-1.2 1.2 1.2 0 011.2 1.2z"/></svg>
+                            </a>
+                            <a className="social-icon tiktok" href="https://www.tiktok.com/@samartify" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M17.5 6.5a4 4 0 01-4-4v9a5 5 0 11-5-5v2.1a2.9 2.9 0 102.9 2.9V6.5h4.1z"/></svg>
+                            </a>
+                            <a className="social-icon youtube" href="https://www.youtube.com/c/samartify" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M10 15l5.2-3L10 9v6zm12-3c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v0c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v0z"/></svg>
+                            </a>
+                        </div>
+                    </footer>
+                </>
+            );
+        }
+
+        // Render App
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<BlogPage />);
+    </script>
+</body>
+</html>

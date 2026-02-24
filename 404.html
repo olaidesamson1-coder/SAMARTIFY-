@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Page Not Found | SamArtify</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Lora:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cream: #F9FAFB;
+            --rust: #2E5EAA;
+            --deep-rust: #1E3F7A;
+            --sage: #00C3B1;
+            --charcoal: #1F2937;
+            --gold: #00C3B1;
+            --light-sage: #E0F7F5;
+            --white: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lora', serif;
+            background: var(--cream);
+            color: var(--charcoal);
+            line-height: 1.6;
+        }
+
+        #root {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(250, 247, 240, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid rgba(184, 92, 56, 0.1);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--deep-rust);
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-btn {
+            color: var(--charcoal);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            text-decoration: none;
+            background: none;
+            border: none;
+        }
+
+        .nav-btn:hover {
+            color: var(--rust);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            width: 100%;
+            flex: 1;
+        }
+
+        /* 404 Section */
+        .error-container {
+            text-align: center;
+            padding: 4rem 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .error-code {
+            font-family: 'Playfair Display', serif;
+            font-size: 6rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--deep-rust), var(--rust));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 0;
+            line-height: 1;
+        }
+
+        .error-icon {
+            font-size: 4rem;
+            margin: 1rem 0;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .error-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--deep-rust);
+            margin: 1rem 0;
+        }
+
+        .error-message {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 2rem;
+            max-width: 500px;
+        }
+
+        .error-details {
+            background: var(--light-sage);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--rust);
+            text-align: left;
+        }
+
+        .error-details h3 {
+            color: var(--deep-rust);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .error-details ul {
+            list-style: none;
+            margin-left: 0;
+        }
+
+        .error-details li {
+            padding: 0.5rem 0;
+            color: #555;
+        }
+
+        .error-details li:before {
+            content: "✓ ";
+            color: var(--rust);
+            font-weight: 700;
+            margin-right: 0.5rem;
+        }
+
+        /* Action Buttons */
+        .error-actions {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Lora', serif;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--rust);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--deep-rust);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(184, 92, 56, 0.3);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--rust);
+            border: 2px solid var(--rust);
+        }
+
+        .btn-secondary:hover {
+            background: var(--light-sage);
+        }
+
+        /* Suggestions */
+        .suggestions-section {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .suggestions-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--deep-rust);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .suggestion-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .suggestion-card {
+            background: var(--light-sage);
+            padding: 1.5rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+            text-align: center;
+        }
+
+        .suggestion-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--rust);
+            box-shadow: 0 4px 12px rgba(184, 92, 56, 0.15);
+        }
+
+        .suggestion-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .suggestion-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--deep-rust);
+            margin-bottom: 0.5rem;
+        }
+
+        .suggestion-description {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .suggestion-link {
+            display: inline-block;
+            color: var(--rust);
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .suggestion-link:hover {
+            color: var(--deep-rust);
+        }
+
+        /* Popular Designs */
+        .popular-designs {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 2px solid var(--light-sage);
+        }
+
+        .popular-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--deep-rust);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .designs-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .design-preview {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .design-preview:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 12px rgba(184, 92, 56, 0.15);
+        }
+
+        .design-image {
+            width: 100%;
+            height: 150px;
+            background: linear-gradient(135deg, var(--gold), var(--rust));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+        }
+
+        .design-details {
+            padding: 1rem;
+        }
+
+        .design-name {
+            font-weight: 700;
+            color: var(--deep-rust);
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .design-price {
+            color: var(--rust);
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .design-btn {
+            width: 100%;
+            padding: 0.5rem;
+            background: var(--rust);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .design-btn:hover {
+            background: var(--deep-rust);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--charcoal);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: auto;
+        }
+
+        footer a {
+            color: var(--gold);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .error-code {
+                font-size: 4rem;
+            }
+
+            .error-title {
+                font-size: 1.8rem;
+            }
+
+            .error-actions {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .suggestion-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .designs-showcase {
+                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            }
+        }
+    </style>
+    <style>
+        .social-icons { display:none; }
+        .social-icon { display:inline-flex; align-items:center; justify-content:center; width:48px; height:48px; border-radius:12px; color:#fff; transition:transform 0.15s ease,box-shadow 0.15s ease; box-shadow:0 2px 6px rgba(0,0,0,0.08); }
+        .social-icon svg { width:22px; height:22px; fill:currentColor; }
+        .social-icon.facebook { background:#1877F2; }
+        .social-icon.instagram { background:radial-gradient(circle at 30% 30%,#fdf497 0%,#fd5949 30%,#d6249f 60%,#285AEB 100%); }
+        .social-icon.tiktok { background:linear-gradient(135deg,#69C9D0,#010101); }
+        .social-icon.youtube { background:#FF0000; }
+        .social-icon:hover { transform:translateY(-4px); box-shadow:0 8px 20px rgba(0,0,0,0.18); }
+        .footer-social { display:flex; gap:0.8rem; justify-content:center; align-items:center; margin-top:1rem; }
+        .footer-social .social-icon { width:56px; height:56px; border-radius:14px; }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        function Navigation() {
+            return (
+                <nav>
+                    <div className="nav-content">
+                        <a href="homepage.html" className="logo">SamArtify</a>
+                        <div className="nav-links">
+                            <a href="homepage.html" className="nav-btn">Home</a>
+                            <a href="categories.html" className="nav-btn">Categories</a>
+                            <a href="blog.html" className="nav-btn">Blog</a>
+                            <a href="faq.html" className="nav-btn">Support</a>
+                            <a href="account.html" className="nav-btn">Account</a>
+                        </div>
+                    </div>
+                </nav>
+            );
+        }
+
+        const POPULAR_DESIGNS = [
+            { id: 1, name: 'Classic Agbada', price: '$24.99', emoji: '👗' },
+            { id: 2, name: 'Royal Gold', price: '$34.99', emoji: '👑' },
+            { id: 3, name: 'Floral Design', price: '$19.99', emoji: '🌸' },
+            { id: 4, name: 'Geometric Art', price: '$29.99', emoji: '✨' },
+            { id: 5, name: 'Heritage Pattern', price: '$22.99', emoji: '🏛️' },
+            { id: 6, name: 'Monogram Set', price: '$29.99', emoji: '🔤' }
+        ];
+
+        function ErrorPage404() {
+            const [searchQuery, setSearchQuery] = useState('');
+
+            const handleSearch = (e) => {
+                e.preventDefault();
+                if (searchQuery.trim()) {
+                    window.location.href = `search-results.html?q=${encodeURIComponent(searchQuery)}`;
+                }
+            };
+
+            const handleDesignClick = (design) => {
+                alert(`Added "${design.name}" to cart!`);
+            };
+
+            return (
+                <>
+                    <Navigation />
+
+                    <div className="container">
+                        <div className="error-container">
+                            <h1 className="error-code">404</h1>
+                            <div className="error-icon">🧵</div>
+                            <h2 className="error-title">Page Not Found</h2>
+                            <p className="error-message">
+                                Oops! The design you're looking for has gone off the embroidery hoop. Let's get you back on track!
+                            </p>
+
+                            <div className="error-actions">
+                                <a href="homepage.html" className="btn btn-primary">← Back to Home</a>
+                                <a href="categories.html" className="btn btn-secondary">Browse Designs</a>
+                            </div>
+
+                            <div className="suggestions-section">
+                                <h3 className="suggestions-title">💡 Here's What You Can Do</h3>
+
+                                <div className="suggestion-grid">
+                                    <div className="suggestion-card" onClick={() => window.location.href = 'categories.html'}>
+                                        <div className="suggestion-icon">🎨</div>
+                                        <div className="suggestion-title">Browse Categories</div>
+                                        <p className="suggestion-description">Explore our full collection of embroidery designs</p>
+                                        <a href="categories.html" className="suggestion-link">Explore →</a>
+                                    </div>
+
+                                    <div className="suggestion-card" onClick={() => window.location.href = 'search-results.html'}>
+                                        <div className="suggestion-icon">🔍</div>
+                                        <div className="suggestion-title">Search Designs</div>
+                                        <p className="suggestion-description">Search for specific designs by keyword</p>
+                                        <a href="search-results.html" className="suggestion-link">Search →</a>
+                                    </div>
+
+                                    <div className="suggestion-card" onClick={() => window.location.href = 'blog.html'}>
+                                        <div className="suggestion-icon">📚</div>
+                                        <div className="suggestion-title">Read Blog</div>
+                                        <p className="suggestion-description">Learn embroidery tips and design tutorials</p>
+                                        <a href="blog.html" className="suggestion-link">Read →</a>
+                                    </div>
+
+                                    <div className="suggestion-card" onClick={() => window.location.href = 'contact.html'}>
+                                        <div className="suggestion-icon">💬</div>
+                                        <div className="suggestion-title">Contact Support</div>
+                                        <p className="suggestion-description">Need help? Our team is here to assist</p>
+                                        <a href="contact.html" className="suggestion-link">Contact →</a>
+                                    </div>
+                                </div>
+
+                                <div className="popular-designs">
+                                    <h3 className="popular-title">⭐ Popular Designs to Check Out</h3>
+                                    <div className="designs-showcase">
+                                        {POPULAR_DESIGNS.map(design => (
+                                            <div key={design.id} className="design-preview">
+                                                <div className="design-image">{design.emoji}</div>
+                                                <div className="design-details">
+                                                    <div className="design-name">{design.name}</div>
+                                                    <div className="design-price">{design.price}</div>
+                                                    <button 
+                                                        className="design-btn"
+                                                        onClick={() => handleDesignClick(design)}
+                                                    >
+                                                        Add to Cart
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <footer>
+                        <p>&copy; 2026 SamArtify. All rights reserved. | <a href="policies.html">Policies</a> | <a href="faq.html">FAQ</a> | <a href="contact.html">Contact</a></p>
+                        <div className="footer-social">
+                            <a className="social-icon facebook" href="https://facebook.com/samartify" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M22 12a10 10 0 10-11.5 9.9v-7h-2.2v-2.9h2.2V9.4c0-2.2 1.3-3.4 3.3-3.4.96 0 1.96.17 1.96.17v2.1h-1.06c-1.04 0-1.36.65-1.36 1.32v1.6h2.32l-.37 2.9h-1.95v7A10 10 0 0022 12z"/></svg>
+                            </a>
+                            <a className="social-icon instagram" href="https://instagram.com/samartify" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M7 2h10a5 5 0 015 5v10a5 5 0 01-5 5H7a5 5 0 01-5-5V7a5 5 0 015-5zm5 6.1A4.9 4.9 0 1016.9 13 4.9 4.9 0 0012 8.1zm5.2-2.3a1.2 1.2 0 11-1.2-1.2 1.2 1.2 0 011.2 1.2z"/></svg>
+                            </a>
+                            <a className="social-icon tiktok" href="https://www.tiktok.com/@samartify" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M17.5 6.5a4 4 0 01-4-4v9a5 5 0 11-5-5v2.1a2.9 2.9 0 102.9 2.9V6.5h4.1z"/></svg>
+                            </a>
+                            <a className="social-icon youtube" href="https://www.youtube.com/c/samartify" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M10 15l5.2-3L10 9v6zm12-3c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v0c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v0z"/></svg>
+                            </a>
+                        </div>
+                    </footer>
+                </>
+            );
+        }
+
+        // Render App
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<ErrorPage404 />);
+    </script>
+</body>
+</html>
